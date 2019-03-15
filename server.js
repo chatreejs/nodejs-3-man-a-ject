@@ -24,6 +24,6 @@ app.get('/', (req, res) => {
 
 app.get('/Today', function(req, res) {
 
-    res.send(today)
+    res.send("Hello")
 });
 
