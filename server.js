@@ -5,6 +5,9 @@ var app = express();
 var TwentyFourForecast = require('./TwentyFourForecast.js');
 var carousel = new TwentyFourForecast();
 
+var Compass = require('./Compass.js');
+var compass = new Compass();
+
 app.use(express.static(__dirname + '/public'));
 
 var head = '<head>';
@@ -54,16 +57,10 @@ var server = app.listen(3000, function () {
     console.log('Running on port : %s', port);
 });
 
-var date = new Date();
-var current_hour = date.getHours();
-
-var city = 'Bangkok';
-var temperature = 28;
 var humidity = 76;
 var pressure = 1012;
 var wind_speed = 10;
-var wind_deg = 157.5;
-var description = 'cloudy';
+var wind_deg = 15;
 
 app.get('/', (req, res) => {
     var html = '';
@@ -98,7 +95,7 @@ app.get('/', (req, res) => {
     html += '</thead>';
     html += '<tbody>';
     html += '<tr>';
-    html += '<td>SSE ';
+    html += '<td>' + compass.getDirection(wind_deg) + ' ';
     html += wind_speed;
     html += 'km/hr</td>';
     html += '<td>';

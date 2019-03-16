@@ -6,10 +6,6 @@ class TwentyFourForecast {
 
         var city = 'Bangkok';
         var temperature = 28;
-        var humidity = 76;
-        var pressure = 1012;
-        var wind_speed = 10;
-        var wind_deg = 157.5;
         var description = 'cloudy';
 
         for (let index = 0; index < 24; index++) {
