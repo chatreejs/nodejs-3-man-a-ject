@@ -61,7 +61,7 @@ var server = app.listen(3000, function () {
 });
 
 app.get('/', (req, res) => {
-    request('http://ipinfo.io/json', function (error, response, body) {
+    request('https://api.ipgeolocation.io/ipgeo?apiKey=7cc0eab4bbb44d95928fccea5b517f01', function (error, response, body) {
         var obj = JSON.parse(body);
         city = obj.city;
 
@@ -226,93 +226,8 @@ app.get('/', (req, res) => {
     });
 });
 
-app.get('/old', (req, res) => {
-    var html = '';
-    html += head;
-    html += '<body id="page-top">';
-    html += nav;
-    html += '<header class="masthead">';
-
-    //html += forecast.getCarouselForecastOnLocation();
-
-    html += '</div>';
-    html += '<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">';
-    html += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
-    html += '<span class="sr-only">Previous</span>';
-    html += '</a>';
-    html += '<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">';
-    html += '<span class="carousel-control-next-icon" aria-hidden="true"></span>'
-    html += '<span class="sr-only">Next</span>'
-    html += '</a>'
-    html += '</div>';
-
-    html += '<div class="container">';
-    html += '<div class="table-responsive-sm">';
-    html += '<table class="table table-borderless text-white">';
-    html += '<thead>';
-    html += '<tr>';
-    html += '<th scope="col">Wind</th>';
-    html += '<th scope="col">Humidity</th>';
-    html += '<th scope="col">Pressure</th>';
-    html += '</tr>';
-    html += '</thead>';
-    html += '<tbody>';
-    html += '<tr>';
-    html += '<td>' + compass.getDirection(wind_deg) + ' ';
-    html += wind_speed;
-    html += 'km/hr</td>';
-    html += '<td>';
-    html += humidity;
-    html += '%</td>';
-    html += '<td>';
-    html += pressure;
-    html += 'hPa</td>';
-    html += '</tr></tbody></table></div></div>';
-    html += '<div class="container">';
-    html += '<div class="table-responsive-sm">';
-    html += '<table class="table table-borderless text-white">';
-    html += '<tbody>';
-    html += '<tr>';
-    html += '<td class="text-white" style="width:2%">Sunday</td>'
-    html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-    html += '<td class="text-white" style="width:2%">34</td>'
-    html += '<td class="text-white-50" style="width:2%">27</td>'
-    html += '</tr>'
-    html += '<td class="text-white" style="width:2%">Monday</td>'
-    html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-    html += '<td class="text-white" style="width:2%">34</td>'
-    html += '<td class="text-white-50" style="width:2%">27</td>'
-    html += '</tr>'
-    html += '<td class="text-white" style="width:2%">Tuesday</td>'
-    html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-    html += '<td class="text-white" style="width:2%">33</td>'
-    html += '<td class="text-white-50" style="width:2%">28</td>'
-    html += '</tr>'
-    html += '<td class="text-white" style="width:2%">Wednesday</td>'
-    html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-    html += '<td class="text-white" style="width:2%">34</td>'
-    html += '<td class="text-white-50" style="width:2%">28</td>'
-    html += '</tr>'
-    html += '<td class="text-white" style="width:2%">Thursday</td>'
-    html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-    html += '<td class="text-white" style="width:2%">37</td>'
-    html += '<td class="text-white-50" style="width:2%">27</td>'
-    html += '</tr>'
-    html += '<td class="text-white" style="width:2%">Friday</td>'
-    html += '<td class="text-white" style="width:2%"><canvas class="partly-cloudy-day" width="20" height="20"></canvas></td>'
-    html += '<td class="text-white" style="width:2%">37</td>'
-    html += '<td class="text-white-50" style="width:2%">28</td>'
-    html += '</tr>'
-    html += '<td class="text-white" style="width:2%">Saturday</td>'
-    html += '<td class="text-white" style="width:2%"><canvas class="partly-cloudy-day" width="20" height="20"></canvas></td>'
-    html += '<td class="text-white" style="width:2%">37</td>'
-    html += '<td class="text-white-50" style="width:2%">27</td>'
-    html += '</tr>'
-    html += '</tbody></table></div></div>';
-    html += '</header>';
-    html += footer;
-    html += script;
-    html += '</body>';
+app.get('/province', (req, res) => {
+    var html = '<h1>Province</h1>';
 
     res.send(html)
 });
