@@ -107,6 +107,7 @@
 .masthead h1 {
   font-family: 'Helvetica';
   font-size: 5rem;
+  line-height: 7.5rem;
   letter-spacing: 0.8rem;
   padding-bottom: 2rem;
   -webkit-background-clip: text;
@@ -123,8 +124,9 @@
 
 @media (min-width: 768px) {
   .masthead h1 {
-    font-size: 4rem;
-    line-height: 4rem;
+    font-size: 4.5rem;
+    line-height: 7.5rem;
+    max-width: 25rem;
   }
 }
 

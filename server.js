@@ -60,167 +60,169 @@ var server = app.listen(3000, function () {
     console.log('Running on port : %s', port);
 });
 
-var lat = 13.7594;
-var lon = 100.4890;
-
 app.get('/', (req, res) => {
-    request('http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&APPID=' + ApiKey, function (error, response, body) {
+    request('http://ipinfo.io/json', function (error, response, body) {
         var obj = JSON.parse(body);
-        var item = []
-        var description = obj.weather[0].main;
-        var city = obj.name;
-        var temp_kelvin = obj.main.temp;
-        var temp_celsius = temp_kelvin - 273.15;
-        var humidity = obj.main.humidity;
-        var pressure = obj.main.pressure;
-        var wind_speed = obj.wind.speed;
-        var wind_deg = obj.wind.deg;
+        city = obj.city;
 
-        hour_add = 0;
-        for (let index = 0; index < 8; index++) {
-            var hour = current_hour + hour_add;
-            if (hour >= 24) {
-                hour -= 24;
+        request('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&APPID=' + ApiKey, function (error, response, body) {
+            var obj = JSON.parse(body);
+            var item = []
+            var description = obj.weather[0].main;
+            var city = obj.name;
+            var temp_kelvin = obj.main.temp;
+            var temp_celsius = temp_kelvin - 273.15;
+            var humidity = obj.main.humidity;
+            var pressure = obj.main.pressure;
+            var wind_speed = obj.wind.speed;
+            var wind_deg = obj.wind.deg;
+
+            hour_add = 0;
+            for (let index = 0; index < 8; index++) {
+                var hour = current_hour + hour_add;
+                if (hour >= 24) {
+                    hour -= 24;
+                }
+
+                if (description == 'Clear' && hour >= 6 && hour <= 18) {
+                    des_icon = 'clear-day';
+                } else {
+                    des_icon = 'clear-night';
+                }
+
+                if (index == 0) {
+                    item[0] = '<div id="carouselControls" class="carousel slide" data-ride="carousel">';
+                    item[0] += '<div class="carousel-inner">';
+                    //carousel-item #1
+                    item[0] += '<div class="carousel-item active">';
+                    item[0] += '<div class="container d-flex h-20 align-items-center">';
+                    item[0] += '<div class=" mx-auto text-center">';
+                    item[0] += '<h2 class="text-white mx-auto" style="margin-top:20%;">';
+                    item[0] += city;
+                    item[0] += '</h2>';
+                    item[0] += '<h3 class="text-white mx-auto mt-2 mb-5">';
+                    item[0] += description;
+                    item[0] += '</h3>';
+                    item[0] += '<h1 class="text-white mx-auto mt-5 mb-5">';
+                    item[0] += '<canvas class="';
+                    item[0] += des_icon;
+                    item[0] += '" width="120" height="120"></canvas>';
+                    item[0] += temp_celsius.toFixed(0);
+                    item[0] += '&deg;</h1>';
+                    item[0] += '<h3 class="text-white mx-auto mt-2 mb-5">Saturday '
+                    item[0] += hour;
+                    item[0] += ':00</h3>';
+                    item[0] += '</div>';
+                    item[0] += '</div>';
+                    item[0] += '</div>';
+                } else {
+                    item[index] = '<div class="carousel-item">';
+                    item[index] += '<div class="container d-flex h-20 align-items-center">';
+                    item[index] += '<div class=" mx-auto text-center">';
+                    item[index] += '<h2 class="text-white mx-auto" style="margin-top:20%;">';
+                    item[index] += city;
+                    item[index] += '</h2>';
+                    item[index] += '<h3 class="text-white mx-auto mt-2 mb-5">';
+                    item[index] += description
+                    item[index] += '</h3>';
+                    item[index] += '<h1 class="text-white mx-auto mt-5 mb-5">';
+                    item[index] += '<canvas class="';
+                    item[index] += des_icon;
+                    item[index] += '" width="120" height="120"></canvas>';
+                    item[index] += temp_celsius.toFixed(0);
+                    item[index] += '&deg;</h1>';
+                    item[index] += '<h3 class="text-white mx-auto mt-2 mb-5">Saturday '
+                    item[index] += hour;
+                    item[index] += ':00</h3>';
+                    item[index] += '</div>';
+                    item[index] += '</div>';
+                    item[index] += '</div>';
+                }
+                hour_add += 3;
             }
 
-            if (description == 'Clear' && hour >= 6 && hour <= 18) {
-                des_icon = 'clear-day';
-            } else {
-                des_icon = 'clear-night';
+            var list = '';
+            for (let index = 0; index < item.length; index++) {
+                list += item[index];
             }
 
-            if (index == 0) {
-                item[0] = '<div id="carouselControls" class="carousel slide" data-ride="carousel">';
-                item[0] += '<div class="carousel-inner">';
-                //carousel-item #1
-                item[0] += '<div class="carousel-item active">';
-                item[0] += '<div class="container d-flex h-20 align-items-center">';
-                item[0] += '<div class=" mx-auto text-center">';
-                item[0] += '<h2 class="text-white mx-auto" style="margin-top:20%;">';
-                item[0] += city;
-                item[0] += '</h2>';
-                item[0] += '<h3 class="text-white mx-auto mt-2 mb-5">';
-                item[0] += description;
-                item[0] += '</h3>';
-                item[0] += '<h1 class="text-white mx-auto mt-5 mb-5">';
-                item[0] += '<canvas class="';
-                item[0] += des_icon;
-                item[0] += '" width="120" height="120"></canvas>';
-                item[0] += temp_celsius.toFixed(0);
-                item[0] += '&deg;</h1>';
-                item[0] += '<h3 class="text-white mx-auto mt-2 mb-5">Saturday '
-                item[0] += hour;
-                item[0] += ':00</h3>';
-                item[0] += '</div>';
-                item[0] += '</div>';
-                item[0] += '</div>';
-            } else {
-                item[index] = '<div class="carousel-item">';
-                item[index] += '<div class="container d-flex h-20 align-items-center">';
-                item[index] += '<div class=" mx-auto text-center">';
-                item[index] += '<h2 class="text-white mx-auto" style="margin-top:20%;">';
-                item[index] += city;
-                item[index] += '</h2>';
-                item[index] += '<h3 class="text-white mx-auto mt-2 mb-5">';
-                item[index] += description
-                item[index] += '</h3>';
-                item[index] += '<h1 class="text-white mx-auto mt-5 mb-5">';
-                item[index] += '<canvas class="';
-                item[index] += des_icon;
-                item[index] += '" width="120" height="120"></canvas>';
-                item[index] += temp_celsius.toFixed(0);
-                item[index] += '&deg;</h1>';
-                item[index] += '<h3 class="text-white mx-auto mt-2 mb-5">Saturday '
-                item[index] += hour;
-                item[index] += ':00</h3>';
-                item[index] += '</div>';
-                item[index] += '</div>';
-                item[index] += '</div>';
-            }
-            hour_add +=3;
-        }
+            var html = '';
+            html += head;
+            html += '<body id="page-top">';
+            html += nav;
+            html += '<header class="masthead">';
+            html += list;
+            html += '</div>';
+            html += '<a class="left carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">';
+            html += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
+            html += '<span class="sr-only">Previous</span>';
+            html += '</a>';
+            html += '<a class="right carousel-control-next" href="#carouselControls" role="button" data-slide="next">';
+            html += '<span class="carousel-control-next-icon" aria-hidden="true"></span>'
+            html += '<span class="sr-only">Next</span>'
+            html += '</a>'
+            html += '</div>';
 
-        var list = '';
-        for (let index = 0; index < item.length; index++) {
-            list += item[index];
-        }
+            html += '<div class="container">';
+            html += '<div class="table-responsive-sm">';
+            html += '<table class="table table-borderless text-white">';
+            html += '<thead>';
+            html += '<tr>';
+            html += '<th scope="col">Wind</th>';
+            html += '<th scope="col">Humidity</th>';
+            html += '<th scope="col">Pressure</th>';
+            html += '</tr>';
+            html += '</thead>';
+            html += '<tbody>';
+            html += '<tr>';
+            html += '<td>' + compass.getDirection(wind_deg) + ' ';
+            html += wind_speed;
+            html += 'km/hr</td>';
+            html += '<td>';
+            html += humidity;
+            html += '%</td>';
+            html += '<td>';
+            html += pressure;
+            html += ' hPa</td>';
+            html += '</tr></tbody></table></div></div>';
+            html += '<div class="container">';
+            html += '<div class="table-responsive-sm">';
+            html += '<table class="table table-borderless text-white">';
+            html += '<tbody>';
+            html += '<tr>';
+            html += '<td class="text-white" style="width:2%">Sunday</td>'
+            html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
+            html += '<td class="text-white" style="width:2%">34</td>'
+            html += '<td class="text-white-50" style="width:2%">27</td>'
+            html += '</tr>'
+            html += '<td class="text-white" style="width:2%">Monday</td>'
+            html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
+            html += '<td class="text-white" style="width:2%">34</td>'
+            html += '<td class="text-white-50" style="width:2%">27</td>'
+            html += '</tr>'
+            html += '<td class="text-white" style="width:2%">Tuesday</td>'
+            html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
+            html += '<td class="text-white" style="width:2%">33</td>'
+            html += '<td class="text-white-50" style="width:2%">28</td>'
+            html += '</tr>'
+            html += '<td class="text-white" style="width:2%">Wednesday</td>'
+            html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
+            html += '<td class="text-white" style="width:2%">34</td>'
+            html += '<td class="text-white-50" style="width:2%">28</td>'
+            html += '</tr>'
+            html += '<td class="text-white" style="width:2%">Thursday</td>'
+            html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
+            html += '<td class="text-white" style="width:2%">37</td>'
+            html += '<td class="text-white-50" style="width:2%">27</td>'
+            html += '</tr>'
+            html += '</tbody></table></div></div>';
+            html += '</header>';
+            html += footer;
+            html += script;
+            html += '</body>';
 
-        var html = '';
-        html += head;
-        html += '<body id="page-top">';
-        html += nav;
-        html += '<header class="masthead">';
-        html += list;
-        html += '</div>';
-        html += '<a class="left carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">';
-        html += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
-        html += '<span class="sr-only">Previous</span>';
-        html += '</a>';
-        html += '<a class="right carousel-control-next" href="#carouselControls" role="button" data-slide="next">';
-        html += '<span class="carousel-control-next-icon" aria-hidden="true"></span>'
-        html += '<span class="sr-only">Next</span>'
-        html += '</a>'
-        html += '</div>';
-
-        html += '<div class="container">';
-        html += '<div class="table-responsive-sm">';
-        html += '<table class="table table-borderless text-white">';
-        html += '<thead>';
-        html += '<tr>';
-        html += '<th scope="col">Wind</th>';
-        html += '<th scope="col">Humidity</th>';
-        html += '<th scope="col">Pressure</th>';
-        html += '</tr>';
-        html += '</thead>';
-        html += '<tbody>';
-        html += '<tr>';
-        html += '<td>' + compass.getDirection(wind_deg) + ' ';
-        html += wind_speed;
-        html += 'km/hr</td>';
-        html += '<td>';
-        html += humidity;
-        html += '%</td>';
-        html += '<td>';
-        html += pressure;
-        html += ' hPa</td>';
-        html += '</tr></tbody></table></div></div>';
-        html += '<div class="container">';
-        html += '<div class="table-responsive-sm">';
-        html += '<table class="table table-borderless text-white">';
-        html += '<tbody>';
-        html += '<tr>';
-        html += '<td class="text-white" style="width:2%">Sunday</td>'
-        html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-        html += '<td class="text-white" style="width:2%">34</td>'
-        html += '<td class="text-white-50" style="width:2%">27</td>'
-        html += '</tr>'
-        html += '<td class="text-white" style="width:2%">Monday</td>'
-        html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-        html += '<td class="text-white" style="width:2%">34</td>'
-        html += '<td class="text-white-50" style="width:2%">27</td>'
-        html += '</tr>'
-        html += '<td class="text-white" style="width:2%">Tuesday</td>'
-        html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-        html += '<td class="text-white" style="width:2%">33</td>'
-        html += '<td class="text-white-50" style="width:2%">28</td>'
-        html += '</tr>'
-        html += '<td class="text-white" style="width:2%">Wednesday</td>'
-        html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-        html += '<td class="text-white" style="width:2%">34</td>'
-        html += '<td class="text-white-50" style="width:2%">28</td>'
-        html += '</tr>'
-        html += '<td class="text-white" style="width:2%">Thursday</td>'
-        html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-        html += '<td class="text-white" style="width:2%">37</td>'
-        html += '<td class="text-white-50" style="width:2%">27</td>'
-        html += '</tr>'
-        html += '</tbody></table></div></div>';
-        html += '</header>';
-        html += footer;
-        html += script;
-        html += '</body>';
-
-        res.send(html)
+            res.send(html)
+        });
     });
 });
 

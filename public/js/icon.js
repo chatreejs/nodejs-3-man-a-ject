@@ -1,6 +1,7 @@
 var icons = new Skycons({
-        "color": "white"
-    }),
+    "stroke": 0.01,
+    "color": "white"
+}),
     list = [
         "clear-day", "clear-night", "partly-cloudy-day",
         "partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
