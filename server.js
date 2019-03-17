@@ -97,7 +97,7 @@ app.get('/', (req, res) => {
                     item[0] += '<div class="carousel-item active">';
                     item[0] += '<div class="container d-flex h-20 align-items-center">';
                     item[0] += '<div class=" mx-auto text-center">';
-                    item[0] += '<h2 class="text-white mx-auto" style="margin-top:20%;">';
+                    item[0] += '<h2 class="text-white mx-auto" style="margin-top:10rem;">';
                     item[0] += city;
                     item[0] += '</h2>';
                     item[0] += '<h3 class="text-white mx-auto mt-2 mb-5">';
@@ -119,7 +119,7 @@ app.get('/', (req, res) => {
                     item[index] = '<div class="carousel-item">';
                     item[index] += '<div class="container d-flex h-20 align-items-center">';
                     item[index] += '<div class=" mx-auto text-center">';
-                    item[index] += '<h2 class="text-white mx-auto" style="margin-top:20%;">';
+                    item[index] += '<h2 class="text-white mx-auto" style="margin-top:10rem;">';
                     item[index] += city;
                     item[index] += '</h2>';
                     item[index] += '<h3 class="text-white mx-auto mt-2 mb-5">';
