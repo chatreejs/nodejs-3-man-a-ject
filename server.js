@@ -76,18 +76,21 @@ app.get('/', (req, res) => {
         var wind_speed = obj.wind.speed;
         var wind_deg = obj.wind.deg;
 
-        if (description == 'Clear') {
-            des_icon = 'clear-day';
-        }
-
-        for (let index = 0; index < 24; index+=3) {
-            var hour = current_hour + index;
+        hour_add = 0;
+        for (let index = 0; index < 8; index++) {
+            var hour = current_hour + hour_add;
             if (hour >= 24) {
                 hour -= 24;
             }
 
+            if (description == 'Clear' && hour >= 6 && hour <= 18) {
+                des_icon = 'clear-day';
+            } else {
+                des_icon = 'clear-night';
+            }
+
             if (index == 0) {
-                item[0] = '<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">';
+                item[0] = '<div id="carouselControls" class="carousel slide" data-ride="carousel">';
                 item[0] += '<div class="carousel-inner">';
                 //carousel-item #1
                 item[0] += '<div class="carousel-item active">';
@@ -134,6 +137,7 @@ app.get('/', (req, res) => {
                 item[index] += '</div>';
                 item[index] += '</div>';
             }
+            hour_add +=3;
         }
 
         var list = '';
@@ -148,11 +152,11 @@ app.get('/', (req, res) => {
         html += '<header class="masthead">';
         html += list;
         html += '</div>';
-        html += '<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">';
+        html += '<a class="left carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">';
         html += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
         html += '<span class="sr-only">Previous</span>';
         html += '</a>';
-        html += '<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">';
+        html += '<a class="right carousel-control-next" href="#carouselControls" role="button" data-slide="next">';
         html += '<span class="carousel-control-next-icon" aria-hidden="true"></span>'
         html += '<span class="sr-only">Next</span>'
         html += '</a>'
