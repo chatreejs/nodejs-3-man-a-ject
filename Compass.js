@@ -1,8 +1,4 @@
 class Compass {
-    constuctor() {
-
-    }
-
     getDirection(degree) {
         if (degree == 0 || degree == 360) {
             return 'N';
