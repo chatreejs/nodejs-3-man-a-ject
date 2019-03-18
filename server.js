@@ -64,23 +64,20 @@ var server = app.listen(3000, function () {
 });
 
 app.get('/', (req, res) => {
-    var current_hour = date.getHours();
-    var currentDayOfWeek = date.getDay();
-    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    var dayNameOfWeek = days[currentDayOfWeek];
-
     //Call IPGeolocation API
-    request('https://api.ipgeolocation.io/ipgeo?apiKey=7cc0eab4bbb44d95928fccea5b517f01', function (error, response, body) {
-        var obj = JSON.parse(body);
-        city = obj.city;
-
-        res.redirect('/province?city=' + city);
+    request('https://api.ipgeolocation.io/ipgeo?apiKey=7cc0eab4bbb44d95928fccea5b517f01', (error, response, body) => {
+        if (response.statusCode == 200) {
+            var obj = JSON.parse(body);
+            city = obj.city;
+            //Redirect and get weather at current location
+            res.redirect('/weather?q=' + city);
+        }
     });
 });
 
-app.get('/province', (req, res) => {
+app.get('/weather', (req, res) => {
     id = req.query.id;
-    city = req.query.city;
+    city = req.query.q;
     if (!id && !city) {
         res.sendFile('public/html/404.html', { root: __dirname })
     } else {
@@ -94,8 +91,9 @@ app.get('/province', (req, res) => {
         } else {
             query = 'q=' + city;
         }
+
         //Call Weather API
-        request('http://api.openweathermap.org/data/2.5/weather?' + query + '&APPID=' + ApiKey, function (error, response, body) {
+        request('http://api.openweathermap.org/data/2.5/weather?' + query + '&APPID=' + ApiKey, (error, response, body) => {
             var obj = JSON.parse(body);
             try {
                 var item = []
@@ -107,7 +105,7 @@ app.get('/province', (req, res) => {
                 var pressure = obj.main.pressure;
                 var wind_speed = obj.wind.speed;
                 var wind_deg = obj.wind.deg;
-                request('http://api.openweathermap.org/data/2.5/forecast?' + query + '&APPID=' + ApiKey, function (error, response, body) {
+                request('http://api.openweathermap.org/data/2.5/forecast?' + query + '&APPID=' + ApiKey, (error, response, body) => {
                     var obj = JSON.parse(body);
                     var forecast_idx;
 
@@ -118,7 +116,7 @@ app.get('/province', (req, res) => {
                             forecast_idx = i;
                             break;
                         } else if (dt.getHours() == current_hour && dt.getDay() == currentDayOfWeek) {
-                            forecast_idx = i+1;
+                            forecast_idx = i + 1;
                             break;
                         }
                     }
