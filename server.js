@@ -5,11 +5,13 @@ var app = express();
 
 const ApiKey = 'd5898bac8ec6c53e5587936972a98a56';
 
-var Compass = require('./Compass.js');
+var Compass = require('./Compass');
 var compass = new Compass();
 
+var DescriptionIcon = require('./DescriptionIcon')
+var des_icon = new DescriptionIcon();
+
 var date = new Date();
-var current_hour = date.getHours();
 
 app.use(express.static(__dirname + '/public'));
 
@@ -34,7 +36,7 @@ nav += '</button>';
 nav += '<div class="collapse navbar-collapse" id="navbarResponsive">';
 nav += '<ul class="navbar-nav ml-auto">';
 nav += '<li class="nav-item">';
-nav += '<a class="nav-link js-scroll-trigger" href="#">Home</a>';
+nav += '<a class="nav-link js-scroll-trigger" href="/">Home</a>';
 nav += '</li>';
 nav += '<li class="nav-item">';
 nav += '<a class="nav-link js-scroll-trigger" href="#">Province</a>';
@@ -61,10 +63,17 @@ var server = app.listen(3000, function () {
 });
 
 app.get('/', (req, res) => {
+    var current_hour = date.getHours();
+    var currentDayOfWeek = date.getDay();
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var dayNameOfWeek = days[currentDayOfWeek];
+
+    //Call IPGeolocation API
     request('https://api.ipgeolocation.io/ipgeo?apiKey=7cc0eab4bbb44d95928fccea5b517f01', function (error, response, body) {
         var obj = JSON.parse(body);
         city = obj.city;
 
+        //Call Weather API
         request('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&APPID=' + ApiKey, function (error, response, body) {
             var obj = JSON.parse(body);
             var item = []
@@ -76,152 +85,163 @@ app.get('/', (req, res) => {
             var pressure = obj.main.pressure;
             var wind_speed = obj.wind.speed;
             var wind_deg = obj.wind.deg;
+            request('http://api.openweathermap.org/data/2.5/forecast?q=' + city + '&APPID=' + ApiKey, function (error, response, body) {
+                var obj = JSON.parse(body);
 
-            hour_add = 0;
-            for (let index = 0; index < 8; index++) {
-                var hour = current_hour + hour_add;
-                if (hour >= 24) {
-                    hour -= 24;
+                // var forecast_humidity = obj.main.humidity;
+                // var forecast_pressure = obj.main.pressure;
+                // var forecast_wind_speed = obj.wind.speed;
+                // var forecast_wind_deg = obj.wind.deg;
+                var forecast_idx;
+
+                for (let i = 0; i < obj.list.length; i++) {
+                    var dt_txt = obj.list[i].dt_txt;
+                    var dt = new Date(dt_txt);
+                    if (dt.getHours() >= current_hour) {
+                        forecast_idx = i - 1;
+                        break;
+                    }
                 }
 
-                if (description == 'Clear' && hour >= 6 && hour <= 18) {
-                    des_icon = 'clear-day';
-                } else {
-                    des_icon = 'clear-night';
+                for (let index = 0; index < 10; index++) {
+                    var forecast_dt = new Date(obj.list[forecast_idx].dt_txt);
+                    var forecast_description = obj.list[forecast_idx].weather[0].description;
+
+                    if (index == 0) {
+                        item[0] = '<div id="carouselControls" class="carousel slide" data-ride="carousel">';
+                        item[0] += '<div class="carousel-inner">';
+                        //carousel-item #1
+                        item[0] += '<div class="carousel-item active">';
+                        item[0] += '<div class="container d-flex h-20 align-items-center">';
+                        item[0] += '<div class=" mx-auto text-center">';
+                        item[0] += '<h2 class="text-white mx-auto" style="margin-top:10rem;">';
+                        item[0] += city;
+                        item[0] += '</h2>';
+                        item[0] += '<h3 class="text-white mx-auto mt-2 mb-5">';
+                        item[0] += description;
+                        item[0] += '</h3>';
+                        item[0] += '<h1 class="text-white mx-auto mt-5 mb-5">';
+                        item[0] += '<canvas class="';
+                        item[0] += des_icon.getIcon(description, current_hour);
+                        item[0] += '" width="120" height="120"></canvas>';
+                        item[0] += temp_celsius.toFixed(0);
+                        item[0] += '&deg;</h1>';
+                        item[0] += '<h3 class="text-white mx-auto mt-2 mb-5">' + dayNameOfWeek + ' '
+                        item[0] += current_hour;
+                        item[0] += ':00</h3>';
+                        item[0] += '</div>';
+                        item[0] += '</div>';
+                        item[0] += '</div>';
+                    } else {
+                        var forecast_temp_kelvin = obj.list[forecast_idx].main.temp;
+                        var forecast_temp_celsius = forecast_temp_kelvin - 273.15;
+                        item[index] = '<div class="carousel-item">';
+                        item[index] += '<div class="container d-flex h-20 align-items-center">';
+                        item[index] += '<div class=" mx-auto text-center">';
+                        item[index] += '<h2 class="text-white mx-auto" style="margin-top:10rem;">';
+                        item[index] += city;
+                        item[index] += '</h2>';
+                        item[index] += '<h3 class="text-white mx-auto mt-2 mb-5">';
+                        item[index] += forecast_description
+                        item[index] += '</h3>';
+                        item[index] += '<h1 class="text-white mx-auto mt-5 mb-5">';
+                        item[index] += '<canvas class="';
+                        item[index] += des_icon.getIcon(forecast_description, forecast_dt.getHours());
+                        item[index] += '" width="120" height="120"></canvas>';
+                        item[index] += forecast_temp_celsius.toFixed(0);
+                        item[index] += '&deg;</h1>';
+                        item[index] += '<h3 class="text-white mx-auto mt-2 mb-5">' + days[forecast_dt.getDay()] + ' '
+                        item[index] += forecast_dt.getHours();
+                        item[index] += ':00</h3>';
+                        item[index] += '</div>';
+                        item[index] += '</div>';
+                        item[index] += '</div>';
+                    }
+                    forecast_idx++;
                 }
 
-                if (index == 0) {
-                    item[0] = '<div id="carouselControls" class="carousel slide" data-ride="carousel">';
-                    item[0] += '<div class="carousel-inner">';
-                    //carousel-item #1
-                    item[0] += '<div class="carousel-item active">';
-                    item[0] += '<div class="container d-flex h-20 align-items-center">';
-                    item[0] += '<div class=" mx-auto text-center">';
-                    item[0] += '<h2 class="text-white mx-auto" style="margin-top:10rem;">';
-                    item[0] += city;
-                    item[0] += '</h2>';
-                    item[0] += '<h3 class="text-white mx-auto mt-2 mb-5">';
-                    item[0] += description;
-                    item[0] += '</h3>';
-                    item[0] += '<h1 class="text-white mx-auto mt-5 mb-5">';
-                    item[0] += '<canvas class="';
-                    item[0] += des_icon;
-                    item[0] += '" width="120" height="120"></canvas>';
-                    item[0] += temp_celsius.toFixed(0);
-                    item[0] += '&deg;</h1>';
-                    item[0] += '<h3 class="text-white mx-auto mt-2 mb-5">Saturday '
-                    item[0] += hour;
-                    item[0] += ':00</h3>';
-                    item[0] += '</div>';
-                    item[0] += '</div>';
-                    item[0] += '</div>';
-                } else {
-                    item[index] = '<div class="carousel-item">';
-                    item[index] += '<div class="container d-flex h-20 align-items-center">';
-                    item[index] += '<div class=" mx-auto text-center">';
-                    item[index] += '<h2 class="text-white mx-auto" style="margin-top:10rem;">';
-                    item[index] += city;
-                    item[index] += '</h2>';
-                    item[index] += '<h3 class="text-white mx-auto mt-2 mb-5">';
-                    item[index] += description
-                    item[index] += '</h3>';
-                    item[index] += '<h1 class="text-white mx-auto mt-5 mb-5">';
-                    item[index] += '<canvas class="';
-                    item[index] += des_icon;
-                    item[index] += '" width="120" height="120"></canvas>';
-                    item[index] += temp_celsius.toFixed(0);
-                    item[index] += '&deg;</h1>';
-                    item[index] += '<h3 class="text-white mx-auto mt-2 mb-5">Saturday '
-                    item[index] += hour;
-                    item[index] += ':00</h3>';
-                    item[index] += '</div>';
-                    item[index] += '</div>';
-                    item[index] += '</div>';
+                var list = '';
+                for (let index = 0; index < item.length; index++) {
+                    list += item[index];
                 }
-                hour_add += 3;
-            }
 
-            var list = '';
-            for (let index = 0; index < item.length; index++) {
-                list += item[index];
-            }
+                var html = '';
+                html += head;
+                html += '<body id="page-top">';
+                html += nav;
+                html += '<header class="masthead">';
+                html += list;
+                html += '</div>';
+                html += '<a class="left carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">';
+                html += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
+                html += '<span class="sr-only">Previous</span>';
+                html += '</a>';
+                html += '<a class="right carousel-control-next" href="#carouselControls" role="button" data-slide="next">';
+                html += '<span class="carousel-control-next-icon" aria-hidden="true"></span>'
+                html += '<span class="sr-only">Next</span>'
+                html += '</a>'
+                html += '</div>';
 
-            var html = '';
-            html += head;
-            html += '<body id="page-top">';
-            html += nav;
-            html += '<header class="masthead">';
-            html += list;
-            html += '</div>';
-            html += '<a class="left carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">';
-            html += '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
-            html += '<span class="sr-only">Previous</span>';
-            html += '</a>';
-            html += '<a class="right carousel-control-next" href="#carouselControls" role="button" data-slide="next">';
-            html += '<span class="carousel-control-next-icon" aria-hidden="true"></span>'
-            html += '<span class="sr-only">Next</span>'
-            html += '</a>'
-            html += '</div>';
+                html += '<div class="container">';
+                html += '<div class="table-responsive-sm">';
+                html += '<table class="table table-borderless text-white">';
+                html += '<thead>';
+                html += '<tr>';
+                html += '<th scope="col">Wind</th>';
+                html += '<th scope="col">Humidity</th>';
+                html += '<th scope="col">Pressure</th>';
+                html += '</tr>';
+                html += '</thead>';
+                html += '<tbody>';
+                html += '<tr>';
+                html += '<td>' + compass.getDirection(wind_deg) + ' ';
+                html += wind_speed;
+                html += 'km/hr</td>';
+                html += '<td>';
+                html += humidity;
+                html += '%</td>';
+                html += '<td>';
+                html += pressure;
+                html += ' hPa</td>';
+                html += '</tr></tbody></table></div></div>';
+                html += '<div class="container">';
+                html += '<div class="table-responsive-sm">';
+                html += '<table class="table table-borderless text-white">';
+                html += '<tbody>';
+                html += '<tr>';
+                html += '<td class="text-white" style="width:2%">Sunday</td>'
+                html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
+                html += '<td class="text-white" style="width:2%">34</td>'
+                html += '<td class="text-white-50" style="width:2%">27</td>'
+                html += '</tr>'
+                html += '<td class="text-white" style="width:2%">Monday</td>'
+                html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
+                html += '<td class="text-white" style="width:2%">34</td>'
+                html += '<td class="text-white-50" style="width:2%">27</td>'
+                html += '</tr>'
+                html += '<td class="text-white" style="width:2%">Tuesday</td>'
+                html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
+                html += '<td class="text-white" style="width:2%">33</td>'
+                html += '<td class="text-white-50" style="width:2%">28</td>'
+                html += '</tr>'
+                html += '<td class="text-white" style="width:2%">Wednesday</td>'
+                html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
+                html += '<td class="text-white" style="width:2%">34</td>'
+                html += '<td class="text-white-50" style="width:2%">28</td>'
+                html += '</tr>'
+                html += '<td class="text-white" style="width:2%">Thursday</td>'
+                html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
+                html += '<td class="text-white" style="width:2%">37</td>'
+                html += '<td class="text-white-50" style="width:2%">27</td>'
+                html += '</tr>'
+                html += '</tbody></table></div></div>';
+                html += '</header>';
+                html += footer;
+                html += script;
+                html += '</body>';
 
-            html += '<div class="container">';
-            html += '<div class="table-responsive-sm">';
-            html += '<table class="table table-borderless text-white">';
-            html += '<thead>';
-            html += '<tr>';
-            html += '<th scope="col">Wind</th>';
-            html += '<th scope="col">Humidity</th>';
-            html += '<th scope="col">Pressure</th>';
-            html += '</tr>';
-            html += '</thead>';
-            html += '<tbody>';
-            html += '<tr>';
-            html += '<td>' + compass.getDirection(wind_deg) + ' ';
-            html += wind_speed;
-            html += 'km/hr</td>';
-            html += '<td>';
-            html += humidity;
-            html += '%</td>';
-            html += '<td>';
-            html += pressure;
-            html += ' hPa</td>';
-            html += '</tr></tbody></table></div></div>';
-            html += '<div class="container">';
-            html += '<div class="table-responsive-sm">';
-            html += '<table class="table table-borderless text-white">';
-            html += '<tbody>';
-            html += '<tr>';
-            html += '<td class="text-white" style="width:2%">Sunday</td>'
-            html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-            html += '<td class="text-white" style="width:2%">34</td>'
-            html += '<td class="text-white-50" style="width:2%">27</td>'
-            html += '</tr>'
-            html += '<td class="text-white" style="width:2%">Monday</td>'
-            html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-            html += '<td class="text-white" style="width:2%">34</td>'
-            html += '<td class="text-white-50" style="width:2%">27</td>'
-            html += '</tr>'
-            html += '<td class="text-white" style="width:2%">Tuesday</td>'
-            html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-            html += '<td class="text-white" style="width:2%">33</td>'
-            html += '<td class="text-white-50" style="width:2%">28</td>'
-            html += '</tr>'
-            html += '<td class="text-white" style="width:2%">Wednesday</td>'
-            html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-            html += '<td class="text-white" style="width:2%">34</td>'
-            html += '<td class="text-white-50" style="width:2%">28</td>'
-            html += '</tr>'
-            html += '<td class="text-white" style="width:2%">Thursday</td>'
-            html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-            html += '<td class="text-white" style="width:2%">37</td>'
-            html += '<td class="text-white-50" style="width:2%">27</td>'
-            html += '</tr>'
-            html += '</tbody></table></div></div>';
-            html += '</header>';
-            html += footer;
-            html += script;
-            html += '</body>';
-
-            res.send(html)
+                res.send(html)
+            });
         });
     });
 });
