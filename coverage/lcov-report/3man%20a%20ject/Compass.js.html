@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for 3man%20a%20ject\Compass.js</title>
+    <title>Code coverage report for 3man%20a%20ject/Compass.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">40.63% </span>
+        <span class="strong">56.25% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>13/32</span>
+        <span class='fraction'>18/32</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">45.65% </span>
+        <span class="strong">65.22% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>21/46</span>
+        <span class='fraction'>30/46</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/2</span>
+        <span class='fraction'>1/1</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">40.63% </span>
+        <span class="strong">56.25% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>13/32</span>
+        <span class='fraction'>18/32</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -81,16 +81,16 @@
 36
 37
 38
-39
-40
-41
-42
-43</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+39</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">2×</span>
@@ -113,14 +113,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -128,10 +120,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span></td><td class="text"><pre class="prettyprint lang-js">class Compass {
-    constuctor<span class="fstat-no" title="function not covered" >() {</span>
-&nbsp;
-    }
-&nbsp;
     getDirection(degree) {
         if (degree == 0 || degree == 360) {
             return 'N';
@@ -149,16 +137,16 @@
 <span class="cstat-no" title="statement not covered" >            return 'SE';</span>
         } else <span class="missing-if-branch" title="if path not taken" >I</span>if (degree &gt; 135 &amp;&amp; degree &lt; 180) {
 <span class="cstat-no" title="statement not covered" >            return 'SSE'</span>
-        } else <span class="missing-if-branch" title="else path not taken" >E</span>if (degree == 180) {
+        } else if (degree == 180) {
             return 'S';
-        } else <span class="cstat-no" title="statement not covered" >if (degree &gt; 180 &amp;&amp; degree &lt; 225) {</span>
+        } else <span class="missing-if-branch" title="if path not taken" >I</span>if (degree &gt; 180 &amp;&amp; degree &lt; 225) {
 <span class="cstat-no" title="statement not covered" >            return 'SSW';</span>
-        } else <span class="cstat-no" title="statement not covered" >if (degree == 225) {</span>
+        } else <span class="missing-if-branch" title="if path not taken" >I</span>if (degree == 225) {
 <span class="cstat-no" title="statement not covered" >            return 'SW';</span>
-        } else <span class="cstat-no" title="statement not covered" >if (degree &gt; 225 &amp;&amp; degree &lt; 270) {</span>
+        } else <span class="missing-if-branch" title="if path not taken" >I</span>if (degree &gt; 225 &amp;&amp; degree &lt; 270) {
 <span class="cstat-no" title="statement not covered" >            return 'WSW';</span>
-        } else <span class="cstat-no" title="statement not covered" >if (degree == 270) {</span>
-<span class="cstat-no" title="statement not covered" >            return 'W';</span>
+        } else <span class="missing-if-branch" title="else path not taken" >E</span>if (degree == 270) {
+            return 'W';
         } else <span class="cstat-no" title="statement not covered" >if (degree &gt; 270 &amp;&amp; degree &lt; 315) {</span>
 <span class="cstat-no" title="statement not covered" >            return 'WNW';</span>
         } else <span class="cstat-no" title="statement not covered" >if (degree == 315) {</span>
@@ -175,7 +163,7 @@ module.exports = Compass;</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Mar 17 2019 03:49:14 GMT+0700 (Indochina Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Mar 18 2019 19:04:04 GMT+0700 (Indochina Time)
 </div>
 </div>
 <script src="../prettify.js"></script>
