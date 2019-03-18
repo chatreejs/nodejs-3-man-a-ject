@@ -97,8 +97,11 @@ app.get('/', (req, res) => {
                 for (let i = 0; i < obj.list.length; i++) {
                     var dt_txt = obj.list[i].dt_txt;
                     var dt = new Date(dt_txt);
-                    if (dt.getHours() >= current_hour) {
+                    if (dt.getHours() > current_hour) {
                         forecast_idx = i - 1;
+                        break;
+                    } else if (dt.getHours() == current_hour) {
+                        forecast_idx = i;
                         break;
                     }
                 }
