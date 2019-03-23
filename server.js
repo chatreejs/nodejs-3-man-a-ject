@@ -83,6 +83,9 @@ app.get('/weather', (req, res) => {
     } else {
         var current_hour = date.getHours();
         var currentDayOfWeek = date.getDay();
+        //Dummy date
+        // var current_hour = 23;
+        // var currentDayOfWeek = 6;
         var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         var dayNameOfWeek = days[currentDayOfWeek];
 
@@ -112,14 +115,25 @@ app.get('/weather', (req, res) => {
                     for (let i = 0; i < obj.list.length; i++) {
                         var dt_txt = obj.list[i].dt_txt;
                         var dt = new Date(dt_txt);
-                        if (dt.getHours() > current_hour && dt.getDay() >= currentDayOfWeek) {
+                        if (dt.getHours() > current_hour && dt.getDay() > currentDayOfWeek && currentDayOfWeek != 0) {
                             forecast_idx = i;
                             break;
                         } else if (dt.getHours() == current_hour && dt.getDay() == currentDayOfWeek) {
+                            //When call api at 09:00, 12:00, 15:00, 18:00
                             forecast_idx = i + 1;
+                            break;
+                        } else if (dt.getDay() == 0 && currentDayOfWeek == 0) {
+                            //When call api at 00:00
+                            forecast_idx = i;
+                            break;
+                        } else if (dt.getHours() == 0 && dt.getDay() == 0 && currentDayOfWeek == 6 && current_hour >= 21) {
+                            //9PM Saturday issues
+                            //When call api at 21:00 to 23:59
+                            forecast_idx = i;
                             break;
                         }
                     }
+
                     for (let index = 0; index < 9; index++) {
                         var forecast_dt = new Date(obj.list[forecast_idx].dt_txt);
                         var forecast_description = obj.list[forecast_idx].weather[0].description;
