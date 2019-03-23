@@ -1,10 +1,14 @@
 {
-  "name": "3man%20a%20ject",
+  "name": "3man",
   "version": "1.0.0",
   "description": "",
-  "main": "gulpfile.js",
+  "main": "Compass.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
-    "test": "nyc  --reporter=html --reporter=text --reporter=lcov mocha"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -12,17 +16,17 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "grunt": "^1.0.3",
-    "grunt-mocha-istanbul": "^5.0.2",
-    "istanbul": "^0.4.5",
-    "mocha": "^6.0.2",
-    "mocha-istanbul": "^0.3.0"
-  },
   "dependencies": {
     "change-case": "^3.1.0",
     "express": "^4.16.4",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "grunt": "^1.0.4",
+    "grunt-mocha-istanbul": "^5.0.2",
+    "istanbul": "^0.4.5",
+    "mocha": "^6.0.2",
+    "mocha-istanbul": "^0.3.0"
   }
 }
