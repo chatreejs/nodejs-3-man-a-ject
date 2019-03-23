@@ -114,7 +114,7 @@ app.get('/province', (req, res) => {
                     for (let i = 0; i < obj.list.length; i++) {
                         var dt_txt = obj.list[i].dt_txt;
                         var dt = new Date(dt_txt);
-                        if (dt.getHours() > current_hour && dt.getDay() > currentDayOfWeek) {
+                        if (dt.getHours() > current_hour && dt.getDay() >= currentDayOfWeek) {
                             forecast_idx = i;
                             break;
                         } else if (dt.getHours() == current_hour && dt.getDay() == currentDayOfWeek) {
@@ -122,7 +122,6 @@ app.get('/province', (req, res) => {
                             break;
                         }
                     }
-
                     for (let index = 0; index < 9; index++) {
                         var forecast_dt = new Date(obj.list[forecast_idx].dt_txt);
                         var forecast_description = obj.list[forecast_idx].weather[0].description;
@@ -289,7 +288,8 @@ app.get('/province', (req, res) => {
                     res.send(html)
                 });
             } catch (error) {
-                res.sendFile('public/html/404.html', { root: __dirname })
+                console.log(error);
+                res.sendFile('public/html/404.html', { root: __dirname });
             }
         });
     }
