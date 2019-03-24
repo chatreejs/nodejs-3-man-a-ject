@@ -1,14 +1,221 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Climate Change | Province</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-    <script src="main.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {
+  font-family: "Lato", sans-serif;
+  transition: background-color .5s;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
 </head>
 <body>
-    <h1>Test</h1>
+    
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()">
+        ภาคเหนือ <i class="fa fa-caret-down"></i>
+        </button>
+        <div id="demoAcc" class="w3-hide w3-white w3-card">
+        <a href="#" class="w3-bar-item w3-button">เชียงราย</a>
+        <a href="#" class="w3-bar-item w3-button">เชียงใหม่</a>
+        <a href="#" class="w3-bar-item w3-button">น่าน</a>
+        <a href="#" class="w3-bar-item w3-button">พะเยา</a>
+        <a href="#" class="w3-bar-item w3-button">แพร่</a>
+        <a href="#" class="w3-bar-item w3-button">แม่ฮ่องสอน</a>
+        <a href="#" class="w3-bar-item w3-button">ลำปาง</a>
+        <a href="#" class="w3-bar-item w3-button">ลำพูน</a>
+        <a href="#" class="w3-bar-item w3-button">อุตรดิตถ์</a>
+        </div>
+
+        <button class="w3-button w3-block w3-left-align" onclick="myDropFunc()">
+        ภาคตะวันออกเฉียงเหนือ <i class="fa fa-caret-down"></i>
+        </button>
+        <div id="demoDrop" class="w3-hide w3-white w3-card">
+        <a href="#" class="w3-bar-item w3-button">กาฬสินธุ์</a>
+        <a href="#" class="w3-bar-item w3-button">ขอนแก่น</a>
+        <a href="#" class="w3-bar-item w3-button">ชัยภูมิ</a>
+        <a href="#" class="w3-bar-item w3-button">นครพนม</a>
+        <a href="#" class="w3-bar-item w3-button">นครราชสีมา</a>
+        <a href="#" class="w3-bar-item w3-button">บึงกาฬ</a>
+        <a href="#" class="w3-bar-item w3-button">บุรีรัมย์</a>
+        <a href="#" class="w3-bar-item w3-button">มหาสารคาม</a>
+        <a href="#" class="w3-bar-item w3-button">มุกดาหาร</a>
+        <a href="#" class="w3-bar-item w3-button">ยโสธร</a>
+        <a href="#" class="w3-bar-item w3-button">ร้อยเอ็ด</a>
+        <a href="#" class="w3-bar-item w3-button">เลย</a>
+        <a href="#" class="w3-bar-item w3-button">ศรีสะเกษ</a>
+        <a href="#" class="w3-bar-item w3-button">สกลนคร</a>
+        <a href="#" class="w3-bar-item w3-button">สุรินทร์</a>
+        <a href="#" class="w3-bar-item w3-button">หนองคาย</a>
+        <a href="#" class="w3-bar-item w3-button">หนองบัวลำภู</a>
+        <a href="#" class="w3-bar-item w3-button">อำนาจเจริญ</a>
+        <a href="#" class="w3-bar-item w3-button">อุดรธานี</a>
+        <a href="#" class="w3-bar-item w3-button">อุบลราชธานี</a>
+        </div>
+
+        <button class="w3-button w3-block w3-left-align" onclick="myDropFunc2()">
+        ภาคกลาง<i class="fa fa-caret-down"></i>
+        </button>
+        <div id="demoDrop2" class="w3-hide w3-white w3-card">
+                <a href="#" class="w3-bar-item w3-button">กรุงเทพมหานคร</a>
+                <a href="#" class="w3-bar-item w3-button">กำแพงเพชร</a>
+                <a href="#" class="w3-bar-item w3-button">ชัยนาท</a>
+                <a href="#" class="w3-bar-item w3-button">นครนายก</a>
+                <a href="#" class="w3-bar-item w3-button">นครปฐม</a>
+                <a href="#" class="w3-bar-item w3-button">นครสวรรค์</a>
+                <a href="#" class="w3-bar-item w3-button">นนทบุรี</a>
+                <a href="#" class="w3-bar-item w3-button">ปทุมธานี</a>
+                <a href="#" class="w3-bar-item w3-button">พระนครศรีอยุธยา</a>
+                <a href="#" class="w3-bar-item w3-button">พิจิตร</a>
+                <a href="#" class="w3-bar-item w3-button">พิษณุโลก</a>
+                <a href="#" class="w3-bar-item w3-button">เพชรบูรณ์</a>
+                <a href="#" class="w3-bar-item w3-button">ลพบุรี</a>
+                <a href="#" class="w3-bar-item w3-button">สมุทรปราการ</a>
+                <a href="#" class="w3-bar-item w3-button">สมุทรสงคราม</a>
+                <a href="#" class="w3-bar-item w3-button">สมุทรสาคร</a>
+                <a href="#" class="w3-bar-item w3-button">สระบุรี</a>
+                <a href="#" class="w3-bar-item w3-button">สิงห์บุรี</a>
+                <a href="#" class="w3-bar-item w3-button">สุโขทัย</a>
+                <a href="#" class="w3-bar-item w3-button">สุพรรณบุรี</a>
+                <a href="#" class="w3-bar-item w3-button">อ่างทอง</a>
+                <a href="#" class="w3-bar-item w3-button">อุทัยธานี</a>
+        </div>
+
+        <button class="w3-button w3-block w3-left-align" onclick="myDropFunc3()">
+        ภาคใต้<i class="fa fa-caret-down"></i>
+        </button>
+        <div id="demoDrop3" class="w3-hide w3-white w3-card">
+        <a href="#" class="w3-bar-item w3-button">กระบี่</a>
+        <a href="#" class="w3-bar-item w3-button">ชุมพร</a>
+        <a href="#" class="w3-bar-item w3-button">ตรัง</a>
+        <a href="#" class="w3-bar-item w3-button">นครศรีธรรมราช</a>
+        <a href="#" class="w3-bar-item w3-button">นราธิวาส</a>
+        <a href="#" class="w3-bar-item w3-button">ปัตตานี</a>
+        <a href="#" class="w3-bar-item w3-button">พังงา</a>
+        <a href="#" class="w3-bar-item w3-button">พัทลุง</a>
+        <a href="#" class="w3-bar-item w3-button">ภูเก็ต</a>
+        <a href="#" class="w3-bar-item w3-button">ยะลา</a>
+        <a href="#" class="w3-bar-item w3-button">ระนอง</a>
+        <a href="#" class="w3-bar-item w3-button">สงขลา</a>
+        <a href="#" class="w3-bar-item w3-button">สตูล</a>
+        <a href="#" class="w3-bar-item w3-button">สุราษฎร์ธานี</a>
+        </div>
+  
+    </div>
+      
+<div id="main">
+  <h2>Climate Change</h2>
+  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; เลือกจังหวัด</span>
+</div>
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+  document.body.style.backgroundColor = "white";
+}
+
+function myAccFunc() {
+  var x = document.getElementById("demoAcc");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+    x.previousElementSibling.className += " w3-green";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+    x.previousElementSibling.className = 
+    x.previousElementSibling.className.replace(" w3-green", "");
+  }
+}
+
+function myDropFunc() {
+  var x = document.getElementById("demoDrop");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+    x.previousElementSibling.className += " w3-green";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+    x.previousElementSibling.className = 
+    x.previousElementSibling.className.replace(" w3-green", "");
+  }
+}
+function myDropFunc2() {
+  var x = document.getElementById("demoDrop2");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+    x.previousElementSibling.className += " w3-green";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+    x.previousElementSibling.className = 
+    x.previousElementSibling.className.replace(" w3-green", "");
+  }
+}
+
+function myDropFunc3() {
+  var x = document.getElementById("demoDrop3");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+    x.previousElementSibling.className += " w3-green";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+    x.previousElementSibling.className = 
+    x.previousElementSibling.className.replace(" w3-green", "");
+  }
+}
+</script>
+   
 </body>
-</html>
+</html> 
