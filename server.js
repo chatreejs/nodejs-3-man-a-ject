@@ -115,21 +115,34 @@ app.get('/weather', (req, res) => {
                     for (let i = 0; i < obj.list.length; i++) {
                         var dt_txt = obj.list[i].dt_txt;
                         var dt = new Date(dt_txt);
+                        // console.log("dt.getHours() = " + dt.getHours())
+                        // console.log("dt.getDay() = " + dt.getDay())
+                        // console.log("current_hour = " + current_hour)
+                        // console.log("currentDayOfWeek = " + currentDayOfWeek)
                         if (dt.getHours() > current_hour && dt.getDay() > currentDayOfWeek && currentDayOfWeek != 0) {
                             forecast_idx = i;
+                            // console.log("case 1")
                             break;
                         } else if (dt.getHours() == current_hour && dt.getDay() == currentDayOfWeek) {
                             //When call api at 09:00, 12:00, 15:00, 18:00
                             forecast_idx = i + 1;
+                            // console.log("case 2")
                             break;
-                        } else if (dt.getDay() == 0 && currentDayOfWeek == 0) {
+                        } else if (dt.getDay() == 0 && currentDayOfWeek == 0 && current_hour == 0) {
                             //When call api at 00:00
                             forecast_idx = i;
+                            // console.log("case 3")
                             break;
                         } else if (dt.getHours() == 0 && dt.getDay() == 0 && currentDayOfWeek == 6 && current_hour >= 21) {
                             //9PM Saturday issues
-                            //When call api at 21:00 to 23:59
+                            //When call api at 21:00 to 23:59 at Saturday
                             forecast_idx = i;
+                            // console.log("case 4")
+                            break;
+                        } else if (current_hour >= 21 && dt.getHours() == 0) {
+                            //When call api at 21:00 to 23:59 everyday except Saturday
+                            forecast_idx = i;
+                            // console.log("case 5")
                             break;
                         }
                     }
