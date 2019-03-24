@@ -7,7 +7,7 @@ class DescriptionIcon {
             } else {
                 des_icon = 'clear-night';
             }
-        } else if (description == 'Clouds') {
+        } else if (description == 'Clouds' || description == 'overcast clouds') {
             des_icon = 'cloudy';
         } else if (description == 'few clouds' || description == 'scattered clouds') {
             if (hour >= 6 && hour <= 18) {
