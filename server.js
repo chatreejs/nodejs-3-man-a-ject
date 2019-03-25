@@ -119,7 +119,7 @@ app.get('/weather', (req, res) => {
                         // console.log("dt.getDay() = " + dt.getDay())
                         // console.log("current_hour = " + current_hour)
                         // console.log("currentDayOfWeek = " + currentDayOfWeek)
-                        if (dt.getHours() > current_hour && dt.getDay() > currentDayOfWeek && currentDayOfWeek != 0) {
+                        if (dt.getHours() > current_hour && dt.getDay() >= currentDayOfWeek && currentDayOfWeek != 0) {
                             forecast_idx = i;
                             // console.log("case 1")
                             break;
@@ -257,6 +257,37 @@ app.get('/weather', (req, res) => {
                         list += item[index];
                     }
 
+                    var date_index = currentDayOfWeek;
+                    var table = '';
+                    var forecast_description;
+                    var forecast_temp_max;
+                    var forecast_temp_min;
+                    for (let i = 0; i < obj.list.length; i++) {
+                        var dt_txt = obj.list[i].dt_txt;
+                        var dt = new Date(dt_txt);
+
+                        if (dt.getDay() > date_index && dt.getHours() == 15) {
+                            var forecast_dt = new Date(obj.list[i].dt_txt);
+                            forecast_description = obj.list[i].weather[0].description;
+                            forecast_temp_max_kelvin = obj.list[i].main.temp_max;
+                            forecast_temp_max_celsius = forecast_temp_max_kelvin - 273.15;
+                            forecast_temp_min_kelvin = obj.list[i].main.temp_min;
+                            forecast_temp_min_celsius = forecast_temp_min_kelvin - 273.15;
+                            // console.log(forecast_description);
+                            
+                            table += '<tr>';
+                            table += '<td class="text-white" style="width:45%">' + days[forecast_dt.getDay()] + '</td>'
+                            table += '<td class="text-white" style="width:20%"><canvas class="'
+                            table += des_icon.getIcon(forecast_description, forecast_dt.getHours());
+                            table += '" width="20" height="20"></canvas></td>'
+                            table += '<td class="text-white" style="width:5%">' + forecast_temp_max_celsius.toFixed(0) + '</td>'
+                            table += '<td class="text-white-50" style="width:50%">' + forecast_temp_min_celsius.toFixed(0) + '</td>'
+                            table += '</tr>'
+                            //console.log(obj.list[i].dt_txt);
+                            date_index++;
+                        }
+                    }
+
                     var html = '';
                     html += head;
                     html += '<body id="page-top">';
@@ -278,32 +309,7 @@ app.get('/weather', (req, res) => {
                     html += '<div class="table-responsive-sm">';
                     html += '<table class="table table-borderless text-white">';
                     html += '<tbody>';
-                    html += '<tr>';
-                    html += '<td class="text-white" style="width:2%">Sunday</td>'
-                    html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-                    html += '<td class="text-white" style="width:2%">34</td>'
-                    html += '<td class="text-white-50" style="width:2%">27</td>'
-                    html += '</tr>'
-                    html += '<td class="text-white" style="width:2%">Monday</td>'
-                    html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-                    html += '<td class="text-white" style="width:2%">34</td>'
-                    html += '<td class="text-white-50" style="width:2%">27</td>'
-                    html += '</tr>'
-                    html += '<td class="text-white" style="width:2%">Tuesday</td>'
-                    html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-                    html += '<td class="text-white" style="width:2%">33</td>'
-                    html += '<td class="text-white-50" style="width:2%">28</td>'
-                    html += '</tr>'
-                    html += '<td class="text-white" style="width:2%">Wednesday</td>'
-                    html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-                    html += '<td class="text-white" style="width:2%">34</td>'
-                    html += '<td class="text-white-50" style="width:2%">28</td>'
-                    html += '</tr>'
-                    html += '<td class="text-white" style="width:2%">Thursday</td>'
-                    html += '<td class="text-white" style="width:2%"><canvas class="clear-day" width="20" height="20"></canvas></td>'
-                    html += '<td class="text-white" style="width:2%">37</td>'
-                    html += '<td class="text-white-50" style="width:2%">27</td>'
-                    html += '</tr>'
+                    html += table;
                     html += '</tbody></table></div></div>';
                     html += '</header>';
                     html += footer;
