@@ -34,14 +34,14 @@ class QueueJA {
     clear() {
         while (this.size > 0) {
             try {
-                dequeue();
+                this.dequeue();
             } catch (error) {
                 console.log(error);
             }
         }
     }
 
-    isSize() {
+    size() {
         return this.size;
     }
 }
