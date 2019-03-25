@@ -1,5 +1,6 @@
 var Compass = require('../Compass')
 var DescriptionIcon = require('../DescriptionIcon')
+var QueueJA = require('../QueueJA')
 
 var assert = require("chai").assert;
 var mocha = require('mocha');
@@ -48,5 +49,64 @@ describe('Test Description Icon function', function () {
         var hour = 19;
         var res = d.getIcon("Clear", hour);
         assert.strictEqual(res, "clear-night")
+    });
+});
+
+describe('Test Queue function', function () {
+    it('test:enqueue ', function () {
+        var q = new QueueJA(10);
+        q.enqueue(10);
+        var res = q.size();
+        assert.strictEqual(res, 1);
+    });
+
+    it('test:dequeue ', function () {
+        var q = new QueueJA(10);
+        q.enqueue("A");
+        q.enqueue("B");
+        var res = q.dequeue();
+        assert.strictEqual(res, "A");
+    });
+
+    it('test:get front at position 0', function () {
+        var q = new QueueJA(10);
+        q.enqueue("A");
+        q.enqueue("B");
+        var res = q.front();
+        assert.strictEqual(res, "A");
+    });
+
+    it('test:isEmpty', function () {
+        var q = new QueueJA(10);
+        var res = q.isEmpty();
+        assert.strictEqual(res, true);
+    });
+
+    it('test:isFull', function () {
+        var q = new QueueJA(3);
+        q.enqueue(1);
+        q.enqueue(2);
+        q.enqueue(3);
+        var res = q.isFull();
+        assert.strictEqual(res, true);
+    });
+
+    it('test:clear', function () {
+        var q = new QueueJA(3);
+        q.enqueue(1);
+        q.enqueue(2);
+        q.enqueue(3);
+        q.clear();
+        var res = q.isEmpty();
+        assert.strictEqual(res, true);
+    });
+
+    it('test:size', function () {
+        var q = new QueueJA(3);
+        q.enqueue(1);
+        q.enqueue(2);
+        q.enqueue(3);
+        var res = q.size();
+        assert.strictEqual(res, true);
     });
 });
