@@ -9,8 +9,10 @@ const ApiKey = 'd5898bac8ec6c53e5587936972a98a56';
 var Compass = require('./Compass');
 var compass = new Compass();
 
-var DescriptionIcon = require('./DescriptionIcon')
+var DescriptionIcon = require('./DescriptionIcon');
 var des_icon = new DescriptionIcon();
+
+var QueueJa = require('./QueueJA');
 
 var date = new Date();
 
@@ -87,7 +89,6 @@ app.get('/weather', (req, res) => {
         // var current_hour = 23;
         // var currentDayOfWeek = 6;
         var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        var dayNameOfWeek = days[currentDayOfWeek];
 
         if (!city) {
             query = 'id=' + id;
@@ -100,14 +101,27 @@ app.get('/weather', (req, res) => {
             var obj = JSON.parse(body);
             try {
                 var item = []
-                var description = obj.weather[0].main;
                 var city = obj.name;
-                var temp_kelvin = obj.main.temp;
-                var temp_celsius = temp_kelvin - 273.15;
-                var humidity = obj.main.humidity;
-                var pressure = obj.main.pressure;
-                var wind_speed = obj.wind.speed;
-                var wind_deg = obj.wind.deg;
+
+                var hour = new QueueJa(12);
+                var dayNameOfWeek = new QueueJa(12);
+                var description = new QueueJa(12);
+                var temp = new QueueJa(12);
+                var humidity = new QueueJa(12);
+                var pressure = new QueueJa(12);
+                var wind_speed = new QueueJa(12);
+                var wind_deg = new QueueJa(12);
+
+                hour.enqueue(current_hour);
+                dayNameOfWeek.enqueue(days[currentDayOfWeek]);
+                description.enqueue(obj.weather[0].main);
+                temp.enqueue(obj.main.temp - 273.15);
+                humidity.enqueue(obj.main.humidity);
+                pressure.enqueue(obj.main.pressure);
+                wind_speed.enqueue(obj.wind.speed);
+                wind_deg.enqueue(obj.wind.deg);
+                
+
                 request('http://api.openweathermap.org/data/2.5/forecast?' + query + '&APPID=' + ApiKey, (error, response, body) => {
                     var obj = JSON.parse(body);
                     var forecast_idx;
@@ -121,135 +135,97 @@ app.get('/weather', (req, res) => {
                         // console.log("currentDayOfWeek = " + currentDayOfWeek)
                         if (dt.getHours() > current_hour && dt.getDay() >= currentDayOfWeek && currentDayOfWeek != 0) {
                             forecast_idx = i;
-                            // console.log("case 1")
+                            console.log("case 1")
                             break;
                         } else if (dt.getHours() == current_hour && dt.getDay() == currentDayOfWeek) {
                             //When call api at 09:00, 12:00, 15:00, 18:00
                             forecast_idx = i + 1;
-                            // console.log("case 2")
+                            console.log("case 2")
                             break;
                         } else if (dt.getDay() == 0 && currentDayOfWeek == 0 && current_hour == 0) {
                             //When call api at 00:00
                             forecast_idx = i;
-                            // console.log("case 3")
+                            console.log("case 3")
                             break;
                         } else if (dt.getHours() == 0 && dt.getDay() == 0 && currentDayOfWeek == 6 && current_hour >= 21) {
                             //9PM Saturday issues
                             //When call api at 21:00 to 23:59 at Saturday
                             forecast_idx = i;
-                            // console.log("case 4")
+                            console.log("case 4")
                             break;
                         } else if (current_hour >= 21 && dt.getHours() == 0) {
                             //When call api at 21:00 to 23:59 everyday except Saturday
                             forecast_idx = i;
-                            // console.log("case 5")
+                            console.log("case 5")
                             break;
                         }
                     }
 
                     for (let index = 0; index < 9; index++) {
                         var forecast_dt = new Date(obj.list[forecast_idx].dt_txt);
-                        var forecast_description = obj.list[forecast_idx].weather[0].description;
-                        var forecast_humidity = obj.list[forecast_idx].main.humidity;
-                        var forecast_pressure = obj.list[forecast_idx].main.pressure;
-                        var forecast_wind_speed = obj.list[forecast_idx].wind.speed;
-                        var forecast_wind_deg = obj.list[forecast_idx].wind.deg;
 
+                        hour.enqueue(forecast_dt.getHours());
+                        dayNameOfWeek.enqueue(days[forecast_dt.getDay()]);
+                        description.enqueue(obj.list[forecast_idx].weather[0].description);
+                        temp.enqueue(obj.list[forecast_idx].main.temp - 273.15);
+                        humidity.enqueue(obj.list[forecast_idx].main.humidity);
+                        pressure.enqueue(obj.list[forecast_idx].main.pressure);
+                        wind_speed.enqueue(obj.list[forecast_idx].wind.speed);
+                        wind_deg.enqueue(obj.list[forecast_idx].wind.deg);
+                        forecast_idx++;
+                    }
+
+                    for (let index = 0; index < 10; index++) {
                         if (index == 0) {
-                            item[0] = '<div id="carouselControls" class="carousel slide" data-ride="carousel">';
-                            item[0] += '<div class="carousel-inner">';
-                            //carousel-item #1
-                            item[0] += '<div class="carousel-item active">';
-                            item[0] += '<div class="container d-flex h-20 align-items-center">';
-                            item[0] += '<div class=" mx-auto text-center">';
-                            item[0] += '<h2 class="text-white mx-auto" style="margin-top:10rem;">';
-                            item[0] += city;
-                            item[0] += '</h2>';
-                            item[0] += '<h3 class="text-white mx-auto mt-2 mb-5">';
-                            item[0] += changeCase.titleCase(description);
-                            item[0] += '</h3>';
-                            item[0] += '<h1 class="text-white mx-auto mt-5 mb-5">';
-                            item[0] += '<canvas class="';
-                            item[0] += des_icon.getIcon(description, current_hour);
-                            item[0] += '" width="120" height="120"></canvas>';
-                            item[0] += temp_celsius.toFixed(0);
-                            item[0] += '&deg;</h1>';
-                            item[0] += '<h3 class="text-white mx-auto mt-2 mb-5">' + dayNameOfWeek + ' '
-                            item[0] += current_hour;
-                            item[0] += ':00</h3>';
-                            item[0] += '</div>';
-                            item[0] += '</div>';
-                            item[0] += '<div class="container">';
-                            item[0] += '<div class="table-responsive-sm">';
-                            item[0] += '<table class="table table-borderless text-white">';
-                            item[0] += '<thead>';
-                            item[0] += '<tr>';
-                            item[0] += '<th scope="col">Wind</th>';
-                            item[0] += '<th scope="col">Humidity</th>';
-                            item[0] += '<th scope="col">Pressure</th>';
-                            item[0] += '</tr>';
-                            item[0] += '</thead>';
-                            item[0] += '<tbody>';
-                            item[0] += '<tr>';
-                            item[0] += '<td>' + compass.getDirection(wind_deg) + ' ';
-                            item[0] += wind_speed;
-                            item[0] += 'km/hr</td>';
-                            item[0] += '<td>';
-                            item[0] += humidity;
-                            item[0] += '%</td>';
-                            item[0] += '<td>';
-                            item[0] += pressure;
-                            item[0] += ' hPa</td>';
-                            item[0] += '</tr></tbody></table></div></div>';
-                            item[0] += '</div>';
+                            item[index] = '<div id="carouselControls" class="carousel slide" data-ride="carousel">';
+                            item[index] += '<div class="carousel-inner">';
+                            item[index] += '<div class="carousel-item active">';
                         } else {
-                            var forecast_temp_kelvin = obj.list[forecast_idx].main.temp;
-                            var forecast_temp_celsius = forecast_temp_kelvin - 273.15;
                             item[index] = '<div class="carousel-item">';
-                            item[index] += '<div class="container d-flex h-20 align-items-center">';
-                            item[index] += '<div class=" mx-auto text-center">';
-                            item[index] += '<h2 class="text-white mx-auto" style="margin-top:10rem;">';
-                            item[index] += city;
-                            item[index] += '</h2>';
-                            item[index] += '<h3 class="text-white mx-auto mt-2 mb-5">';
-                            item[index] += changeCase.titleCase(forecast_description);
-                            item[index] += '</h3>';
-                            item[index] += '<h1 class="text-white mx-auto mt-5 mb-5">';
-                            item[index] += '<canvas class="';
-                            item[index] += des_icon.getIcon(forecast_description, forecast_dt.getHours());
-                            item[index] += '" width="120" height="120"></canvas>';
-                            item[index] += forecast_temp_celsius.toFixed(0);
-                            item[index] += '&deg;</h1>';
-                            item[index] += '<h3 class="text-white mx-auto mt-2 mb-5">' + days[forecast_dt.getDay()] + ' '
-                            item[index] += forecast_dt.getHours();
-                            item[index] += ':00</h3>';
-                            item[index] += '</div>';
-                            item[index] += '</div>';
-                            item[index] += '<div class="container">';
-                            item[index] += '<div class="table-responsive-sm">';
-                            item[index] += '<table class="table table-borderless text-white">';
-                            item[index] += '<thead>';
-                            item[index] += '<tr>';
-                            item[index] += '<th scope="col">Wind</th>';
-                            item[index] += '<th scope="col">Humidity</th>';
-                            item[index] += '<th scope="col">Pressure</th>';
-                            item[index] += '</tr>';
-                            item[index] += '</thead>';
-                            item[index] += '<tbody>';
-                            item[index] += '<tr>';
-                            item[index] += '<td>' + compass.getDirection(forecast_wind_deg) + ' ';
-                            item[index] += forecast_wind_speed;
-                            item[index] += 'km/hr</td>';
-                            item[index] += '<td>';
-                            item[index] += forecast_humidity;
-                            item[index] += '%</td>';
-                            item[index] += '<td>';
-                            item[index] += forecast_pressure;
-                            item[index] += ' hPa</td>';
-                            item[index] += '</tr></tbody></table></div></div>';
-                            item[index] += '</div>';
-                            forecast_idx++;
                         }
+
+                        item[index] += '<div class="container d-flex h-20 align-items-center">';
+                        item[index] += '<div class=" mx-auto text-center">';
+                        item[index] += '<h2 class="text-white mx-auto" style="margin-top:10rem;">';
+                        item[index] += city;
+                        item[index] += '</h2>';
+                        item[index] += '<h3 class="text-white mx-auto mt-2 mb-5">';
+                        item[index] += changeCase.titleCase(description.getFront());
+                        item[index] += '</h3>';
+                        item[index] += '<h1 class="text-white mx-auto mt-5 mb-5">';
+                        item[index] += '<canvas class="';
+                        item[index] += des_icon.getIcon(description.dequeue(), hour.getFront());
+                        item[index] += '" width="120" height="120"></canvas>';
+                        item[index] += temp.dequeue().toFixed(0);
+                        item[index] += '&deg;</h1>';
+                        item[index] += '<h3 class="text-white mx-auto mt-2 mb-5">' + dayNameOfWeek.dequeue() + ' '
+                        item[index] += hour.dequeue();
+                        item[index] += ':00</h3>';
+                        item[index] += '</div>';
+                        item[index] += '</div>';
+                        item[index] += '<div class="container">';
+                        item[index] += '<div class="table-responsive-sm">';
+                        item[index] += '<table class="table table-borderless text-white">';
+                        item[index] += '<thead>';
+                        item[index] += '<tr>';
+                        item[index] += '<th scope="col">Wind</th>';
+                        item[index] += '<th scope="col">Humidity</th>';
+                        item[index] += '<th scope="col">Pressure</th>';
+                        item[index] += '</tr>';
+                        item[index] += '</thead>';
+                        item[index] += '<tbody>';
+                        item[index] += '<tr>';
+                        item[index] += '<td>' + compass.getDirection(wind_deg.dequeue()) + ' ';
+                        item[index] += wind_speed.dequeue();
+                        item[index] += 'km/hr</td>';
+                        item[index] += '<td>';
+                        item[index] += humidity.dequeue();
+                        item[index] += '%</td>';
+                        item[index] += '<td>';
+                        item[index] += pressure.dequeue();
+                        item[index] += ' hPa</td>';
+                        item[index] += '</tr></tbody></table></div></div>';
+                        item[index] += '</div>';
                     }
 
                     var list = '';
@@ -260,8 +236,7 @@ app.get('/weather', (req, res) => {
                     var date_index = currentDayOfWeek;
                     var table = '';
                     var forecast_description;
-                    var forecast_temp_max;
-                    var forecast_temp_min;
+
                     for (let i = 0; i < obj.list.length; i++) {
                         var dt_txt = obj.list[i].dt_txt;
                         var dt = new Date(dt_txt);
@@ -274,7 +249,7 @@ app.get('/weather', (req, res) => {
                             forecast_temp_min_kelvin = obj.list[i].main.temp_min;
                             forecast_temp_min_celsius = forecast_temp_min_kelvin - 273.15;
                             // console.log(forecast_description);
-                            
+
                             table += '<tr>';
                             table += '<td class="text-white" style="width:45%">' + days[forecast_dt.getDay()] + '</td>'
                             table += '<td class="text-white" style="width:20%"><canvas class="'
