@@ -260,7 +260,8 @@ app.get('/weather', (req, res) => {
                     var date_index = currentDayOfWeek;
                     var table = '';
                     var forecast_description;
-                    
+                    var forecast_temp_max;
+                    var forecast_temp_min;
                     for (let i = 0; i < obj.list.length; i++) {
                         var dt_txt = obj.list[i].dt_txt;
                         var dt = new Date(dt_txt);
