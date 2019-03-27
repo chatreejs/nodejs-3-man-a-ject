@@ -19,7 +19,7 @@ class QueueJA {
         return temp;
     }
 
-    front() {
+    getFront() {
         return this.data[this.front];
     }
 
@@ -41,7 +41,7 @@ class QueueJA {
         }
     }
 
-    size() {
+    getSize() {
         return this.size;
     }
 }

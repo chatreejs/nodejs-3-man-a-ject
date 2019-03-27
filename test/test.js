@@ -56,7 +56,7 @@ describe('Test Queue function', function () {
     it('test:enqueue ', function () {
         var q = new QueueJA(10);
         q.enqueue(10);
-        var res = q.size();
+        var res = q.getSize();
         assert.strictEqual(res, 1);
     });
 
@@ -72,7 +72,7 @@ describe('Test Queue function', function () {
         var q = new QueueJA(10);
         q.enqueue("A");
         q.enqueue("B");
-        var res = q.front();
+        var res = q.getFront();
         assert.strictEqual(res, "A");
     });
 
@@ -106,7 +106,7 @@ describe('Test Queue function', function () {
         q.enqueue(1);
         q.enqueue(2);
         q.enqueue(3);
-        var res = q.size();
-        assert.strictEqual(res, true);
+        var res = q.getSize();
+        assert.strictEqual(res, 3);
     });
 });
