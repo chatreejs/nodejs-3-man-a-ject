@@ -62,7 +62,7 @@ script += '<script>$(".carousel").carousel({interval: false})</script>';
 
 var server = app.listen(3000, function () {
     var port = server.address().port;
-    console.log('\x1b[32m%s%s\x1b[0m', 'Running on port : ', port);
+    console.log('Running on port : %s', port);
 });
 
 app.get('/', (req, res) => {
@@ -107,8 +107,6 @@ app.get('/weather', (req, res) => {
                 var dayNameOfWeek = new QueueJa(12);
                 var description = new QueueJa(12);
                 var temp = new QueueJa(12);
-                var temp_max = new QueueJa(5);
-                var temp_min = new QueueJa(5);
                 var humidity = new QueueJa(12);
                 var pressure = new QueueJa(12);
                 var wind_speed = new QueueJa(12);
@@ -122,6 +120,7 @@ app.get('/weather', (req, res) => {
                 pressure.enqueue(obj.main.pressure);
                 wind_speed.enqueue(obj.wind.speed);
                 wind_deg.enqueue(obj.wind.deg);
+                
 
                 request('http://api.openweathermap.org/data/2.5/forecast?' + query + '&APPID=' + ApiKey, (error, response, body) => {
                     var obj = JSON.parse(body);
@@ -136,28 +135,28 @@ app.get('/weather', (req, res) => {
                         // console.log("currentDayOfWeek = " + currentDayOfWeek)
                         if (dt.getHours() > current_hour && dt.getDay() >= currentDayOfWeek && currentDayOfWeek != 0) {
                             forecast_idx = i;
-                            //console.log("case 1")
+                            console.log("case 1")
                             break;
                         } else if (dt.getHours() == current_hour && dt.getDay() == currentDayOfWeek) {
                             //When call api at 09:00, 12:00, 15:00, 18:00
                             forecast_idx = i + 1;
-                            //console.log("case 2")
+                            console.log("case 2")
                             break;
                         } else if (dt.getDay() == 0 && currentDayOfWeek == 0 && current_hour == 0) {
                             //When call api at 00:00
                             forecast_idx = i;
-                            //console.log("case 3")
+                            console.log("case 3")
                             break;
                         } else if (dt.getHours() == 0 && dt.getDay() == 0 && currentDayOfWeek == 6 && current_hour >= 21) {
                             //9PM Saturday issues
                             //When call api at 21:00 to 23:59 at Saturday
                             forecast_idx = i;
-                            //console.log("case 4")
+                            console.log("case 4")
                             break;
                         } else if (current_hour >= 21 && dt.getHours() == 0) {
                             //When call api at 21:00 to 23:59 everyday except Saturday
                             forecast_idx = i;
-                            //console.log("case 5")
+                            console.log("case 5")
                             break;
                         }
                     }
@@ -236,30 +235,32 @@ app.get('/weather', (req, res) => {
 
                     var date_index = currentDayOfWeek;
                     var table = '';
+                    var forecast_description;
 
-                    for (let index = 0; index < obj.list.length; index++) {
-                        var dt_txt = obj.list[index].dt_txt;
+                    for (let i = 0; i < obj.list.length; i++) {
+                        var dt_txt = obj.list[i].dt_txt;
                         var dt = new Date(dt_txt);
 
                         if (dt.getDay() > date_index && dt.getHours() == 15) {
-                            hour.enqueue(dt.getHours());
-                            dayNameOfWeek.enqueue(days[dt.getDay()]);
-                            description.enqueue(obj.list[index].weather[0].description);
-                            temp_max.enqueue(obj.list[index].main.temp_max - 273.15);
-                            temp_min.enqueue(obj.list[index].main.temp_min - 273.15);
+                            var forecast_dt = new Date(obj.list[i].dt_txt);
+                            forecast_description = obj.list[i].weather[0].description;
+                            forecast_temp_max_kelvin = obj.list[i].main.temp_max;
+                            forecast_temp_max_celsius = forecast_temp_max_kelvin - 273.15;
+                            forecast_temp_min_kelvin = obj.list[i].main.temp_min;
+                            forecast_temp_min_celsius = forecast_temp_min_kelvin - 273.15;
+                            // console.log(forecast_description);
+
+                            table += '<tr>';
+                            table += '<td class="text-white" style="width:45%">' + days[forecast_dt.getDay()] + '</td>'
+                            table += '<td class="text-white" style="width:20%"><canvas class="'
+                            table += des_icon.getIcon(forecast_description, forecast_dt.getHours());
+                            table += '" width="20" height="20"></canvas></td>'
+                            table += '<td class="text-white" style="width:5%">' + forecast_temp_max_celsius.toFixed(0) + '</td>'
+                            table += '<td class="text-white-50" style="width:50%">' + forecast_temp_min_celsius.toFixed(0) + '</td>'
+                            table += '</tr>'
+                            //console.log(obj.list[i].dt_txt);
                             date_index++;
                         }
-                    }
-
-                    for (let index = 0; index < 3; index++) {
-                        table += '<tr>';
-                        table += '<td class="text-white" style="width:45%">' + dayNameOfWeek.dequeue() + '</td>'
-                        table += '<td class="text-white" style="width:20%"><canvas class="'
-                        table += des_icon.getIcon(description.dequeue(), hour.dequeue());
-                        table += '" width="20" height="20"></canvas></td>'
-                        table += '<td class="text-white" style="width:5%">' + temp_max.dequeue().toFixed(0) + '</td>'
-                        table += '<td class="text-white-50" style="width:50%">' + temp_min.dequeue().toFixed(0) + '</td>'
-                        table += '</tr>'
                     }
 
                     var html = '';
