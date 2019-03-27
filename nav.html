@@ -1,222 +1,226 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-body {
-  font-family: "Lato", sans-serif;
-  transition: background-color .5s;
-}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <style>
+    body {
+      font-family: "Lato", sans-serif;
+      transition: background-color .5s;
+    }
 
-.sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-}
+    body {
+      font-family: "Helvetica";
+    }
 
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
+    .sidenav {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 5;
+      top: 0;
+      right: 0;
+      background-color: #ffffff;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
 
-.sidenav a:hover {
-  color:  #f1f1f1;
-}
+    .sidenav a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #818181;
+      display: block;
+      transition: 0.5s;
+    }
 
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 5px;
-  font-size: 36px;
-  margin-left: 50px;
-}
+    /* ตอนเอาเมาส์ชี้ที่ภาค */
+    .sidenav a:hover {
+      color: #000;
+      background-color: #F0F0F0;
+    }
 
-#main {
-  transition: margin-left .5s;
-  padding: 16px;
-}
+    /* ตอนเอาเมาส์ชี้ที่จังหวัด */
+    .sidenav button:hover {
+      color: #000;
+      background-color: #F0F0F0;
+    }
 
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-</style>
+    .sidenav .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+    }
+
+    #main,
+    #mainNav {
+      transition: margin-right .45s;
+      padding: 16px;
+    }
+
+    @media screen and (max-height: 450px) {
+      .sidenav {
+        padding-top: 15px;
+      }
+
+      .sidenav a {
+        font-size: 18px;
+      }
+    }
+
+    .climate-button {
+      border: none;
+      display: inline block;
+      padding: 8px 16px;
+      vertical-align: middle;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      background-color: inherit;
+      text-align: center;
+      cursor: pointer;
+      white-space: nowrap;
+      font-size: 18px;
+    }
+
+    .climate-block {
+      display: block;
+      width: 100%;
+    }
+
+    .climate-left-align {
+      text-align: left !important;
+    }
+
+    .climate-hide {
+      display: none !important;
+    }
+
+    .climate-show-block,
+    .climate-show {
+      display: block !important;
+    }
+
+    /* ตอนปิด dropdown */
+    .sidenav-dropdown {
+      color: #000 !important;
+      background-color: #fff !important;
+    }
+
+    /* เปิด dropdown */
+    .sidenav-dropdown-open {
+      color: #fff !important;
+      background-color: #4CAF50 !important;
+    }
+
+    .sidenav-card {
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    }
+  </style>
 </head>
+
 <body>
-    
-    <div id="mySidenav" class="sidenav" >
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" >&times;</a>
-        <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()">
-        ภาคเหนือ <i class="fa fa-caret-down"></i>
-        </button>
-        <div id="demoAcc" class="w3-hide w3-white w3-card">
-        <a href="/weather?id=1153669" class="w3-bar-item w3-button">เชียงราย</a>
-        <a href="/weather?id=1153671" class="w3-bar-item w3-button">เชียงใหม่</a>
-        <a href="/weather?id=1608452" class="w3-bar-item w3-button">น่าน</a>
-        <a href="/weather?id=1151426" class="w3-bar-item w3-button">พะเยา</a>
-        <a href="/weather?id=1607552" class="w3-bar-item w3-button">แพร่</a>
-        <a href="/weather?id=1152222" class="w3-bar-item w3-button">แม่ฮ่องสอน</a>
-        <a href="/weather?id=1152473" class="w3-bar-item w3-button">ลำปาง</a>
-        <a href="/weather?id=1152468" class="w3-bar-item w3-button">ลำพูน</a>
-        <a href="/weather?id=1605215" class="w3-bar-item w3-button">อุตรดิตถ์</a>
-        </div>
-
-        <button class="w3-button w3-block w3-left-align" onclick="myDropFunc()">
-        ภาคตะวันออกเฉียงเหนือ <i class="fa fa-caret-down"></i>
-        </button>
-        <div id="demoDrop" class="w3-hide w3-white w3-card">
-        <a href="/weather?id=1610469" class="w3-bar-item w3-button">กาฬสินธุ์</a>
-        <a href="/weather?id=1609776" class="w3-bar-item w3-button">ขอนแก่น</a>
-        <a href="/weather?id=1611407" class="w3-bar-item w3-button">ชัยภูมิ</a>
-        <a href="/weather?id=1608531" class="w3-bar-item w3-button">นครพนม</a>
-        <a href="/weather?id=1608529" class="w3-bar-item w3-button">นครราชสีมา</a>
-        <a href="/weather?id=1611475" class="w3-bar-item w3-button">บึงกาฬ</a>
-        <a href="/weather?id=1603291" class="w3-bar-item w3-button">บุรีรัมย์</a>
-        <a href="/weather?id=1608900" class="w3-bar-item w3-button">มหาสารคาม</a>
-        <a href="/weather?id=1608597" class="w3-bar-item w3-button">มุกดาหาร</a>
-        <a href="/weather?id=1604769" class="w3-bar-item w3-button">ยโสธร</a>
-        <a href="/weather?id=1607001" class="w3-bar-item w3-button">ร้อยเอ็ด</a>
-        <a href="/weather?id=1609071" class="w3-bar-item w3-button">เลย</a>
-        <a href="/weather?id=1606239" class="w3-bar-item w3-button">ศรีสะเกษ</a>
-        <a href="/weather?id=1606790" class="w3-bar-item w3-button">สกลนคร</a>
-        <a href="/weather?id=1606030" class="w3-bar-item w3-button">สุรินทร์</a>
-        <a href="/weather?id=1608232" class="w3-bar-item w3-button">หนองคาย</a>
-        <a href="/weather?id=1608269" class="w3-bar-item w3-button">หนองบัวลำภู</a>
-        <a href="/weather?id=1621060" class="w3-bar-item w3-button">อำนาจเจริญ</a>
-        <a href="/weather?id=1605239" class="w3-bar-item w3-button">อุดรธานี</a>
-        <a href="/weather?id=1605245" class="w3-bar-item w3-button">อุบลราชธานี</a>
-        </div>
-
-        <button class="w3-button w3-block w3-left-align" onclick="myDropFunc2()">
-        ภาคกลาง<i class="fa fa-caret-down"></i>
-        </button>
-        <div id="demoDrop2" class="w3-hide w3-white w3-card">
-                <a href="/weather?id=1609350" class="w3-bar-item w3-button">กรุงเทพมหานคร</a>
-                <a href="/weather?id=1153090" class="w3-bar-item w3-button">กำแพงเพชร</a>
-                <a href="/weather?id=1611416" class="w3-bar-item w3-button">ชัยนาท</a>
-                <a href="/weather?id=1608539" class="w3-bar-item w3-button">นครนายก</a>
-                <a href="/weather?id=1608534" class="w3-bar-item w3-button">นครปฐม</a>
-                <a href="/weather?id=1608527" class="w3-bar-item w3-button">นครสวรรค์</a>
-                <a href="/weather?id=1609350" class="w3-bar-item w3-button">นนทบุรี</a>
-                <a href="/weather?id=1607983" class="w3-bar-item w3-button">ปทุมธานี</a>
-                <a href="/weather?id=1607532" class="w3-bar-item w3-button">พระนครศรีอยุธยา</a>
-                <a href="/weather?id=1607725" class="w3-bar-item w3-button">พิจิตร</a>
-                <a href="/weather?id=1607708" class="w3-bar-item w3-button">พิษณุโลก</a>
-                <a href="/weather?id=1607737" class="w3-bar-item w3-button">เพชรบูรณ์</a>
-                <a href="/weather?id=1609032" class="w3-bar-item w3-button">ลพบุรี</a>
-                <a href="/weather?id=1606590" class="w3-bar-item w3-button">สมุทรปราการ</a>
-                <a href="/weather?id=1606586" class="w3-bar-item w3-button">สมุทรสงคราม</a>
-                <a href="/weather?id=1606588" class="w3-bar-item w3-button">สมุทรสาคร</a>
-                <a href="/weather?id=1606418" class="w3-bar-item w3-button">สระบุรี</a>
-                <a href="/weather?id=1606270" class="w3-bar-item w3-button">สิงห์บุรี</a>
-                <a href="/weather?id=1150533" class="w3-bar-item w3-button">สุโขทัย</a>
-                <a href="/weather?id=1606033" class="w3-bar-item w3-button">สุพรรณบุรี</a>
-                <a href="/weather?id=1621035" class="w3-bar-item w3-button">อ่างทอง</a>
-                <a href="/weather?id=1605221" class="w3-bar-item w3-button">อุทัยธานี</a>
-        </div>
-
-        <button class="w3-button w3-block w3-left-align" onclick="myDropFunc3()">
-        ภาคใต้<i class="fa fa-caret-down"></i>
-        </button>
-        <div id="demoDrop3" class="w3-hide w3-white w3-card">
-        <a href="/weather?id=1152633" class="w3-bar-item w3-button">กระบี่</a>
-        <a href="/weather?id=1153557" class="w3-bar-item w3-button">ชุมพร</a>
-        <a href="/weather?id=1150007" class="w3-bar-item w3-button">ตรัง</a>
-        <a href="/weather?id=1151933" class="w3-bar-item w3-button">นครศรีธรรมราช</a>
-        <a href="/weather?id=1608409" class="w3-bar-item w3-button">นราธิวาส</a>
-        <a href="/weather?id=1607978" class="w3-bar-item w3-button">ปัตตานี</a>
-        <a href="/weather?id=1151464" class="w3-bar-item w3-button">พังงา</a>
-        <a href="/weather?id=1607779" class="w3-bar-item w3-button">พัทลุง</a>
-        <a href="/weather?id=1151254" class="w3-bar-item w3-button">ภูเก็ต</a>
-        <a href="/weather?id=1604870" class="w3-bar-item w3-button">ยะลา</a>
-        <a href="/weather?id=1150965" class="w3-bar-item w3-button">ระนอง</a>
-        <a href="/weather?id=1606147" class="w3-bar-item w3-button">สงขลา</a>
-        <a href="/weather?id=1606376" class="w3-bar-item w3-button">สตูล</a>
-        <a href="/weather?id=1150515" class="w3-bar-item w3-button">สุราษฎร์ธานี</a>
-        </div>
-  
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <button class="climate-button climate-block climate-left-align" onclick="myAccFunc()">
+      ภาคเหนือ <i class="fa fa-caret-down"></i>
+    </button>
+    <div id="demoAcc" class="w3-hide sidenav-dropdown sidenav-card">
+      <a href="/weather?id=1153669" class="climate-button">เชียงราย</a>
+      <a href="/weather?id=1153671" class="climate-button">เชียงใหม่</a>
+      <a href="/weather?id=1608452" class="climate-button">น่าน</a>
+      <a href="/weather?id=1151426" class="climate-button">พะเยา</a>
+      <a href="/weather?id=1607552" class="climate-button">แพร่</a>
+      <a href="/weather?id=1152222" class="climate-button">แม่ฮ่องสอน</a>
+      <a href="/weather?id=1152473" class="climate-button">ลำปาง</a>
+      <a href="/weather?id=1152468" class="climate-button">ลำพูน</a>
+      <a href="/weather?id=1605215" class="climate-button">อุตรดิตถ์</a>
     </div>
-      
-<div id="main"  >
-  <h2>Climate Change </h2>
-  
-  <span style="font-size:30px;cursor:pointer"  onclick="openNav()">&#9776; เลือกจังหวัด</span>
-</div>
 
-<script>
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-  document.getElementById("main").style.marginRight = "250px";
-  document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-}
+    <button class="climate-button climate-block climate-left-align" onclick="myDropFunc()">
+      ภาคตะวันออกเฉียงเหนือ <i class="fa fa-caret-down"></i>
+    </button>
+    <div id="demoDrop" class="w3-hide sidenav-dropdown sidenav-card">
+      <a href="/weather?id=1610469" class="climate-button">กาฬสินธุ์</a>
+      <a href="/weather?id=1609776" class="climate-button">ขอนแก่น</a>
+      <a href="/weather?id=1611407" class="climate-button">ชัยภูมิ</a>
+      <a href="/weather?id=1608531" class="climate-button">นครพนม</a>
+      <a href="/weather?id=1608529" class="climate-button">นครราชสีมา</a>
+      <a href="/weather?id=1611475" class="climate-button">บึงกาฬ</a>
+      <a href="/weather?id=1603291" class="climate-button">บุรีรัมย์</a>
+      <a href="/weather?id=1608900" class="climate-button">มหาสารคาม</a>
+      <a href="/weather?id=1608597" class="climate-button">มุกดาหาร</a>
+      <a href="/weather?id=1604769" class="climate-button">ยโสธร</a>
+      <a href="/weather?id=1607001" class="climate-button">ร้อยเอ็ด</a>
+      <a href="/weather?id=1609071" class="climate-button">เลย</a>
+      <a href="/weather?id=1606239" class="climate-button">ศรีสะเกษ</a>
+      <a href="/weather?id=1606790" class="climate-button">สกลนคร</a>
+      <a href="/weather?id=1606030" class="climate-button">สุรินทร์</a>
+      <a href="/weather?id=1608232" class="climate-button">หนองคาย</a>
+      <a href="/weather?id=1608269" class="climate-button">หนองบัวลำภู</a>
+      <a href="/weather?id=1621060" class="climate-button">อำนาจเจริญ</a>
+      <a href="/weather?id=1605239" class="climate-button">อุดรธานี</a>
+      <a href="/weather?id=1605245" class="climate-button">อุบลราชธานี</a>
+    </div>
 
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-  document.getElementById("main").style.marginRight= "0";
-  document.body.style.backgroundColor = "white";
-}
+    <button class="climate-button climate-block climate-left-align" onclick="myDropFunc2()">
+      ภาคกลาง<i class="fa fa-caret-down"></i>
+    </button>
+    <div id="demoDrop2" class="w3-hide sidenav-dropdown sidenav-card">
+      <a href="/weather?id=1609350" class="climate-button">กรุงเทพมหานคร</a>
+      <a href="/weather?id=1153090" class="climate-button">กำแพงเพชร</a>
+      <a href="/weather?id=1611416" class="climate-button">ชัยนาท</a>
+      <a href="/weather?id=1608539" class="climate-button">นครนายก</a>
+      <a href="/weather?id=1608534" class="climate-button">นครปฐม</a>
+      <a href="/weather?id=1608527" class="climate-button">นครสวรรค์</a>
+      <a href="/weather?id=1609350" class="climate-button">นนทบุรี</a>
+      <a href="/weather?id=1607983" class="climate-button">ปทุมธานี</a>
+      <a href="/weather?id=1607532" class="climate-button">พระนครศรีอยุธยา</a>
+      <a href="/weather?id=1607725" class="climate-button">พิจิตร</a>
+      <a href="/weather?id=1607708" class="climate-button">พิษณุโลก</a>
+      <a href="/weather?id=1607737" class="climate-button">เพชรบูรณ์</a>
+      <a href="/weather?id=1609032" class="climate-button">ลพบุรี</a>
+      <a href="/weather?id=1606590" class="climate-button">สมุทรปราการ</a>
+      <a href="/weather?id=1606586" class="climate-button">สมุทรสงคราม</a>
+      <a href="/weather?id=1606588" class="climate-button">สมุทรสาคร</a>
+      <a href="/weather?id=1606418" class="climate-button">สระบุรี</a>
+      <a href="/weather?id=1606270" class="climate-button">สิงห์บุรี</a>
+      <a href="/weather?id=1150533" class="climate-button">สุโขทัย</a>
+      <a href="/weather?id=1606033" class="climate-button">สุพรรณบุรี</a>
+      <a href="/weather?id=1621035" class="climate-button">อ่างทอง</a>
+      <a href="/weather?id=1605221" class="climate-button">อุทัยธานี</a>
+    </div>
 
-function myAccFunc() {
-  var x = document.getElementById("demoAcc");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-    x.previousElementSibling.className += " w3-green";
-  } else { 
-    x.className = x.className.replace(" w3-show", "");
-    x.previousElementSibling.className = 
-    x.previousElementSibling.className.replace(" w3-green", "");
-  }
-}
-
-function myDropFunc() {
-  var x = document.getElementById("demoDrop");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-    x.previousElementSibling.className += " w3-green";
-  } else { 
-    x.className = x.className.replace(" w3-show", "");
-    x.previousElementSibling.className = 
-    x.previousElementSibling.className.replace(" w3-green", "");
-  }
-}
-function myDropFunc2() {
-  var x = document.getElementById("demoDrop2");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-    x.previousElementSibling.className += " w3-green";
-  } else { 
-    x.className = x.className.replace(" w3-show", "");
-    x.previousElementSibling.className = 
-    x.previousElementSibling.className.replace(" w3-green", "");
-  }
-}
-
-function myDropFunc3() {
-  var x = document.getElementById("demoDrop3");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-    x.previousElementSibling.className += " w3-green";
-  } else { 
-    x.className = x.className.replace(" w3-show", "");
-    x.previousElementSibling.className = 
-    x.previousElementSibling.className.replace(" w3-green", "");
-  }
-}
-</script>
-   
+    <button class="climate-button climate-block climate-left-align" onclick="myDropFunc3()">
+      ภาคใต้<i class="fa fa-caret-down"></i>
+    </button>
+    <div id="demoDrop3" class="w3-hide sidenav-dropdown sidenav-card">
+      <a href="/weather?id=1152633" class="climate-button">กระบี่</a>
+      <a href="/weather?id=1153557" class="climate-button">ชุมพร</a>
+      <a href="/weather?id=1150007" class="climate-button">ตรัง</a>
+      <a href="/weather?id=1151933" class="climate-button">นครศรีธรรมราช</a>
+      <a href="/weather?id=1608409" class="climate-button">นราธิวาส</a>
+      <a href="/weather?id=1607978" class="climate-button">ปัตตานี</a>
+      <a href="/weather?id=1151464" class="climate-button">พังงา</a>
+      <a href="/weather?id=1607779" class="climate-button">พัทลุง</a>
+      <a href="/weather?id=1151254" class="climate-button">ภูเก็ต</a>
+      <a href="/weather?id=1604870" class="climate-button">ยะลา</a>
+      <a href="/weather?id=1150965" class="climate-button">ระนอง</a>
+      <a href="/weather?id=1606147" class="climate-button">สงขลา</a>
+      <a href="/weather?id=1606376" class="climate-button">สตูล</a>
+      <a href="/weather?id=1150515" class="climate-button">สุราษฎร์ธานี</a>
+    </div>
+  </div>
+  <div id="main">
+    <h2>Climate Change </h2>
+    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; เลือกจังหวัด</span>
+  </div>
+  <script src="public/js/sidenav.js"></script>
 </body>
-</html> 
+
+</html>
