@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for 3man%20a%20ject\DescriptionIcon.js</title>
+    <title>Code coverage report for 3man%20a%20ject/DescriptionIcon.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">46.67% </span>
+        <span class="strong">73.33% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>7/15</span>
+        <span class='fraction'>11/15</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">24% </span>
+        <span class="strong">56% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>6/25</span>
+        <span class='fraction'>14/25</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -35,13 +35,13 @@
         <span class='fraction'>1/1</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">46.67% </span>
+        <span class="strong">73.33% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>7/15</span>
+        <span class='fraction'>11/15</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -71,7 +71,13 @@
 26
 27</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -80,35 +86,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span></td><td class="text"><pre class="prettyprint lang-js">class DescriptionIcon {
     getIcon(description, hour) {
         var des_icon;
-        <span class="missing-if-branch" title="else path not taken" >E</span>if (description == 'Clear' || <span class="branch-1 cbranch-no" title="branch not covered" >description == 'clear sky')</span> {
+        if (description == 'Clear' || description == 'clear sky') {
             if (hour &gt;= 6 &amp;&amp; hour &lt;= 18) {
                 des_icon = 'clear-day';
             } else {
                 des_icon = 'clear-night';
             }
-        } else <span class="cstat-no" title="statement not covered" >if (description == 'few clouds' || description == 'scattered clouds' || description == 'broken clouds') {</span>
-<span class="cstat-no" title="statement not covered" >            if (hour &gt;= 6 &amp;&amp; hour &lt;= 18) {</span>
-<span class="cstat-no" title="statement not covered" >                des_icon = 'partly-cloudy-day';</span>
+        } else <span class="missing-if-branch" title="else path not taken" >E</span>if (description == 'few clouds' || <span class="branch-1 cbranch-no" title="branch not covered" >description == 'scattered clouds' </span>|| <span class="branch-2 cbranch-no" title="branch not covered" >description == 'broken clouds')</span> {
+            if (hour &gt;= 6 &amp;&amp; hour &lt;= 18) {
+                des_icon = 'partly-cloudy-day';
             } else {
-<span class="cstat-no" title="statement not covered" >                des_icon = 'partly-cloudy-night';</span>
+                des_icon = 'partly-cloudy-night';
             }
         } else <span class="cstat-no" title="statement not covered" >if (description == 'Clouds' || description == 'overcast clouds') {</span>
 <span class="cstat-no" title="statement not covered" >            des_icon = 'cloudy';</span>
@@ -127,7 +127,7 @@ module.exports = DescriptionIcon;</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 27 2019 14:57:04 GMT+0700 (Indochina Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 27 2019 21:37:56 GMT+0700 (Indochina Time)
 </div>
 </div>
 <script src="../prettify.js"></script>
