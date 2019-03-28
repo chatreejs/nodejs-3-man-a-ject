@@ -234,20 +234,38 @@ app.get('/weather', (req, res) => {
                         var dt_txt = obj.list[index].dt_txt;
                         var dt = new Date(dt_txt);
 
-                        if (dt.getHours() >= current_hour && dt.getDate() > date_index && dt.getMonth() == current_month) {
-                            hour.enqueue(dt.getHours());
-                            dayNameOfWeek.enqueue(days[dt.getDay()]);
-                            description.enqueue(obj.list[index].weather[0].description);
-                            temp_max.enqueue(obj.list[index].main.temp_max - 273.15);
-                            temp_min.enqueue(obj.list[index].main.temp_min - 273.15);
-                            date_index++;
-                        } else if (dt.getHours() >= current_hour && dt.getDate() >= newmonth_date_index && dt.getMonth() > current_month) {
-                            hour.enqueue(dt.getHours());
-                            dayNameOfWeek.enqueue(days[dt.getDay()]);
-                            description.enqueue(obj.list[index].weather[0].description);
-                            temp_max.enqueue(obj.list[index].main.temp_max - 273.15);
-                            temp_min.enqueue(obj.list[index].main.temp_min - 273.15);
-                            newmonth_date_index++;
+                        if (current_hour >= 21) {
+                            if (dt.getHours() == 0 && dt.getDate() > date_index && dt.getMonth() == current_month) {
+                                hour.enqueue(dt.getHours());
+                                dayNameOfWeek.enqueue(days[dt.getDay()]);
+                                description.enqueue(obj.list[index].weather[0].description);
+                                temp_max.enqueue(obj.list[index].main.temp_max - 273.15);
+                                temp_min.enqueue(obj.list[index].main.temp_min - 273.15);
+                                date_index++;
+                            } else if (dt.getHours() == 0 && dt.getDate() >= newmonth_date_index && dt.getMonth() > current_month) {
+                                hour.enqueue(dt.getHours());
+                                dayNameOfWeek.enqueue(days[dt.getDay()]);
+                                description.enqueue(obj.list[index].weather[0].description);
+                                temp_max.enqueue(obj.list[index].main.temp_max - 273.15);
+                                temp_min.enqueue(obj.list[index].main.temp_min - 273.15);
+                                newmonth_date_index++;
+                            }
+                        } else {
+                            if (dt.getHours() >= current_hour && dt.getDate() > date_index && dt.getMonth() == current_month) {
+                                hour.enqueue(dt.getHours());
+                                dayNameOfWeek.enqueue(days[dt.getDay()]);
+                                description.enqueue(obj.list[index].weather[0].description);
+                                temp_max.enqueue(obj.list[index].main.temp_max - 273.15);
+                                temp_min.enqueue(obj.list[index].main.temp_min - 273.15);
+                                date_index++;
+                            } else if (dt.getHours() >= current_hour && dt.getDate() >= newmonth_date_index && dt.getMonth() > current_month) {
+                                hour.enqueue(dt.getHours());
+                                dayNameOfWeek.enqueue(days[dt.getDay()]);
+                                description.enqueue(obj.list[index].weather[0].description);
+                                temp_max.enqueue(obj.list[index].main.temp_max - 273.15);
+                                temp_min.enqueue(obj.list[index].main.temp_min - 273.15);
+                                newmonth_date_index++;
+                            }
                         }
                     }
 
