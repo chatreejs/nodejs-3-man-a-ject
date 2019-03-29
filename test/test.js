@@ -30,6 +30,78 @@ describe('Test Compass function', function () {
         var res = c.getDirection(270);
         assert.strictEqual(res, "W");
     });
+
+    it('test:getDirection Northeast', function () {
+        var c = new Compass();
+        var res = c.getDirection(45);
+        assert.strictEqual(res, "NE");
+    });
+
+    it('test:getDirection Southeast', function () {
+        var c = new Compass();
+        var res = c.getDirection(135);
+        assert.strictEqual(res, "SE");
+    });
+
+    it('test:getDirection Southwest', function () {
+        var c = new Compass();
+        var res = c.getDirection(225);
+        assert.strictEqual(res, "SW");
+    });
+
+    it('test:getDirection Northwest', function () {
+        var c = new Compass();
+        var res = c.getDirection(315);
+        assert.strictEqual(res, "NW");
+    });
+
+    it('test:getDirection North-northeast', function () {
+        var c = new Compass();
+        var res = c.getDirection(21);
+        assert.strictEqual(res, "NNE");
+    });
+
+    it('test:getDirection East-northeast', function () {
+        var c = new Compass();
+        var res = c.getDirection(70);
+        assert.strictEqual(res, "ENE");
+    });
+
+    it('test:getDirection East-southeast', function () {
+        var c = new Compass();
+        var res = c.getDirection(110);
+        assert.strictEqual(res, "ESE");
+    });
+
+    it('test:getDirection South-southeast', function () {
+        var c = new Compass();
+        var res = c.getDirection(160);
+        assert.strictEqual(res, "SSE");
+    });
+
+    it('test:getDirection South-southwest', function () {
+        var c = new Compass();
+        var res = c.getDirection(200);
+        assert.strictEqual(res, "SSW");
+    });
+
+    it('test:getDirection West-southwest', function () {
+        var c = new Compass();
+        var res = c.getDirection(250);
+        assert.strictEqual(res, "WSW");
+    });
+
+    it('test:getDirection West-northwest', function () {
+        var c = new Compass();
+        var res = c.getDirection(290);
+        assert.strictEqual(res, "WNW");
+    });
+
+    it('test:getDirection North-northwest', function () {
+        var c = new Compass();
+        var res = c.getDirection(340);
+        assert.strictEqual(res, "NNW");
+    });
 });
 
 describe('Test Description Icon function', function () {
