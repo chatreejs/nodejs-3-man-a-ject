@@ -339,7 +339,7 @@ body {
   z-index: 5;
   top: 0;
   right: 0;
-  background-color: #a1dfd9b6;
+  background-color: #F2EDD8;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
@@ -357,7 +357,7 @@ body {
 /* ตอนเอาเมาส์ชี้ที่ภาค */
 .sidenav a:hover {
   color: #000;
-  background-color: rgba(93, 114, 121, 0.836);
+  background-color: rgba(150, 192, 206);
 }
 
 /* ตอนเอาเมาส์ชี้ที่จังหวัด */
@@ -426,13 +426,13 @@ body {
 /* ตอนปิด dropdown */
 .sidenav-dropdown {
   color: #000 !important;
-  background-color: #8199a0be !important;
+  background-color: #FEF6EB !important;
 }
 
 /* เปิด dropdown */
 .sidenav-dropdown-open {
   color: rgb(0, 0, 0) !important;
-  background-color: rgb(101, 125, 145) !important;
+  background-color: rgb(194, 91, 86) !important;
 }
 
 .sidenav-card {
