@@ -26,6 +26,7 @@ head += '<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">';
 head += '<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">';
 head += '<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">';
 head += '<link href="css/climate.css" rel="stylesheet">';
+head += '<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">';
 head += '</head>';
 
 var nav = '<!-- Navigation -->';
@@ -42,7 +43,7 @@ nav += '<li class="nav-item">';
 nav += '<a class="nav-link js-scroll-trigger" href="/">Home</a>';
 nav += '</li>';
 nav += '<li class="nav-item">';
-nav += '<a class="nav-link js-scroll-trigger" href="#">Province</a>';
+nav += '<a class="nav-link js-scroll-trigger" href="#" onclick="openNav()">Province</a>';
 nav += '</li>';
 nav += '</ul></div></div></nav>';
 
@@ -59,6 +60,97 @@ script += '<script src="js/climate.min.js"></script>';
 script += '<script src="js/skycons.js"></script>';
 script += '<script src="js/icon.js"></script>';
 script += '<script>$(".carousel").carousel({interval: false})</script>';
+script += '<script src="js/sidenav.js"></script>';
+
+var sidenav = '<div id="mySidenav" class="sidenav" >';
+sidenav += '<a class="climate-button climate-block climate-left-align" onclick="myAccFunc()">'
+sidenav += 'ภาคเหนือ <i class="fa fa-caret-down"></i>'
+sidenav += '</a>'
+sidenav += '<div id="demoAcc" class="w3-hide sidenav-dropdown sidenav-card">'
+sidenav += '<a href="/weather?id=1153669" class="climate-button">เชียงราย</a>'
+sidenav += '<a href="/weather?id=1153671" class="climate-button">เชียงใหม่</a>'
+sidenav += '<a href="/weather?id=1608452" class="climate-button">น่าน</a>'
+sidenav += '<a href="/weather?id=1151426" class="climate-button">พะเยา</a>'
+sidenav += '<a href="/weather?id=1607552" class="climate-button">แพร่</a>'
+sidenav += '<a href="/weather?id=1152222" class="climate-button">แม่ฮ่องสอน</a>'
+sidenav += '<a href="/weather?id=1152473" class="climate-button">ลำปาง</a>'
+sidenav += '<a href="/weather?id=1152468" class="climate-button">ลำพูน</a>'
+sidenav += '<a href="/weather?id=1605215" class="climate-button">อุตรดิตถ์</a>'
+sidenav += '</div>'
+sidenav += '<a class="climate-button climate-block climate-left-align" onclick="myDropFunc()">'
+sidenav += 'ภาคตะวันออกเฉียงเหนือ <i class="fa fa-caret-down"></i>'
+sidenav += '</a>'
+sidenav += '<div id="demoDrop" class="w3-hide sidenav-dropdown sidenav-card">'
+sidenav += '<a href="/weather?id=1610469" class="climate-button">กาฬสินธุ์</a>'
+sidenav += '<a href="/weather?id=1609776" class="climate-button">ขอนแก่น</a>'
+sidenav += '<a href="/weather?id=1611407" class="climate-button">ชัยภูมิ</a>'
+sidenav += '<a href="/weather?id=1608531" class="climate-button">นครพนม</a>'
+sidenav += '<a href="/weather?id=1608529" class="climate-button">นครราชสีมา</a>'
+sidenav += '<a href="/weather?id=1611475" class="climate-button">บึงกาฬ</a>'
+sidenav += '<a href="/weather?id=1603291" class="climate-button">บุรีรัมย์</a>'
+sidenav += '<a href="/weather?id=1608900" class="climate-button">มหาสารคาม</a>'
+sidenav += '<a href="/weather?id=1608597" class="climate-button">มุกดาหาร</a>'
+sidenav += '<a href="/weather?id=1604769" class="climate-button">ยโสธร</a>'
+sidenav += '<a href="/weather?id=1607001" class="climate-button">ร้อยเอ็ด</a>'
+sidenav += '<a href="/weather?id=1609071" class="climate-button">เลย</a>'
+sidenav += '<a href="/weather?id=1606239" class="climate-button">ศรีสะเกษ</a>'
+sidenav += '<a href="/weather?id=1606790" class="climate-button">สกลนคร</a>'
+sidenav += '<a href="/weather?id=1606030" class="climate-button">สุรินทร์</a>'
+sidenav += '<a href="/weather?id=1608232" class="climate-button">หนองคาย</a>'
+sidenav += '<a href="/weather?id=1608269" class="climate-button">หนองบัวลำภู</a>'
+sidenav += '<a href="/weather?id=1621060" class="climate-button">อำนาจเจริญ</a>'
+sidenav += '<a href="/weather?id=1605239" class="climate-button">อุดรธานี</a>'
+sidenav += '<a href="/weather?id=1605245" class="climate-button">อุบลราชธานี</a>'
+sidenav += '</div>'
+sidenav += '<a class="climate-button climate-block climate-left-align" onclick="myDropFunc2()">'
+sidenav += 'ภาคกลาง<i class="fa fa-caret-down"></i>'
+sidenav += '</a>'
+sidenav += '<div id="demoDrop2" class="w3-hide sidenav-dropdown sidenav-card">'
+sidenav += '<a href="/weather?id=1609350" class="climate-button">กรุงเทพมหานคร</a>'
+sidenav += '<a href="/weather?id=1153090" class="climate-button">กำแพงเพชร</a>'
+sidenav += '<a href="/weather?id=1611416" class="climate-button">ชัยนาท</a>'
+sidenav += '<a href="/weather?id=1608539" class="climate-button">นครนายก</a>'
+sidenav += '<a href="/weather?id=1608534" class="climate-button">นครปฐม</a>'
+sidenav += '<a href="/weather?id=1608527" class="climate-button">นครสวรรค์</a>'
+sidenav += '<a href="/weather?id=1609350" class="climate-button">นนทบุรี</a>'
+sidenav += '<a href="/weather?id=1607983" class="climate-button">ปทุมธานี</a>'
+sidenav += '<a href="/weather?id=1607532" class="climate-button">พระนครศรีอยุธยา</a>'
+sidenav += '<a href="/weather?id=1607725" class="climate-button">พิจิตร</a>'
+sidenav += '<a href="/weather?id=1607708" class="climate-button">พิษณุโลก</a>'
+sidenav += '<a href="/weather?id=1607737" class="climate-button">เพชรบูรณ์</a>'
+sidenav += '<a href="/weather?id=1609032" class="climate-button">ลพบุรี</a>'
+sidenav += '<a href="/weather?id=1606590" class="climate-button">สมุทรปราการ</a>'
+sidenav += '<a href="/weather?id=1606586" class="climate-button">สมุทรสงคราม</a>'
+sidenav += '<a href="/weather?id=1606588" class="climate-button">สมุทรสาคร</a>'
+sidenav += '<a href="/weather?id=1606418" class="climate-button">สระบุรี</a>'
+sidenav += '<a href="/weather?id=1606270" class="climate-button">สิงห์บุรี</a>'
+sidenav += '<a href="/weather?id=1150533" class="climate-button">สุโขทัย</a>'
+sidenav += '<a href="/weather?id=1606033" class="climate-button">สุพรรณบุรี</a>'
+sidenav += '<a href="/weather?id=1621035" class="climate-button">อ่างทอง</a>'
+sidenav += '<a href="/weather?id=1605221" class="climate-button">อุทัยธานี</a>'
+sidenav += '</div>'
+sidenav += '<a class="climate-button climate-block climate-left-align" onclick="myDropFunc3()">'
+sidenav += 'ภาคใต้<i class="fa fa-caret-down"></i>'
+sidenav += '</a>'
+sidenav += '<div id="demoDrop3" class="w3-hide sidenav-dropdown sidenav-card">'
+sidenav += '<a href="/weather?id=1152633" class="climate-button">กระบี่</a>'
+sidenav += '<a href="/weather?id=1153557" class="climate-button">ชุมพร</a>'
+sidenav += '<a href="/weather?id=1150007" class="climate-button">ตรัง</a>'
+sidenav += '<a href="/weather?id=1151933" class="climate-button">นครศรีธรรมราช</a>'
+sidenav += '<a href="/weather?id=1608409" class="climate-button">นราธิวาส</a>'
+sidenav += '<a href="/weather?id=1607978" class="climate-button">ปัตตานี</a>'
+sidenav += '<a href="/weather?id=1151464" class="climate-button">พังงา</a>'
+sidenav += '<a href="/weather?id=1607779" class="climate-button">พัทลุง</a>'
+sidenav += '<a href="/weather?id=1151254" class="climate-button">ภูเก็ต</a>'
+sidenav += '<a href="/weather?id=1604870" class="climate-button">ยะลา</a>'
+sidenav += '<a href="/weather?id=1150965" class="climate-button">ระนอง</a>'
+sidenav += '<a href="/weather?id=1606147" class="climate-button">สงขลา</a>'
+sidenav += '<a href="/weather?id=1606376" class="climate-button">สตูล</a>'
+sidenav += '<a href="/weather?id=1150515" class="climate-button">สุราษฎร์ธานี</a>'
+sidenav += '</div>'
+sidenav += '</div>'
+
+
 
 var server = app.listen(3000, function () {
     var port = server.address().port;
@@ -285,6 +377,8 @@ app.get('/weather', (req, res) => {
                     html += '<body id="page-top">';
                     html += nav;
                     html += '<header class="masthead">';
+                    html += sidenav;
+                    html += '<div id="main">';
                     html += list;
                     html += '</div>';
                     html += '<a class="left carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">';
