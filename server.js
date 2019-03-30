@@ -222,8 +222,15 @@ app.get('/weather', (req, res) => {
                     for (let i = 0; i < obj.list.length; i++) {
                         var dt_txt = obj.list[i].dt_txt;
                         var dt = new Date(dt_txt);
+                        console.log("dt_hour " + dt.getHours());
+                        console.log("cur_hour" + current_hour);
+                        console.log("dt_day" + dt.getDay());
+                        console.log("cur_day" + currentDayOfWeek);
+                        console.log(' ');
+
 
                         if (dt.getHours() > current_hour && dt.getDay() >= currentDayOfWeek && currentDayOfWeek != 0) {
+                            //Default
                             forecast_idx = i;
                             break;
                         } else if (dt.getHours() == current_hour && dt.getDay() == currentDayOfWeek) {
@@ -231,12 +238,16 @@ app.get('/weather', (req, res) => {
                             forecast_idx = i + 1;
                             break;
                         } else if (dt.getDay() == 0 && currentDayOfWeek == 0 && current_hour == 0) {
-                            //When call api at 00:00
+                            //When call api at 00:00 on Sunday
                             forecast_idx = i;
+                            break;
+                        } else if (dt.getDay() == 0 && currentDayOfWeek == 0 && current_hour >= 0) {
+                            //When call api at 01:00 to 23:59 on Sunday
+                            forecast_idx = i + 1;
                             break;
                         } else if (dt.getHours() == 0 && dt.getDay() == 0 && currentDayOfWeek == 6 && current_hour >= 21) {
                             //9PM Saturday issues
-                            //When call api at 21:00 to 23:59 at Saturday
+                            //When call api at 21:00 to 23:59 on Saturday
                             forecast_idx = i;
                             break;
                         } else if (current_hour >= 21 && dt.getHours() == 0) {
@@ -246,7 +257,14 @@ app.get('/weather', (req, res) => {
                         }
                     }
 
-                    for (let index = 0; index < 9; index++) {
+                    if (current_hour % 3 == 0) {
+                        var list_len = 8;
+                    } else {
+                        var list_len = 9;
+                    }
+                    console.log(list_len);
+                    
+                    for (let index = 0; index < list_len; index++) {
                         var forecast_dt = new Date(obj.list[forecast_idx].dt_txt);
 
                         hour.enqueue(forecast_dt.getHours());
@@ -260,7 +278,7 @@ app.get('/weather', (req, res) => {
                         forecast_idx++;
                     }
 
-                    for (let index = 0; index < 10; index++) {
+                    for (let index = 0; index < list_len + 1; index++) {
                         if (index == 0) {
                             item[index] = '<div id="carouselControls" class="carousel slide" data-ride="carousel">';
                             item[index] += '<div class="carousel-inner">';
