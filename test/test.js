@@ -112,6 +112,13 @@ describe('Test Description Icon function', function () {
         assert.strictEqual(res, "clear-day");
     });
 
+    it('test:get icon clear sky at 6:00', function () {
+        var d = new DescriptionIcon();
+        var hour = 6;
+        var res = d.getIcon("clear sky", hour);
+        assert.strictEqual(res, "clear-day");
+    });
+
     it('test:get icon clear at 19:00', function () {
         var d = new DescriptionIcon();
         var hour = 19;
@@ -119,18 +126,95 @@ describe('Test Description Icon function', function () {
         assert.strictEqual(res, "clear-night");
     });
 
-    it('test:get icon cloud at 6:00', function () {
+    it('test:get icon clear sky at 19:00', function () {
+        var d = new DescriptionIcon();
+        var hour = 19;
+        var res = d.getIcon("clear sky", hour);
+        assert.strictEqual(res, "clear-night");
+    });
+
+    it('test:get icon few clouds at 6:00', function () {
         var d = new DescriptionIcon();
         var hour = 6;
         var res = d.getIcon("few clouds", hour);
         assert.strictEqual(res, "partly-cloudy-day");
     });
 
-    it('test:get icon cloud at 19:00', function () {
+    it('test:get icon scattered clouds at 6:00', function () {
+        var d = new DescriptionIcon();
+        var hour = 6;
+        var res = d.getIcon("scattered clouds", hour);
+        assert.strictEqual(res, "partly-cloudy-day");
+    });
+
+    it('test:get icon broken clouds at 6:00', function () {
+        var d = new DescriptionIcon();
+        var hour = 6;
+        var res = d.getIcon("broken clouds", hour);
+        assert.strictEqual(res, "partly-cloudy-day");
+    });
+
+    it('test:get icon few clouds at 19:00', function () {
         var d = new DescriptionIcon();
         var hour = 19;
         var res = d.getIcon("few clouds", hour);
         assert.strictEqual(res, "partly-cloudy-night");
+    });
+
+    it('test:get icon scattered clouds at 19:00', function () {
+        var d = new DescriptionIcon();
+        var hour = 19;
+        var res = d.getIcon("scattered clouds", hour);
+        assert.strictEqual(res, "partly-cloudy-night");
+    });
+
+    it('test:get icon broken clouds at 19:00', function () {
+        var d = new DescriptionIcon();
+        var hour = 19;
+        var res = d.getIcon("broken clouds", hour);
+        assert.strictEqual(res, "partly-cloudy-night");
+    });
+
+    it('test:get icon clouds at 6:00', function () {
+        var d = new DescriptionIcon();
+        var hour = 6;
+        var res = d.getIcon("Clouds", hour);
+        assert.strictEqual(res, "cloudy");
+    });
+
+    it('test:get icon overcast clouds at 6:00', function () {
+        var d = new DescriptionIcon();
+        var hour = 6;
+        var res = d.getIcon("overcast clouds", hour);
+        assert.strictEqual(res, "cloudy");
+    });
+
+    it('test:get icon light rain at 6:00', function () {
+        var d = new DescriptionIcon();
+        var hour = 6;
+        var res = d.getIcon("light rain", hour);
+        assert.strictEqual(res, "rain");
+    });
+
+    it('test:get icon moderate rain at 6:00', function () {
+        var d = new DescriptionIcon();
+        var hour = 6;
+        var res = d.getIcon("moderate rain", hour);
+        assert.strictEqual(res, "rain");
+    });
+
+    it('test:get icon mist at 6:00', function () {
+        var d = new DescriptionIcon();
+        var hour = 6;
+        var res = d.getIcon("Mist", hour);
+        assert.strictEqual(res, "fog");
+    });
+
+    it('test:get icon haze at 6:00', function () {
+        var d = new DescriptionIcon();
+        var hour = 6;
+        var res = d.getIcon("Haze", hour);
+        assert.strictEqual(res, "fog");
     });
 });
 
