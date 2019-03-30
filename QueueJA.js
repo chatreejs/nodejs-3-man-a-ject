@@ -44,15 +44,6 @@ class QueueJA {
     getSize() {
         return this.size;
     }
-
-    printAll() {
-        console.log("Queue element are...")
-        let str = '';
-        for (let index = this.front; index < this.data.length; index++) {
-            str += this.data[index] + ' ';
-        }
-        console.log(str);
-    }
 }
 
 module.exports = QueueJA;
