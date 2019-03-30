@@ -15,9 +15,10 @@ class DescriptionIcon {
             }
         } else if (description == 'Clouds' || description == 'overcast clouds') {
             des_icon = 'cloudy';
-
         } else if (description == 'light rain' || description == 'moderate rain') {
             des_icon = 'rain';
+        } else if (description == 'Mist' || description == 'Haze') {
+            des_icon = 'fog';
         }
 
         return des_icon;

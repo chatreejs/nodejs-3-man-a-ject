@@ -1,5 +1,5 @@
 var icons = new Skycons({
-    "stroke": 0.01,
+    "stroke": 1,
     "color": "white"
 }),
     list = [
