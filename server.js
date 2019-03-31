@@ -175,6 +175,7 @@ app.get('/weather', (req, res) => {
     if (!id && !city) {
         res.sendFile('public/html/404.html', { root: __dirname })
     } else {
+        //asd
         var current_hour = date.getHours();
         var currentDayOfWeek = date.getDay();
         var currentDayOfMonth = date.getDate();
@@ -222,12 +223,6 @@ app.get('/weather', (req, res) => {
                     for (let i = 0; i < obj.list.length; i++) {
                         var dt_txt = obj.list[i].dt_txt;
                         var dt = new Date(dt_txt);
-                        console.log("dt_hour " + dt.getHours());
-                        console.log("cur_hour" + current_hour);
-                        console.log("dt_day" + dt.getDay());
-                        console.log("cur_day" + currentDayOfWeek);
-                        console.log(' ');
-
 
                         if (dt.getHours() > current_hour && dt.getDay() >= currentDayOfWeek && currentDayOfWeek != 0) {
                             //Default
@@ -262,7 +257,6 @@ app.get('/weather', (req, res) => {
                     } else {
                         var list_len = 9;
                     }
-                    console.log(list_len);
                     
                     for (let index = 0; index < list_len; index++) {
                         var forecast_dt = new Date(obj.list[forecast_idx].dt_txt);
