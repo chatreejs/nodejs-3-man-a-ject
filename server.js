@@ -32,7 +32,7 @@ head += '</head>';
 var nav = '<!-- Navigation -->';
 nav += '<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">';
 nav += '<div class="container">';
-nav += '<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"';
+nav += '<button class="navbar-toggler navbar-toggler-right" name="menu" type="button" data-toggle="collapse" data-target="#navbarResponsive"';
 nav += 'aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">';
 nav += 'Menu';
 nav += '<i class="fas fa-bars"></i>';
@@ -40,10 +40,10 @@ nav += '</button>';
 nav += '<div class="collapse navbar-collapse" id="navbarResponsive">';
 nav += '<ul class="navbar-nav ml-auto">';
 nav += '<li class="nav-item">';
-nav += '<a class="nav-link js-scroll-trigger" href="/">Home</a>';
+nav += '<a class="nav-link js-scroll-trigger" name="home" href="/">Home</a>';
 nav += '</li>';
 nav += '<li class="nav-item">';
-nav += '<a class="nav-link js-scroll-trigger" href="#" onclick="openNav()">Province</a>';
+nav += '<a class="nav-link js-scroll-trigger" name="province" href="#" onclick="openNav()">Province</a>';
 nav += '</li>';
 nav += '</ul></div></div></nav>';
 
@@ -63,11 +63,11 @@ script += '<script>$(".carousel").carousel({interval: false})</script>';
 script += '<script src="js/sidenav.js"></script>';
 
 var sidenav = '<div id="mySidenav" class="sidenav" >';
-sidenav += '<a class="climate-button climate-block climate-left-align" onclick="myAccFunc()">'
+sidenav += '<a class="climate-button climate-block climate-left-align" name="north" onclick="myAccFunc()">'
 sidenav += 'ภาคเหนือ <i class="fa fa-caret-down"></i>'
 sidenav += '</a>'
 sidenav += '<div id="demoAcc" class="w3-hide sidenav-dropdown sidenav-card">'
-sidenav += '<a href="/weather?id=1153669" class="climate-button">เชียงราย</a>'
+sidenav += '<a href="/weather?id=1153669" class="climate-button" name="cnx">เชียงราย</a>'
 sidenav += '<a href="/weather?id=1153671" class="climate-button">เชียงใหม่</a>'
 sidenav += '<a href="/weather?id=1608452" class="climate-button">น่าน</a>'
 sidenav += '<a href="/weather?id=1151426" class="climate-button">พะเยา</a>'
@@ -283,7 +283,7 @@ app.get('/weather', (req, res) => {
 
                         item[index] += '<div class="container d-flex h-20 align-items-center">';
                         item[index] += '<div class=" mx-auto text-center">';
-                        item[index] += '<h2 class="text-white mx-auto" style="margin-top:10rem;">';
+                        item[index] += '<h2 class="text-white mx-auto" name="city" style="margin-top:10rem;">';
                         item[index] += city;
                         item[index] += '</h2>';
                         item[index] += '<h3 class="text-white mx-auto mt-2 mb-5">';
