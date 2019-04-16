@@ -1,8 +1,9 @@
 class Compass {
     /**
+     * Returns points of the compass in 16-wind compass rose format
      * 
      * @param {number} degree Compass degree value 0 to 360
-     * @return {String} Name of compass 'N' 'E' 'W' 'S' 'NE' ...
+     * @return {String} Points of compass 'N' 'E' 'W' 'S' 'NE' ...
      */
     getDirection(degree) {
         if (degree == 0 || degree == 360) {
