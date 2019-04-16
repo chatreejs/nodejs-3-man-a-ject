@@ -261,7 +261,10 @@ body {
 
 #main,
 #mainNav {
-  transition: margin-right .45s;
+  -moz-transition: margin-right .45s!important;
+  -webkit-transition: margin-right .45s!important;
+  -o-transition: margin-right .45s!important;
+  -ms-transition: margin-right .45s!important;
   padding: 16px;
 }
 
