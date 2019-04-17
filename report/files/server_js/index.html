@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - server.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>server.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">42.75</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">425</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">55.00</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">5.58</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">var http = require(&#039;http&#039;);
+const request = require(&#039;request&#039;);
+var express = require(&#039;express&#039;);
+var app = express();
+var changeCase = require(&#039;change-case&#039;);
+
+const ApiKey = &#039;d5898bac8ec6c53e5587936972a98a56&#039;;
+
+var Compass = require(&#039;./Compass&#039;);
+var compass = new Compass();
+
+var DescriptionIcon = require(&#039;./DescriptionIcon&#039;);
+var des_icon = new DescriptionIcon();
+
+var QueueJa = require(&#039;./QueueJA&#039;);
+
+var date = new Date();
+
+app.use(express.static(__dirname + &#039;/public&#039;));
+
+var head = &#039;&lt;head&gt;&#039;;
+head += &#039;&lt;meta charset=&quot;utf-8&quot;&gt;&#039;;
+head += &#039;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;&#039;;
+head += &#039;&lt;title&gt;Climate Change&lt;/title&gt;&#039;;
+head += &#039;&lt;link href=&quot;vendor/bootstrap/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;&gt;&#039;;
+head += &#039;&lt;link href=&quot;vendor/fontawesome-free/css/all.min.css&quot; rel=&quot;stylesheet&quot;&gt;&#039;;
+head += &#039;&lt;link href=&quot;https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&quot; rel=&quot;stylesheet&quot;&gt;&#039;;
+head += &#039;&lt;link href=&quot;css/climate.css&quot; rel=&quot;stylesheet&quot;&gt;&#039;;
+head += &#039;&lt;link rel=&quot;stylesheet&quot; href=&quot;https://www.w3schools.com/w3css/4/w3.css&quot;&gt;&#039;;
+head += &#039;&lt;/head&gt;&#039;;
+
+var nav = &#039;&lt;!-- Navigation --&gt;&#039;;
+nav += &#039;&lt;nav class=&quot;navbar navbar-expand-lg navbar-light fixed-top&quot; id=&quot;mainNav&quot;&gt;&#039;;
+nav += &#039;&lt;div class=&quot;container&quot;&gt;&#039;;
+nav += &#039;&lt;button class=&quot;navbar-toggler navbar-toggler-right&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarResponsive&quot;&#039;;
+nav += &#039;aria-controls=&quot;navbarResponsive&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;&#039;;
+nav += &#039;Menu&#039;;
+nav += &#039;&lt;i class=&quot;fas fa-bars&quot;&gt;&lt;/i&gt;&#039;;
+nav += &#039;&lt;/button&gt;&#039;;
+nav += &#039;&lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarResponsive&quot;&gt;&#039;;
+nav += &#039;&lt;ul class=&quot;navbar-nav ml-auto&quot;&gt;&#039;;
+nav += &#039;&lt;li class=&quot;nav-item&quot;&gt;&#039;;
+nav += &#039;&lt;a class=&quot;nav-link js-scroll-trigger&quot; href=&quot;/&quot;&gt;Home&lt;/a&gt;&#039;;
+nav += &#039;&lt;/li&gt;&#039;;
+nav += &#039;&lt;li class=&quot;nav-item&quot;&gt;&#039;;
+nav += &#039;&lt;a class=&quot;nav-link js-scroll-trigger&quot; href=&quot;#&quot; onclick=&quot;openNav()&quot;&gt;Province&lt;/a&gt;&#039;;
+nav += &#039;&lt;/li&gt;&#039;;
+nav += &#039;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;&lt;/nav&gt;&#039;;
+
+var footer = &#039;&lt;!-- Footer --&gt;&#039;;
+footer += &#039;&lt;footer class=&quot;bg-black small text-center text-white-50&quot;&gt;&#039;;
+footer += &#039;&lt;div class=&quot;container&quot;&gt;&#039;;
+footer += &#039;Copyright &amp;copy; 3man a ject 2019&#039;;
+footer += &#039;&lt;/div&gt;&lt;/footer&gt;&#039;;
+
+var script = &#039;&lt;script src=&quot;vendor/jquery/jquery.min.js&quot;&gt;&lt;/script&gt;&#039;;
+script += &#039;&lt;script src=&quot;vendor/bootstrap/js/bootstrap.bundle.min.js&quot;&gt;&lt;/script&gt;&#039;;
+script += &#039;&lt;script src=&quot;vendor/jquery-easing/jquery.easing.min.js&quot;&gt;&lt;/script&gt;&#039;;
+script += &#039;&lt;script src=&quot;js/climate.min.js&quot;&gt;&lt;/script&gt;&#039;;
+script += &#039;&lt;script src=&quot;js/skycons.js&quot;&gt;&lt;/script&gt;&#039;;
+script += &#039;&lt;script src=&quot;js/icon.js&quot;&gt;&lt;/script&gt;&#039;;
+script += &#039;&lt;script&gt;$(&quot;.carousel&quot;).carousel({interval: false})&lt;/script&gt;&#039;;
+script += &#039;&lt;script src=&quot;js/sidenav.js&quot;&gt;&lt;/script&gt;&#039;;
+
+var sidenav = &#039;&lt;div id=&quot;mySidenav&quot; class=&quot;sidenav&quot; &gt;&#039;;
+sidenav += &#039;&lt;a class=&quot;climate-button climate-block climate-left-align&quot; onclick=&quot;myAccFunc()&quot;&gt;&#039;
+sidenav += &#039;ภาคเหนือ &lt;i class=&quot;fa fa-caret-down&quot;&gt;&lt;/i&gt;&#039;
+sidenav += &#039;&lt;/a&gt;&#039;
+sidenav += &#039;&lt;div id=&quot;demoAcc&quot; class=&quot;w3-hide sidenav-dropdown sidenav-card&quot;&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1153669&quot; class=&quot;climate-button&quot;&gt;เชียงราย&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1153671&quot; class=&quot;climate-button&quot;&gt;เชียงใหม่&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608452&quot; class=&quot;climate-button&quot;&gt;น่าน&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1151426&quot; class=&quot;climate-button&quot;&gt;พะเยา&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607552&quot; class=&quot;climate-button&quot;&gt;แพร่&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1152222&quot; class=&quot;climate-button&quot;&gt;แม่ฮ่องสอน&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1152473&quot; class=&quot;climate-button&quot;&gt;ลำปาง&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1152468&quot; class=&quot;climate-button&quot;&gt;ลำพูน&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1605215&quot; class=&quot;climate-button&quot;&gt;อุตรดิตถ์&lt;/a&gt;&#039;
+sidenav += &#039;&lt;/div&gt;&#039;
+sidenav += &#039;&lt;a class=&quot;climate-button climate-block climate-left-align&quot; onclick=&quot;myDropFunc()&quot;&gt;&#039;
+sidenav += &#039;ภาคตะวันออกเฉียงเหนือ &lt;i class=&quot;fa fa-caret-down&quot;&gt;&lt;/i&gt;&#039;
+sidenav += &#039;&lt;/a&gt;&#039;
+sidenav += &#039;&lt;div id=&quot;demoDrop&quot; class=&quot;w3-hide sidenav-dropdown sidenav-card&quot;&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1610469&quot; class=&quot;climate-button&quot;&gt;กาฬสินธุ์&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1609776&quot; class=&quot;climate-button&quot;&gt;ขอนแก่น&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1611407&quot; class=&quot;climate-button&quot;&gt;ชัยภูมิ&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608531&quot; class=&quot;climate-button&quot;&gt;นครพนม&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608529&quot; class=&quot;climate-button&quot;&gt;นครราชสีมา&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1611475&quot; class=&quot;climate-button&quot;&gt;บึงกาฬ&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1603291&quot; class=&quot;climate-button&quot;&gt;บุรีรัมย์&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608900&quot; class=&quot;climate-button&quot;&gt;มหาสารคาม&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608597&quot; class=&quot;climate-button&quot;&gt;มุกดาหาร&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1604769&quot; class=&quot;climate-button&quot;&gt;ยโสธร&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607001&quot; class=&quot;climate-button&quot;&gt;ร้อยเอ็ด&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1609071&quot; class=&quot;climate-button&quot;&gt;เลย&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606239&quot; class=&quot;climate-button&quot;&gt;ศรีสะเกษ&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606790&quot; class=&quot;climate-button&quot;&gt;สกลนคร&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606030&quot; class=&quot;climate-button&quot;&gt;สุรินทร์&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608232&quot; class=&quot;climate-button&quot;&gt;หนองคาย&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608269&quot; class=&quot;climate-button&quot;&gt;หนองบัวลำภู&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1621060&quot; class=&quot;climate-button&quot;&gt;อำนาจเจริญ&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1605239&quot; class=&quot;climate-button&quot;&gt;อุดรธานี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1605245&quot; class=&quot;climate-button&quot;&gt;อุบลราชธานี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;/div&gt;&#039;
+sidenav += &#039;&lt;a class=&quot;climate-button climate-block climate-left-align&quot; onclick=&quot;myDropFunc2()&quot;&gt;&#039;
+sidenav += &#039;ภาคกลาง&lt;i class=&quot;fa fa-caret-down&quot;&gt;&lt;/i&gt;&#039;
+sidenav += &#039;&lt;/a&gt;&#039;
+sidenav += &#039;&lt;div id=&quot;demoDrop2&quot; class=&quot;w3-hide sidenav-dropdown sidenav-card&quot;&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1609350&quot; class=&quot;climate-button&quot;&gt;กรุงเทพมหานคร&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1153090&quot; class=&quot;climate-button&quot;&gt;กำแพงเพชร&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1611416&quot; class=&quot;climate-button&quot;&gt;ชัยนาท&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608539&quot; class=&quot;climate-button&quot;&gt;นครนายก&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608534&quot; class=&quot;climate-button&quot;&gt;นครปฐม&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608527&quot; class=&quot;climate-button&quot;&gt;นครสวรรค์&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1609350&quot; class=&quot;climate-button&quot;&gt;นนทบุรี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607983&quot; class=&quot;climate-button&quot;&gt;ปทุมธานี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607532&quot; class=&quot;climate-button&quot;&gt;พระนครศรีอยุธยา&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607725&quot; class=&quot;climate-button&quot;&gt;พิจิตร&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607708&quot; class=&quot;climate-button&quot;&gt;พิษณุโลก&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607737&quot; class=&quot;climate-button&quot;&gt;เพชรบูรณ์&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1609032&quot; class=&quot;climate-button&quot;&gt;ลพบุรี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606590&quot; class=&quot;climate-button&quot;&gt;สมุทรปราการ&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606586&quot; class=&quot;climate-button&quot;&gt;สมุทรสงคราม&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606588&quot; class=&quot;climate-button&quot;&gt;สมุทรสาคร&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606418&quot; class=&quot;climate-button&quot;&gt;สระบุรี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606270&quot; class=&quot;climate-button&quot;&gt;สิงห์บุรี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1150533&quot; class=&quot;climate-button&quot;&gt;สุโขทัย&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606033&quot; class=&quot;climate-button&quot;&gt;สุพรรณบุรี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1621035&quot; class=&quot;climate-button&quot;&gt;อ่างทอง&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1605221&quot; class=&quot;climate-button&quot;&gt;อุทัยธานี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;/div&gt;&#039;
+sidenav += &#039;&lt;a class=&quot;climate-button climate-block climate-left-align&quot; onclick=&quot;myDropFunc3()&quot;&gt;&#039;
+sidenav += &#039;ภาคใต้&lt;i class=&quot;fa fa-caret-down&quot;&gt;&lt;/i&gt;&#039;
+sidenav += &#039;&lt;/a&gt;&#039;
+sidenav += &#039;&lt;div id=&quot;demoDrop3&quot; class=&quot;w3-hide sidenav-dropdown sidenav-card&quot;&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1152633&quot; class=&quot;climate-button&quot;&gt;กระบี่&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1153557&quot; class=&quot;climate-button&quot;&gt;ชุมพร&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1150007&quot; class=&quot;climate-button&quot;&gt;ตรัง&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1151933&quot; class=&quot;climate-button&quot;&gt;นครศรีธรรมราช&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608409&quot; class=&quot;climate-button&quot;&gt;นราธิวาส&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607978&quot; class=&quot;climate-button&quot;&gt;ปัตตานี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1151464&quot; class=&quot;climate-button&quot;&gt;พังงา&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607779&quot; class=&quot;climate-button&quot;&gt;พัทลุง&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1151254&quot; class=&quot;climate-button&quot;&gt;ภูเก็ต&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1604870&quot; class=&quot;climate-button&quot;&gt;ยะลา&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1150965&quot; class=&quot;climate-button&quot;&gt;ระนอง&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606147&quot; class=&quot;climate-button&quot;&gt;สงขลา&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606376&quot; class=&quot;climate-button&quot;&gt;สตูล&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1150515&quot; class=&quot;climate-button&quot;&gt;สุราษฎร์ธานี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;/div&gt;&#039;
+sidenav += &#039;&lt;/div&gt;&#039;
+
+
+
+var server = app.listen(3000, function () {
+    var port = server.address().port;
+    console.log(&#039;\x1b[32m%s%s\x1b[0m&#039;, &#039;Running on port : &#039;, port);
+});
+
+app.get(&#039;/&#039;, (req, res) =&gt; {
+    //Call IPGeolocation API
+    request(&#039;https://api.ipgeolocation.io/ipgeo?apiKey=7cc0eab4bbb44d95928fccea5b517f01&#039;, (error, response, body) =&gt; {
+        if (response.statusCode == 200) {
+            var obj = JSON.parse(body);
+            city = obj.city;
+            //Redirect and get weather at current location
+            res.redirect(&#039;/weather?q=&#039; + city);
+        }
+    });
+});
+
+app.get(&#039;/weather&#039;, (req, res) =&gt; {
+    id = req.query.id;
+    city = req.query.q;
+    if (!id &amp;&amp; !city) {
+        res.sendFile(&#039;public/html/404.html&#039;, { root: __dirname })
+    } else {
+        //asd
+        var current_hour = date.getHours();
+        var currentDayOfWeek = date.getDay();
+        var currentDayOfMonth = date.getDate();
+        var current_month = date.getMonth();
+
+        var days = [&#039;Sunday&#039;, &#039;Monday&#039;, &#039;Tuesday&#039;, &#039;Wednesday&#039;, &#039;Thursday&#039;, &#039;Friday&#039;, &#039;Saturday&#039;];
+
+        if (!city) {
+            query = &#039;id=&#039; + id;
+        } else {
+            query = &#039;q=&#039; + city;
+        }
+
+        //Call Weather API
+        request(&#039;http://api.openweathermap.org/data/2.5/weather?&#039; + query + &#039;&amp;APPID=&#039; + ApiKey, (error, response, body) =&gt; {
+            var obj = JSON.parse(body);
+            try {
+                var item = []
+                var city = obj.name;
+
+                var hour = new QueueJa(12);
+                var dayNameOfWeek = new QueueJa(12);
+                var description = new QueueJa(12);
+                var temp = new QueueJa(12);
+                var temp_max = new QueueJa(5);
+                var temp_min = new QueueJa(5);
+                var humidity = new QueueJa(12);
+                var pressure = new QueueJa(12);
+                var wind_speed = new QueueJa(12);
+                var wind_deg = new QueueJa(12);
+
+                hour.enqueue(current_hour);
+                dayNameOfWeek.enqueue(days[currentDayOfWeek]);
+                description.enqueue(obj.weather[0].main);
+                temp.enqueue(obj.main.temp - 273.15);
+                humidity.enqueue(obj.main.humidity);
+                pressure.enqueue(obj.main.pressure);
+                wind_speed.enqueue(obj.wind.speed);
+                wind_deg.enqueue(obj.wind.deg);
+
+                request(&#039;http://api.openweathermap.org/data/2.5/forecast?&#039; + query + &#039;&amp;APPID=&#039; + ApiKey, (error, response, body) =&gt; {
+                    var obj = JSON.parse(body);
+                    var forecast_idx;
+
+                    for (let i = 0; i &lt; obj.list.length; i++) {
+                        var dt_txt = obj.list[i].dt_txt;
+                        var dt = new Date(dt_txt);
+
+                        if (dt.getHours() &gt; current_hour &amp;&amp; dt.getDay() &gt;= currentDayOfWeek &amp;&amp; currentDayOfWeek != 0) {
+                            //Default
+                            forecast_idx = i;
+                            break;
+                        } else if (dt.getHours() == current_hour &amp;&amp; dt.getDay() == currentDayOfWeek) {
+                            //When call api at 09:00, 12:00, 15:00, 18:00
+                            forecast_idx = i + 1;
+                            break;
+                        } else if (dt.getDay() == 0 &amp;&amp; currentDayOfWeek == 0 &amp;&amp; current_hour == 0) {
+                            //When call api at 00:00 on Sunday
+                            forecast_idx = i;
+                            break;
+                        } else if (dt.getDay() == 0 &amp;&amp; currentDayOfWeek == 0 &amp;&amp; current_hour &gt;= 0) {
+                            //When call api at 01:00 to 23:59 on Sunday
+                            forecast_idx = i + 1;
+                            break;
+                        } else if (dt.getHours() == 0 &amp;&amp; dt.getDay() == 0 &amp;&amp; currentDayOfWeek == 6 &amp;&amp; current_hour &gt;= 21) {
+                            //9PM Saturday issues
+                            //When call api at 21:00 to 23:59 on Saturday
+                            forecast_idx = i;
+                            break;
+                        } else if (current_hour &gt;= 21 &amp;&amp; dt.getHours() == 0) {
+                            //When call api at 21:00 to 23:59 everyday except Saturday
+                            forecast_idx = i;
+                            break;
+                        }
+                    }
+
+                    if (current_hour % 3 == 0) {
+                        var list_len = 8;
+                    } else {
+                        var list_len = 9;
+                    }
+                    
+                    for (let index = 0; index &lt; list_len; index++) {
+                        var forecast_dt = new Date(obj.list[forecast_idx].dt_txt);
+
+                        hour.enqueue(forecast_dt.getHours());
+                        dayNameOfWeek.enqueue(days[forecast_dt.getDay()]);
+                        description.enqueue(obj.list[forecast_idx].weather[0].description);
+                        temp.enqueue(obj.list[forecast_idx].main.temp - 273.15);
+                        humidity.enqueue(obj.list[forecast_idx].main.humidity);
+                        pressure.enqueue(obj.list[forecast_idx].main.pressure);
+                        wind_speed.enqueue(obj.list[forecast_idx].wind.speed);
+                        wind_deg.enqueue(obj.list[forecast_idx].wind.deg);
+                        forecast_idx++;
+                    }
+
+                    for (let index = 0; index &lt; list_len + 1; index++) {
+                        if (index == 0) {
+                            item[index] = &#039;&lt;div id=&quot;carouselControls&quot; class=&quot;carousel slide&quot; data-ride=&quot;carousel&quot;&gt;&#039;;
+                            item[index] += &#039;&lt;div class=&quot;carousel-inner&quot;&gt;&#039;;
+                            item[index] += &#039;&lt;div class=&quot;carousel-item active&quot;&gt;&#039;;
+                        } else {
+                            item[index] = &#039;&lt;div class=&quot;carousel-item&quot;&gt;&#039;;
+                        }
+
+                        item[index] += &#039;&lt;div class=&quot;container d-flex h-20 align-items-center&quot;&gt;&#039;;
+                        item[index] += &#039;&lt;div class=&quot; mx-auto text-center&quot;&gt;&#039;;
+                        item[index] += &#039;&lt;h2 class=&quot;text-white mx-auto&quot; style=&quot;margin-top:10rem;&quot;&gt;&#039;;
+                        item[index] += city;
+                        item[index] += &#039;&lt;/h2&gt;&#039;;
+                        item[index] += &#039;&lt;h3 class=&quot;text-white mx-auto mt-2 mb-5&quot;&gt;&#039;;
+                        item[index] += changeCase.titleCase(description.getFront());
+                        item[index] += &#039;&lt;/h3&gt;&#039;;
+                        item[index] += &#039;&lt;h1 class=&quot;text-white mx-auto mt-5 mb-5&quot;&gt;&#039;;
+                        item[index] += &#039;&lt;canvas class=&quot;&#039;;
+                        item[index] += des_icon.getIcon(description.dequeue(), hour.getFront());
+                        item[index] += &#039;&quot; width=&quot;120&quot; height=&quot;120&quot;&gt;&lt;/canvas&gt;&#039;;
+                        item[index] += temp.dequeue().toFixed(0);
+                        item[index] += &#039;&amp;deg;&lt;/h1&gt;&#039;;
+                        item[index] += &#039;&lt;h3 class=&quot;text-white mx-auto mt-2 mb-5&quot;&gt;&#039; + dayNameOfWeek.dequeue() + &#039; &#039;
+                        item[index] += hour.dequeue();
+                        item[index] += &#039;:00&lt;/h3&gt;&#039;;
+                        item[index] += &#039;&lt;/div&gt;&#039;;
+                        item[index] += &#039;&lt;/div&gt;&#039;;
+                        item[index] += &#039;&lt;div class=&quot;container&quot;&gt;&#039;;
+                        item[index] += &#039;&lt;div class=&quot;table-responsive-sm&quot;&gt;&#039;;
+                        item[index] += &#039;&lt;table class=&quot;table table-borderless text-white&quot;&gt;&#039;;
+                        item[index] += &#039;&lt;thead&gt;&#039;;
+                        item[index] += &#039;&lt;tr&gt;&#039;;
+                        item[index] += &#039;&lt;th scope=&quot;col&quot;&gt;Wind&lt;/th&gt;&#039;;
+                        item[index] += &#039;&lt;th scope=&quot;col&quot;&gt;Humidity&lt;/th&gt;&#039;;
+                        item[index] += &#039;&lt;th scope=&quot;col&quot;&gt;Pressure&lt;/th&gt;&#039;;
+                        item[index] += &#039;&lt;/tr&gt;&#039;;
+                        item[index] += &#039;&lt;/thead&gt;&#039;;
+                        item[index] += &#039;&lt;tbody&gt;&#039;;
+                        item[index] += &#039;&lt;tr&gt;&#039;;
+                        item[index] += &#039;&lt;td&gt;&#039; + compass.getDirection(wind_deg.dequeue()) + &#039; &#039;;
+                        item[index] += wind_speed.dequeue();
+                        item[index] += &#039;km/hr&lt;/td&gt;&#039;;
+                        item[index] += &#039;&lt;td&gt;&#039;;
+                        item[index] += humidity.dequeue();
+                        item[index] += &#039;%&lt;/td&gt;&#039;;
+                        item[index] += &#039;&lt;td&gt;&#039;;
+                        item[index] += pressure.dequeue();
+                        item[index] += &#039; hPa&lt;/td&gt;&#039;;
+                        item[index] += &#039;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&#039;;
+                        item[index] += &#039;&lt;/div&gt;&#039;;
+                    }
+
+                    var list = &#039;&#039;;
+                    for (let index = 0; index &lt; item.length; index++) {
+                        list += item[index];
+                    }
+
+                    var date_index = currentDayOfMonth;
+                    var newmonth_date_index = 1;
+                    var table = &#039;&#039;;
+
+                    for (let index = 0; index &lt; obj.list.length; index++) {
+                        var dt_txt = obj.list[index].dt_txt;
+                        var dt = new Date(dt_txt);
+
+                        if (current_hour &gt;= 21) {
+                            if (dt.getHours() == 0 &amp;&amp; dt.getDate() &gt; date_index &amp;&amp; dt.getMonth() == current_month) {
+                                hour.enqueue(dt.getHours());
+                                dayNameOfWeek.enqueue(days[dt.getDay()]);
+                                description.enqueue(obj.list[index].weather[0].description);
+                                temp_max.enqueue(obj.list[index].main.temp_max - 273.15);
+                                temp_min.enqueue(obj.list[index].main.temp_min - 273.15);
+                                date_index++;
+                            } else if (dt.getHours() == 0 &amp;&amp; dt.getDate() &gt;= newmonth_date_index &amp;&amp; dt.getMonth() &gt; current_month) {
+                                hour.enqueue(dt.getHours());
+                                dayNameOfWeek.enqueue(days[dt.getDay()]);
+                                description.enqueue(obj.list[index].weather[0].description);
+                                temp_max.enqueue(obj.list[index].main.temp_max - 273.15);
+                                temp_min.enqueue(obj.list[index].main.temp_min - 273.15);
+                                newmonth_date_index++;
+                            }
+                        } else {
+                            if (dt.getHours() &gt;= current_hour &amp;&amp; dt.getDate() &gt; date_index &amp;&amp; dt.getMonth() == current_month) {
+                                hour.enqueue(dt.getHours());
+                                dayNameOfWeek.enqueue(days[dt.getDay()]);
+                                description.enqueue(obj.list[index].weather[0].description);
+                                temp_max.enqueue(obj.list[index].main.temp_max - 273.15);
+                                temp_min.enqueue(obj.list[index].main.temp_min - 273.15);
+                                date_index++;
+                            } else if (dt.getHours() &gt;= current_hour &amp;&amp; dt.getDate() &gt;= newmonth_date_index &amp;&amp; dt.getMonth() &gt; current_month) {
+                                hour.enqueue(dt.getHours());
+                                dayNameOfWeek.enqueue(days[dt.getDay()]);
+                                description.enqueue(obj.list[index].weather[0].description);
+                                temp_max.enqueue(obj.list[index].main.temp_max - 273.15);
+                                temp_min.enqueue(obj.list[index].main.temp_min - 273.15);
+                                newmonth_date_index++;
+                            }
+                        }
+                    }
+
+                    for (let index = 0; index &lt; 3; index++) {
+                        table += &#039;&lt;tr&gt;&#039;;
+                        table += &#039;&lt;td class=&quot;text-white&quot; style=&quot;width:45%&quot;&gt;&#039; + dayNameOfWeek.dequeue() + &#039;&lt;/td&gt;&#039;
+                        table += &#039;&lt;td class=&quot;text-white&quot; style=&quot;width:20%&quot;&gt;&lt;canvas class=&quot;&#039;
+                        table += des_icon.getIcon(description.dequeue(), hour.dequeue());
+                        table += &#039;&quot; width=&quot;20&quot; height=&quot;20&quot;&gt;&lt;/canvas&gt;&lt;/td&gt;&#039;
+                        table += &#039;&lt;td class=&quot;text-white&quot; style=&quot;width:5%&quot;&gt;&#039; + temp_max.dequeue().toFixed(0) + &#039;&lt;/td&gt;&#039;
+                        table += &#039;&lt;td class=&quot;text-white-50&quot; style=&quot;width:50%&quot;&gt;&#039; + temp_min.dequeue().toFixed(0) + &#039;&lt;/td&gt;&#039;
+                        table += &#039;&lt;/tr&gt;&#039;
+                    }
+
+                    var html = &#039;&#039;;
+                    html += head;
+                    html += &#039;&lt;body id=&quot;page-top&quot;&gt;&#039;;
+                    html += nav;
+                    html += &#039;&lt;header class=&quot;masthead&quot;&gt;&#039;;
+                    html += sidenav;
+                    html += &#039;&lt;div id=&quot;main&quot;&gt;&#039;;
+                    html += list;
+                    html += &#039;&lt;/div&gt;&#039;;
+                    html += &#039;&lt;a class=&quot;left carousel-control-prev&quot; href=&quot;#carouselControls&quot; role=&quot;button&quot; data-slide=&quot;prev&quot;&gt;&#039;;
+                    html += &#039;&lt;span class=&quot;carousel-control-prev-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;&#039;;
+                    html += &#039;&lt;span class=&quot;sr-only&quot;&gt;Previous&lt;/span&gt;&#039;;
+                    html += &#039;&lt;/a&gt;&#039;;
+                    html += &#039;&lt;a class=&quot;right carousel-control-next&quot; href=&quot;#carouselControls&quot; role=&quot;button&quot; data-slide=&quot;next&quot;&gt;&#039;;
+                    html += &#039;&lt;span class=&quot;carousel-control-next-icon&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;&#039;
+                    html += &#039;&lt;span class=&quot;sr-only&quot;&gt;Next&lt;/span&gt;&#039;
+                    html += &#039;&lt;/a&gt;&#039;
+                    html += &#039;&lt;/div&gt;&#039;;
+
+                    html += &#039;&lt;div class=&quot;container&quot;&gt;&#039;;
+                    html += &#039;&lt;div class=&quot;table-responsive-sm&quot;&gt;&#039;;
+                    html += &#039;&lt;table class=&quot;table table-borderless text-white&quot;&gt;&#039;;
+                    html += &#039;&lt;tbody&gt;&#039;;
+                    html += table;
+                    html += &#039;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;&#039;;
+                    html += &#039;&lt;/header&gt;&#039;;
+                    html += footer;
+                    html += script;
+                    html += &#039;&lt;/body&gt;&#039;;
+
+                    res.send(html)
+                });
+            } catch (error) {
+                console.log(error);
+                res.sendFile(&#039;public/html/404.html&#039;, { root: __dirname });
+            }
+        });
+    }
+});</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ cyclomatic }} <br>
+    Length : {{ halstead.length }} <br>
+    Difficulty : {{ halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>
