@@ -11,6 +11,7 @@ describe('Checkout Homepage', function () {
     // Next, we will write steps for our test. 
     // For the element ID, you can find it by open the browser inspect feature.
     it('Click on Chiang Rai', async function () {
+        // Set browser size to maximize
         await driver.manage().window().maximize()
         // Load the page
         await driver.get('http://localhost:3000');
@@ -24,7 +25,7 @@ describe('Checkout Homepage', function () {
         await driver.findElement(By.name('cnx')).click();
 
         let city = await driver.findElement(By.name('city')).getText();
-        console.log(city);
+        // console.log(city);
         assert.equal(city, 'Chiang Rai');
     });
     // close the browser after running tests
