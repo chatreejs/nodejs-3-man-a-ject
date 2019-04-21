@@ -231,7 +231,7 @@ footer {
   z-index: 5;
   top: 0;
   right: 0;
-  background-color: #F2EDD8;
+  background-color:#8ecfcc;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
@@ -245,10 +245,10 @@ footer {
   display: block;
   transition: 0.5s;
 }
-
+/* เมาส์ชี้จังหวัด */
 .sidenav a:hover {
   color: #000;
-  background-color: rgba(150, 192, 206);
+  background-color: rgba(253,253,245, 0.8);
 }
 
 .sidenav .closebtn {
@@ -311,14 +311,16 @@ footer {
   display: block !important;
 }
 
+/* พื้นหลังจังหวัด */
 .sidenav-dropdown {
   color: #000 !important;
-  background-color: #FEF6EB !important;
+  background-color: rgba(253,253,245, 0.8) !important;
 }
 
+/* ภาค */
 .sidenav-dropdown-open {
   color: rgb(0, 0, 0) !important;
-  background-color: rgb(194, 91, 86) !important;
+  background-color: rgba(136, 187, 221, 0.432) !important;
 }
 
 .sidenav-card {
