@@ -87,7 +87,7 @@ sidenav += '<a href="/weather?id=1611407" class="climate-button" name="chaiyaphu
 sidenav += '<a href="/weather?id=1608531" class="climate-button" name="nakhon_phanom">นครพนม</a>'
 sidenav += '<a href="/weather?id=1608529" class="climate-button" name="nakhon_ratchasima">นครราชสีมา</a>'
 sidenav += '<a href="/weather?id=1611475" class="climate-button" name="bueng_kan">บึงกาฬ</a>'
-sidenav += '<a href="/weather?id=1611453" class="climate-button" name="burirum">บุรีรัมย์</a>'
+sidenav += '<a href="/weather?id=1611453" class="climate-button" name="buriram">บุรีรัมย์</a>'
 sidenav += '<a href="/weather?id=1608900" class="climate-button" name="maha_sarakham">มหาสารคาม</a>'
 sidenav += '<a href="/weather?id=1608597" class="climate-button" name="mukdahan">มุกดาหาร</a>'
 sidenav += '<a href="/weather?id=1604769" class="climate-button" name="yasothon">ยโสธร</a>'
