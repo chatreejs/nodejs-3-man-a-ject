@@ -48,7 +48,7 @@
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
-      <p class="stat">425</p>
+      <p class="stat">430</p>
     </div>
   </div>
   <div class="row historical">
@@ -62,11 +62,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
-      <p class="stat">55.00</p>
+      <p class="stat">54.61</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
-      <p class="stat">5.58</p>
+      <p class="stat">5.65</p>
     </div>
   </div>
 </div>
@@ -123,7 +123,7 @@ head += &#039;&lt;/head&gt;&#039;;
 var nav = &#039;&lt;!-- Navigation --&gt;&#039;;
 nav += &#039;&lt;nav class=&quot;navbar navbar-expand-lg navbar-light fixed-top&quot; id=&quot;mainNav&quot;&gt;&#039;;
 nav += &#039;&lt;div class=&quot;container&quot;&gt;&#039;;
-nav += &#039;&lt;button class=&quot;navbar-toggler navbar-toggler-right&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarResponsive&quot;&#039;;
+nav += &#039;&lt;button class=&quot;navbar-toggler navbar-toggler-right&quot; name=&quot;menu&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarResponsive&quot;&#039;;
 nav += &#039;aria-controls=&quot;navbarResponsive&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;&#039;;
 nav += &#039;Menu&#039;;
 nav += &#039;&lt;i class=&quot;fas fa-bars&quot;&gt;&lt;/i&gt;&#039;;
@@ -131,12 +131,18 @@ nav += &#039;&lt;/button&gt;&#039;;
 nav += &#039;&lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarResponsive&quot;&gt;&#039;;
 nav += &#039;&lt;ul class=&quot;navbar-nav ml-auto&quot;&gt;&#039;;
 nav += &#039;&lt;li class=&quot;nav-item&quot;&gt;&#039;;
-nav += &#039;&lt;a class=&quot;nav-link js-scroll-trigger&quot; href=&quot;/&quot;&gt;Home&lt;/a&gt;&#039;;
+nav += &#039;&lt;a class=&quot;nav-link js-scroll-trigger&quot; name=&quot;home&quot; href=&quot;/&quot;&gt;Home&lt;/a&gt;&#039;;
 nav += &#039;&lt;/li&gt;&#039;;
 nav += &#039;&lt;li class=&quot;nav-item&quot;&gt;&#039;;
-nav += &#039;&lt;a class=&quot;nav-link js-scroll-trigger&quot; href=&quot;#&quot; onclick=&quot;openNav()&quot;&gt;Province&lt;/a&gt;&#039;;
+nav += &#039;&lt;a class=&quot;nav-link js-scroll-trigger&quot; name=&quot;province&quot; href=&quot;#&quot; onclick=&quot;openNav()&quot;&gt;Province&lt;/a&gt;&#039;;
 nav += &#039;&lt;/li&gt;&#039;;
-nav += &#039;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;&lt;/nav&gt;&#039;;
+nav += &#039;&lt;/ul&gt;&#039;;
+nav += &#039;&lt;div class=&quot;search-box&quot;&gt;&#039;;
+nav += &#039;&lt;input type=&quot;text&quot; class=&quot;input input-province&quot; name=&quot;search-box&quot;&gt;&#039;;
+nav += &#039;&lt;/div&gt;&#039;;
+nav += &#039;&lt;div class=&quot;icon-items icon-1&quot;&gt;&#039;;
+nav += &#039;&lt;i class=&quot;fas fa-search search-btn&quot; name=&quot;search-btn&quot;&gt;&lt;/i&gt;&#039;;
+nav += &#039;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/nav&gt;&#039;;
 
 var footer = &#039;&lt;!-- Footer --&gt;&#039;;
 footer += &#039;&lt;footer class=&quot;bg-black small text-center text-white-50&quot;&gt;&#039;;
@@ -152,96 +158,95 @@ script += &#039;&lt;script src=&quot;js/skycons.js&quot;&gt;&lt;/script&gt;&#039
 script += &#039;&lt;script src=&quot;js/icon.js&quot;&gt;&lt;/script&gt;&#039;;
 script += &#039;&lt;script&gt;$(&quot;.carousel&quot;).carousel({interval: false})&lt;/script&gt;&#039;;
 script += &#039;&lt;script src=&quot;js/sidenav.js&quot;&gt;&lt;/script&gt;&#039;;
+script += &#039;&lt;script src=&quot;js/search.js&quot;&gt;&lt;/script&gt;&#039;;
 
 var sidenav = &#039;&lt;div id=&quot;mySidenav&quot; class=&quot;sidenav&quot; &gt;&#039;;
-sidenav += &#039;&lt;a class=&quot;climate-button climate-block climate-left-align&quot; onclick=&quot;myAccFunc()&quot;&gt;&#039;
+sidenav += &#039;&lt;a class=&quot;climate-button climate-block climate-left-align&quot; name=&quot;north&quot; onclick=&quot;myAccFunc()&quot;&gt;&#039;
 sidenav += &#039;ภาคเหนือ &lt;i class=&quot;fa fa-caret-down&quot;&gt;&lt;/i&gt;&#039;
 sidenav += &#039;&lt;/a&gt;&#039;
 sidenav += &#039;&lt;div id=&quot;demoAcc&quot; class=&quot;w3-hide sidenav-dropdown sidenav-card&quot;&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1153669&quot; class=&quot;climate-button&quot;&gt;เชียงราย&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1153671&quot; class=&quot;climate-button&quot;&gt;เชียงใหม่&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1608452&quot; class=&quot;climate-button&quot;&gt;น่าน&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1151426&quot; class=&quot;climate-button&quot;&gt;พะเยา&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1607552&quot; class=&quot;climate-button&quot;&gt;แพร่&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1152222&quot; class=&quot;climate-button&quot;&gt;แม่ฮ่องสอน&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1152473&quot; class=&quot;climate-button&quot;&gt;ลำปาง&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1152468&quot; class=&quot;climate-button&quot;&gt;ลำพูน&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1605215&quot; class=&quot;climate-button&quot;&gt;อุตรดิตถ์&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1153669&quot; class=&quot;climate-button&quot; name=&quot;chiang_rai&quot;&gt;เชียงราย&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1153671&quot; class=&quot;climate-button&quot; name=&quot;chiang_mai&quot;&gt;เชียงใหม่&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608452&quot; class=&quot;climate-button&quot; name=&quot;nan&quot;&gt;น่าน&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1151426&quot; class=&quot;climate-button&quot; name=&quot;phayao&quot;&gt;พะเยา&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607552&quot; class=&quot;climate-button&quot; name=&quot;phrae&quot;&gt;แพร่&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1152222&quot; class=&quot;climate-button&quot; name=&quot;mae_hong_son&quot;&gt;แม่ฮ่องสอน&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1152473&quot; class=&quot;climate-button&quot; name=&quot;lampang&quot;&gt;ลำปาง&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1152468&quot; class=&quot;climate-button&quot; name=&quot;lamphun&quot;&gt;ลำพูน&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1605215&quot; class=&quot;climate-button&quot; name=&quot;uttaradit&quot;&gt;อุตรดิตถ์&lt;/a&gt;&#039;
 sidenav += &#039;&lt;/div&gt;&#039;
-sidenav += &#039;&lt;a class=&quot;climate-button climate-block climate-left-align&quot; onclick=&quot;myDropFunc()&quot;&gt;&#039;
+sidenav += &#039;&lt;a class=&quot;climate-button climate-block climate-left-align&quot; name=&quot;northeast&quot; onclick=&quot;myDropFunc()&quot;&gt;&#039;
 sidenav += &#039;ภาคตะวันออกเฉียงเหนือ &lt;i class=&quot;fa fa-caret-down&quot;&gt;&lt;/i&gt;&#039;
 sidenav += &#039;&lt;/a&gt;&#039;
 sidenav += &#039;&lt;div id=&quot;demoDrop&quot; class=&quot;w3-hide sidenav-dropdown sidenav-card&quot;&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1610469&quot; class=&quot;climate-button&quot;&gt;กาฬสินธุ์&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1609776&quot; class=&quot;climate-button&quot;&gt;ขอนแก่น&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1611407&quot; class=&quot;climate-button&quot;&gt;ชัยภูมิ&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1608531&quot; class=&quot;climate-button&quot;&gt;นครพนม&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1608529&quot; class=&quot;climate-button&quot;&gt;นครราชสีมา&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1611475&quot; class=&quot;climate-button&quot;&gt;บึงกาฬ&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1603291&quot; class=&quot;climate-button&quot;&gt;บุรีรัมย์&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1608900&quot; class=&quot;climate-button&quot;&gt;มหาสารคาม&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1608597&quot; class=&quot;climate-button&quot;&gt;มุกดาหาร&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1604769&quot; class=&quot;climate-button&quot;&gt;ยโสธร&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1607001&quot; class=&quot;climate-button&quot;&gt;ร้อยเอ็ด&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1609071&quot; class=&quot;climate-button&quot;&gt;เลย&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1606239&quot; class=&quot;climate-button&quot;&gt;ศรีสะเกษ&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1606790&quot; class=&quot;climate-button&quot;&gt;สกลนคร&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1606030&quot; class=&quot;climate-button&quot;&gt;สุรินทร์&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1608232&quot; class=&quot;climate-button&quot;&gt;หนองคาย&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1608269&quot; class=&quot;climate-button&quot;&gt;หนองบัวลำภู&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1621060&quot; class=&quot;climate-button&quot;&gt;อำนาจเจริญ&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1605239&quot; class=&quot;climate-button&quot;&gt;อุดรธานี&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1605245&quot; class=&quot;climate-button&quot;&gt;อุบลราชธานี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1610469&quot; class=&quot;climate-button&quot; name=&quot;kalasin&quot;&gt;กาฬสินธุ์&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1609776&quot; class=&quot;climate-button&quot; name=&quot;khon_kaen&quot;&gt;ขอนแก่น&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1611407&quot; class=&quot;climate-button&quot; name=&quot;chaiyaphum&quot;&gt;ชัยภูมิ&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608531&quot; class=&quot;climate-button&quot; name=&quot;nakhon_phanom&quot;&gt;นครพนม&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608529&quot; class=&quot;climate-button&quot; name=&quot;nakhon_ratchasima&quot;&gt;นครราชสีมา&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1611475&quot; class=&quot;climate-button&quot; name=&quot;bueng_kan&quot;&gt;บึงกาฬ&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1611453&quot; class=&quot;climate-button&quot; name=&quot;buriram&quot;&gt;บุรีรัมย์&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608900&quot; class=&quot;climate-button&quot; name=&quot;maha_sarakham&quot;&gt;มหาสารคาม&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608597&quot; class=&quot;climate-button&quot; name=&quot;mukdahan&quot;&gt;มุกดาหาร&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1604769&quot; class=&quot;climate-button&quot; name=&quot;yasothon&quot;&gt;ยโสธร&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607001&quot; class=&quot;climate-button&quot; name=&quot;roi_et&quot;&gt;ร้อยเอ็ด&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1609071&quot; class=&quot;climate-button&quot; name=&quot;loei&quot;&gt;เลย&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606239&quot; class=&quot;climate-button&quot; name=&quot;si_sa_ket&quot;&gt;ศรีสะเกษ&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606790&quot; class=&quot;climate-button&quot; name=&quot;sakon_nakhon&quot;&gt;สกลนคร&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606030&quot; class=&quot;climate-button&quot; name=&quot;surin&quot;&gt;สุรินทร์&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608232&quot; class=&quot;climate-button&quot; name=&quot;nong_khai&quot;&gt;หนองคาย&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608269&quot; class=&quot;climate-button&quot; name=&quot;nong_bua_lamphu&quot;&gt;หนองบัวลำภู&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1621060&quot; class=&quot;climate-button&quot; name=&quot;amnat_charoen&quot;&gt;อำนาจเจริญ&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1605239&quot; class=&quot;climate-button&quot; name=&quot;udon_thani&quot;&gt;อุดรธานี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1605245&quot; class=&quot;climate-button&quot; name=&quot;ubon_ratchathani&quot;&gt;อุบลราชธานี&lt;/a&gt;&#039;
 sidenav += &#039;&lt;/div&gt;&#039;
-sidenav += &#039;&lt;a class=&quot;climate-button climate-block climate-left-align&quot; onclick=&quot;myDropFunc2()&quot;&gt;&#039;
+sidenav += &#039;&lt;a class=&quot;climate-button climate-block climate-left-align&quot; name=&quot;center&quot; onclick=&quot;myDropFunc2()&quot;&gt;&#039;
 sidenav += &#039;ภาคกลาง&lt;i class=&quot;fa fa-caret-down&quot;&gt;&lt;/i&gt;&#039;
 sidenav += &#039;&lt;/a&gt;&#039;
 sidenav += &#039;&lt;div id=&quot;demoDrop2&quot; class=&quot;w3-hide sidenav-dropdown sidenav-card&quot;&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1609350&quot; class=&quot;climate-button&quot;&gt;กรุงเทพมหานคร&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1153090&quot; class=&quot;climate-button&quot;&gt;กำแพงเพชร&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1611416&quot; class=&quot;climate-button&quot;&gt;ชัยนาท&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1608539&quot; class=&quot;climate-button&quot;&gt;นครนายก&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1608534&quot; class=&quot;climate-button&quot;&gt;นครปฐม&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1608527&quot; class=&quot;climate-button&quot;&gt;นครสวรรค์&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1609350&quot; class=&quot;climate-button&quot;&gt;นนทบุรี&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1607983&quot; class=&quot;climate-button&quot;&gt;ปทุมธานี&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1607532&quot; class=&quot;climate-button&quot;&gt;พระนครศรีอยุธยา&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1607725&quot; class=&quot;climate-button&quot;&gt;พิจิตร&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1607708&quot; class=&quot;climate-button&quot;&gt;พิษณุโลก&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1607737&quot; class=&quot;climate-button&quot;&gt;เพชรบูรณ์&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1609032&quot; class=&quot;climate-button&quot;&gt;ลพบุรี&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1606590&quot; class=&quot;climate-button&quot;&gt;สมุทรปราการ&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1606586&quot; class=&quot;climate-button&quot;&gt;สมุทรสงคราม&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1606588&quot; class=&quot;climate-button&quot;&gt;สมุทรสาคร&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1606418&quot; class=&quot;climate-button&quot;&gt;สระบุรี&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1606270&quot; class=&quot;climate-button&quot;&gt;สิงห์บุรี&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1150533&quot; class=&quot;climate-button&quot;&gt;สุโขทัย&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1606033&quot; class=&quot;climate-button&quot;&gt;สุพรรณบุรี&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1621035&quot; class=&quot;climate-button&quot;&gt;อ่างทอง&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1605221&quot; class=&quot;climate-button&quot;&gt;อุทัยธานี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1609350&quot; class=&quot;climate-button&quot; name=&quot;bangkok&quot;&gt;กรุงเทพมหานคร&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1153090&quot; class=&quot;climate-button&quot; name=&quot;kamphaeng_phet&quot;&gt;กำแพงเพชร&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1611416&quot; class=&quot;climate-button&quot; name=&quot;chai_nat&quot;&gt;ชัยนาท&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608539&quot; class=&quot;climate-button&quot; name=&quot;nakhon_nayok&quot;&gt;นครนายก&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608534&quot; class=&quot;climate-button&quot; name=&quot;nakhon_pathom&quot;&gt;นครปฐม&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608527&quot; class=&quot;climate-button&quot; name=&quot;nakhon_sawan&quot;&gt;นครสวรรค์&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1609350&quot; class=&quot;climate-button&quot; name=&quot;nonthaburi&quot;&gt;นนทบุรี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607983&quot; class=&quot;climate-button&quot; name=&quot;pathum_thani&quot;&gt;ปทุมธานี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607532&quot; class=&quot;climate-button&quot; name=&quot;phra_nakhon_si_ayutthaya&quot;&gt;พระนครศรีอยุธยา&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607725&quot; class=&quot;climate-button&quot; name=&quot;phichit&quot;&gt;พิจิตร&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607708&quot; class=&quot;climate-button&quot; name=&quot;phitsanulok&quot;&gt;พิษณุโลก&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607737&quot; class=&quot;climate-button&quot; name=&quot;phetchabun&quot;&gt;เพชรบูรณ์&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1609032&quot; class=&quot;climate-button&quot; name=&quot;lob_buri&quot;&gt;ลพบุรี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606590&quot; class=&quot;climate-button&quot; name=&quot;samut_prakan&quot;&gt;สมุทรปราการ&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606586&quot; class=&quot;climate-button&quot; name=&quot;samut_songkhram&quot;&gt;สมุทรสงคราม&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606588&quot; class=&quot;climate-button&quot; name=&quot;samut_sakhon&quot;&gt;สมุทรสาคร&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606418&quot; class=&quot;climate-button&quot; name=&quot;saraburi&quot;&gt;สระบุรี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606270&quot; class=&quot;climate-button&quot; name=&quot;sing_buri&quot;&gt;สิงห์บุรี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1150533&quot; class=&quot;climate-button&quot; name=&quot;sukhothai&quot;&gt;สุโขทัย&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606033&quot; class=&quot;climate-button&quot; name=&quot;suphan_buri&quot;&gt;สุพรรณบุรี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1621035&quot; class=&quot;climate-button&quot; name=&quot;ang_thong&quot;&gt;อ่างทอง&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1605221&quot; class=&quot;climate-button&quot; name=&quot;uthai_thani&quot;&gt;อุทัยธานี&lt;/a&gt;&#039;
 sidenav += &#039;&lt;/div&gt;&#039;
-sidenav += &#039;&lt;a class=&quot;climate-button climate-block climate-left-align&quot; onclick=&quot;myDropFunc3()&quot;&gt;&#039;
+sidenav += &#039;&lt;a class=&quot;climate-button climate-block climate-left-align&quot; name=&quot;south&quot; onclick=&quot;myDropFunc3()&quot;&gt;&#039;
 sidenav += &#039;ภาคใต้&lt;i class=&quot;fa fa-caret-down&quot;&gt;&lt;/i&gt;&#039;
 sidenav += &#039;&lt;/a&gt;&#039;
 sidenav += &#039;&lt;div id=&quot;demoDrop3&quot; class=&quot;w3-hide sidenav-dropdown sidenav-card&quot;&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1152633&quot; class=&quot;climate-button&quot;&gt;กระบี่&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1153557&quot; class=&quot;climate-button&quot;&gt;ชุมพร&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1150007&quot; class=&quot;climate-button&quot;&gt;ตรัง&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1151933&quot; class=&quot;climate-button&quot;&gt;นครศรีธรรมราช&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1608409&quot; class=&quot;climate-button&quot;&gt;นราธิวาส&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1607978&quot; class=&quot;climate-button&quot;&gt;ปัตตานี&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1151464&quot; class=&quot;climate-button&quot;&gt;พังงา&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1607779&quot; class=&quot;climate-button&quot;&gt;พัทลุง&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1151254&quot; class=&quot;climate-button&quot;&gt;ภูเก็ต&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1604870&quot; class=&quot;climate-button&quot;&gt;ยะลา&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1150965&quot; class=&quot;climate-button&quot;&gt;ระนอง&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1606147&quot; class=&quot;climate-button&quot;&gt;สงขลา&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1606376&quot; class=&quot;climate-button&quot;&gt;สตูล&lt;/a&gt;&#039;
-sidenav += &#039;&lt;a href=&quot;/weather?id=1150515&quot; class=&quot;climate-button&quot;&gt;สุราษฎร์ธานี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1152633&quot; class=&quot;climate-button&quot; name=&quot;krabi&quot;&gt;กระบี่&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1153557&quot; class=&quot;climate-button&quot; name=&quot;chumphon&quot;&gt;ชุมพร&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1150007&quot; class=&quot;climate-button&quot; name=&quot;trang&quot;&gt;ตรัง&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1151933&quot; class=&quot;climate-button&quot; name=&quot;nakhon_si_thammarat&quot;&gt;นครศรีธรรมราช&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1608409&quot; class=&quot;climate-button&quot; name=&quot;narathiwat&quot;&gt;นราธิวาส&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607978&quot; class=&quot;climate-button&quot; name=&quot;pattani&quot;&gt;ปัตตานี&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1151464&quot; class=&quot;climate-button&quot; name=&quot;phangnga&quot;&gt;พังงา&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1607779&quot; class=&quot;climate-button&quot; name=&quot;phatthalung&quot;&gt;พัทลุง&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1151254&quot; class=&quot;climate-button&quot; name=&quot;phuket&quot;&gt;ภูเก็ต&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1604870&quot; class=&quot;climate-button&quot; name=&quot;yala&quot;&gt;ยะลา&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1150965&quot; class=&quot;climate-button&quot; name=&quot;ranong&quot;&gt;ระนอง&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606147&quot; class=&quot;climate-button&quot; name=&quot;songkhla&quot;&gt;สงขลา&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1606376&quot; class=&quot;climate-button&quot; name=&quot;satun&quot;&gt;สตูล&lt;/a&gt;&#039;
+sidenav += &#039;&lt;a href=&quot;/weather?id=1150515&quot; class=&quot;climate-button&quot; name=&quot;surat_thani&quot;&gt;สุราษฎร์ธานี&lt;/a&gt;&#039;
 sidenav += &#039;&lt;/div&gt;&#039;
 sidenav += &#039;&lt;/div&gt;&#039;
-
-
 
 var server = app.listen(3000, function () {
     var port = server.address().port;
@@ -348,7 +353,7 @@ app.get(&#039;/weather&#039;, (req, res) =&gt; {
                     } else {
                         var list_len = 9;
                     }
-                    
+
                     for (let index = 0; index &lt; list_len; index++) {
                         var forecast_dt = new Date(obj.list[forecast_idx].dt_txt);
 
@@ -374,7 +379,7 @@ app.get(&#039;/weather&#039;, (req, res) =&gt; {
 
                         item[index] += &#039;&lt;div class=&quot;container d-flex h-20 align-items-center&quot;&gt;&#039;;
                         item[index] += &#039;&lt;div class=&quot; mx-auto text-center&quot;&gt;&#039;;
-                        item[index] += &#039;&lt;h2 class=&quot;text-white mx-auto&quot; style=&quot;margin-top:10rem;&quot;&gt;&#039;;
+                        item[index] += &#039;&lt;h2 class=&quot;text-white mx-auto&quot; name=&quot;city&quot; style=&quot;margin-top:10rem;&quot;&gt;&#039;;
                         item[index] += city;
                         item[index] += &#039;&lt;/h2&gt;&#039;;
                         item[index] += &#039;&lt;h3 class=&quot;text-white mx-auto mt-2 mb-5&quot;&gt;&#039;;
