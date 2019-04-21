@@ -153,7 +153,71 @@ const { Builder, Key, By, until } = require('selenium-webdriver');
 //     after(() => driver && driver.quit());
 // });
 
-describe('Checkout Homepage Center Region', function () {
+// describe('Checkout Homepage Center Region', function () {
+//     let driver;
+//     before(async function () {
+//         driver = await new Builder().forBrowser('chrome').build();
+//     });
+
+//     // Next, we will write steps for our test. 
+//     // For the element ID, you can find it by open the browser inspect feature.
+//     it('Click on Bangkok', async function () {
+//         // Set browser size to maximize
+//         await driver.manage().window().maximize()
+//         // Load the page
+//         await driver.get('http://localhost:3000');
+//         // Find the navigation button
+//         await driver.findElement(By.name('province')).click();
+//         // Find the region button
+//         await driver.findElement(By.name('center')).click();
+//         // Find the province button
+//         await driver.findElement(By.name('bangkok')).click();
+
+//         let city = await driver.findElement(By.name('city')).getText();
+//         assert.equal(city, 'Bangkok');
+//     });
+
+//     it('Click on Nakhon Nayok', async function () {
+//         // Find the navigation button
+//         await driver.findElement(By.name('province')).click();
+//         // Find the region button
+//         await driver.findElement(By.name('center')).click();
+//         // Find the province button
+//         await driver.findElement(By.name('nakhon_nayok')).click();
+
+//         let city = await driver.findElement(By.name('city')).getText();
+//         assert.equal(city, 'Nakhon Nayok');
+//     });
+
+//     it('Click on Phichit', async function () {
+//         // Find the navigation button
+//         await driver.findElement(By.name('province')).click();
+//         // Find the region button
+//         await driver.findElement(By.name('center')).click();
+//         // Find the province button
+//         await driver.findElement(By.name('phichit')).click();
+
+//         let city = await driver.findElement(By.name('city')).getText();
+//         assert.equal(city, 'Phichit');
+//     });
+
+//     it('Click on Saraburi', async function () {
+//         // Find the navigation button
+//         await driver.findElement(By.name('province')).click();
+//         // Find the region button
+//         await driver.findElement(By.name('center')).click();
+//         // Find the province button
+//         await driver.findElement(By.name('saraburi')).click();
+
+//         let city = await driver.findElement(By.name('city')).getText();
+//         assert.equal(city, 'Saraburi');
+//     });
+
+//      // close the browser after running tests
+//     after(() => driver && driver.quit());
+// });
+
+describe('Checkout Homepage Southern Region', function () {
     let driver;
     before(async function () {
         driver = await new Builder().forBrowser('chrome').build();
@@ -161,7 +225,7 @@ describe('Checkout Homepage Center Region', function () {
 
     // Next, we will write steps for our test. 
     // For the element ID, you can find it by open the browser inspect feature.
-    it('Click on Bangkok', async function () {
+    it('Click on Trang', async function () {
         // Set browser size to maximize
         await driver.manage().window().maximize()
         // Load the page
@@ -169,48 +233,48 @@ describe('Checkout Homepage Center Region', function () {
         // Find the navigation button
         await driver.findElement(By.name('province')).click();
         // Find the region button
-        await driver.findElement(By.name('center')).click();
+        await driver.findElement(By.name('south')).click();
         // Find the province button
-        await driver.findElement(By.name('bangkok')).click();
+        await driver.findElement(By.name('trang')).click();
 
         let city = await driver.findElement(By.name('city')).getText();
-        assert.equal(city, 'Bangkok');
+        assert.equal(city, 'Trang');
     });
 
-    it('Click on Nakhon Nayok', async function () {
+    it('Click on Pattani', async function () {
         // Find the navigation button
         await driver.findElement(By.name('province')).click();
         // Find the region button
-        await driver.findElement(By.name('center')).click();
+        await driver.findElement(By.name('south')).click();
         // Find the province button
-        await driver.findElement(By.name('nakhon_nayok')).click();
+        await driver.findElement(By.name('pattani')).click();
 
         let city = await driver.findElement(By.name('city')).getText();
-        assert.equal(city, 'Nakhon Nayok');
+        assert.equal(city, 'Pattani');
     });
 
-    it('Click on Phichit', async function () {
+    it('Click on Yala', async function () {
         // Find the navigation button
         await driver.findElement(By.name('province')).click();
         // Find the region button
-        await driver.findElement(By.name('center')).click();
+        await driver.findElement(By.name('south')).click();
         // Find the province button
-        await driver.findElement(By.name('phichit')).click();
+        await driver.findElement(By.name('yala')).click();
 
         let city = await driver.findElement(By.name('city')).getText();
-        assert.equal(city, 'Phichit');
+        assert.equal(city, 'Yala');
     });
 
-    it('Click on Saraburi', async function () {
+    it('Click on Satun', async function () {
         // Find the navigation button
         await driver.findElement(By.name('province')).click();
         // Find the region button
-        await driver.findElement(By.name('center')).click();
+        await driver.findElement(By.name('south')).click();
         // Find the province button
-        await driver.findElement(By.name('saraburi')).click();
+        await driver.findElement(By.name('satun')).click();
 
         let city = await driver.findElement(By.name('city')).getText();
-        assert.equal(city, 'Saraburi');
+        assert.equal(city, 'Satun');
     });
 
      // close the browser after running tests
