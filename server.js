@@ -45,7 +45,13 @@ nav += '</li>';
 nav += '<li class="nav-item">';
 nav += '<a class="nav-link js-scroll-trigger" href="#" onclick="openNav()">Province</a>';
 nav += '</li>';
-nav += '</ul></div></div></nav>';
+nav += '</ul>';
+nav += '<div class="search-box">';
+nav += '<input type="text" class="input input-province">';
+nav += '</div>';
+nav += '<div class="icon-items icon-1">';
+nav += '<i class="fas fa-search search-btn"></i>';
+nav += '</div></div></div></nav>';
 
 var footer = '<!-- Footer -->';
 footer += '<footer class="bg-black small text-center text-white-50">';
@@ -61,6 +67,7 @@ script += '<script src="js/skycons.js"></script>';
 script += '<script src="js/icon.js"></script>';
 script += '<script>$(".carousel").carousel({interval: false})</script>';
 script += '<script src="js/sidenav.js"></script>';
+script += '<script src="js/search.js"></script>';
 
 var sidenav = '<div id="mySidenav" class="sidenav" >';
 sidenav += '<a class="climate-button climate-block climate-left-align" onclick="myAccFunc()">'
@@ -255,7 +262,7 @@ app.get('/weather', (req, res) => {
                     } else {
                         var list_len = 9;
                     }
-                    
+
                     for (let index = 0; index < list_len; index++) {
                         var forecast_dt = new Date(obj.list[forecast_idx].dt_txt);
 
