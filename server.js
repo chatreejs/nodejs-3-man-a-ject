@@ -47,10 +47,10 @@ nav += '<a class="nav-link js-scroll-trigger" name="province" href="#" onclick="
 nav += '</li>';
 nav += '</ul>';
 nav += '<div class="search-box">';
-nav += '<input type="text" class="input input-province">';
+nav += '<input type="text" class="input input-province" name="search-box">';
 nav += '</div>';
 nav += '<div class="icon-items icon-1">';
-nav += '<i class="fas fa-search search-btn"></i>';
+nav += '<i class="fas fa-search search-btn" name="search-btn"></i>';
 nav += '</div></div></div></nav>';
 
 var footer = '<!-- Footer -->';

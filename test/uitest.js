@@ -217,7 +217,71 @@ const { Builder, Key, By, until } = require('selenium-webdriver');
 //     after(() => driver && driver.quit());
 // });
 
-describe('Checkout Homepage Southern Region', function () {
+// describe('Checkout Homepage Southern Region', function () {
+//     let driver;
+//     before(async function () {
+//         driver = await new Builder().forBrowser('chrome').build();
+//     });
+
+//     // Next, we will write steps for our test. 
+//     // For the element ID, you can find it by open the browser inspect feature.
+//     it('Click on Trang', async function () {
+//         // Set browser size to maximize
+//         await driver.manage().window().maximize()
+//         // Load the page
+//         await driver.get('http://localhost:3000');
+//         // Find the navigation button
+//         await driver.findElement(By.name('province')).click();
+//         // Find the region button
+//         await driver.findElement(By.name('south')).click();
+//         // Find the province button
+//         await driver.findElement(By.name('trang')).click();
+
+//         let city = await driver.findElement(By.name('city')).getText();
+//         assert.equal(city, 'Trang');
+//     });
+
+//     it('Click on Pattani', async function () {
+//         // Find the navigation button
+//         await driver.findElement(By.name('province')).click();
+//         // Find the region button
+//         await driver.findElement(By.name('south')).click();
+//         // Find the province button
+//         await driver.findElement(By.name('pattani')).click();
+
+//         let city = await driver.findElement(By.name('city')).getText();
+//         assert.equal(city, 'Pattani');
+//     });
+
+//     it('Click on Yala', async function () {
+//         // Find the navigation button
+//         await driver.findElement(By.name('province')).click();
+//         // Find the region button
+//         await driver.findElement(By.name('south')).click();
+//         // Find the province button
+//         await driver.findElement(By.name('yala')).click();
+
+//         let city = await driver.findElement(By.name('city')).getText();
+//         assert.equal(city, 'Yala');
+//     });
+
+//     it('Click on Satun', async function () {
+//         // Find the navigation button
+//         await driver.findElement(By.name('province')).click();
+//         // Find the region button
+//         await driver.findElement(By.name('south')).click();
+//         // Find the province button
+//         await driver.findElement(By.name('satun')).click();
+
+//         let city = await driver.findElement(By.name('city')).getText();
+//         assert.equal(city, 'Satun');
+//     });
+
+//      // close the browser after running tests
+//     after(() => driver && driver.quit());
+// });
+
+describe('UITest: Search province', function () {
     let driver;
     before(async function () {
         driver = await new Builder().forBrowser('chrome').build();
@@ -225,56 +289,74 @@ describe('Checkout Homepage Southern Region', function () {
 
     // Next, we will write steps for our test. 
     // For the element ID, you can find it by open the browser inspect feature.
-    it('Click on Trang', async function () {
+    it('Search on Trang', async function () {
         // Set browser size to maximize
         await driver.manage().window().maximize()
         // Load the page
         await driver.get('http://localhost:3000');
-        // Find the navigation button
-        await driver.findElement(By.name('province')).click();
-        // Find the region button
-        await driver.findElement(By.name('south')).click();
-        // Find the province button
-        await driver.findElement(By.name('trang')).click();
+        // Find Search serach button
+        await driver.findElement(By.name('search-btn')).click();
+        // ENter keyword and send enter
+        await driver.findElement(By.name('search-box')).sendKeys('Trang', Key.RETURN);
 
         let city = await driver.findElement(By.name('city')).getText();
         assert.equal(city, 'Trang');
     });
 
-    it('Click on Pattani', async function () {
-        // Find the navigation button
-        await driver.findElement(By.name('province')).click();
-        // Find the region button
-        await driver.findElement(By.name('south')).click();
-        // Find the province button
-        await driver.findElement(By.name('pattani')).click();
+    it('Search on Lampang', async function () {
+        // Set browser size to maximize
+        await driver.manage().window().maximize()
+        // Load the page
+        await driver.get('http://localhost:3000');
+        // Find Search serach button
+        await driver.findElement(By.name('search-btn')).click();
+        // ENter keyword and send enter
+        await driver.findElement(By.name('search-box')).sendKeys('Lampang', Key.RETURN);
 
         let city = await driver.findElement(By.name('city')).getText();
-        assert.equal(city, 'Pattani');
+        assert.equal(city, 'Lampang');
     });
 
-    it('Click on Yala', async function () {
-        // Find the navigation button
-        await driver.findElement(By.name('province')).click();
-        // Find the region button
-        await driver.findElement(By.name('south')).click();
-        // Find the province button
-        await driver.findElement(By.name('yala')).click();
+    it('Search on Roi Et', async function () {
+        // Set browser size to maximize
+        await driver.manage().window().maximize()
+        // Load the page
+        await driver.get('http://localhost:3000');
+        // Find Search serach button
+        await driver.findElement(By.name('search-btn')).click();
+        // ENter keyword and send enter
+        await driver.findElement(By.name('search-box')).sendKeys('Roi Et', Key.RETURN);
 
         let city = await driver.findElement(By.name('city')).getText();
-        assert.equal(city, 'Yala');
+        assert.equal(city, 'Roi Et');
     });
 
-    it('Click on Satun', async function () {
-        // Find the navigation button
-        await driver.findElement(By.name('province')).click();
-        // Find the region button
-        await driver.findElement(By.name('south')).click();
-        // Find the province button
-        await driver.findElement(By.name('satun')).click();
+    it('Search on Chai Nat', async function () {
+        // Set browser size to maximize
+        await driver.manage().window().maximize()
+        // Load the page
+        await driver.get('http://localhost:3000');
+        // Find Search serach button
+        await driver.findElement(By.name('search-btn')).click();
+        // ENter keyword and send enter
+        await driver.findElement(By.name('search-box')).sendKeys('Chai Nat', Key.RETURN);
 
         let city = await driver.findElement(By.name('city')).getText();
-        assert.equal(city, 'Satun');
+        assert.equal(city, 'Chai Nat');
+    });
+
+    it('Search on Sing Buri', async function () {
+        // Set browser size to maximize
+        await driver.manage().window().maximize()
+        // Load the page
+        await driver.get('http://localhost:3000');
+        // Find Search serach button
+        await driver.findElement(By.name('search-btn')).click();
+        // ENter keyword and send enter
+        await driver.findElement(By.name('search-box')).sendKeys('Sing Buri', Key.RETURN);
+
+        let city = await driver.findElement(By.name('city')).getText();
+        assert.equal(city, 'Sing Buri');
     });
 
      // close the browser after running tests
