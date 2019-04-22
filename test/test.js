@@ -6,7 +6,7 @@ var assert = require("chai").assert;
 var mocha = require('mocha');
 var describe = mocha.describe;
 
-describe('Test Compass function', function () {
+describe('Test four cardinal directions Compass function', function () {
     it('test:getDirection North', function () {
         var c = new Compass();
         var res = c.getDirection(0);
@@ -30,7 +30,9 @@ describe('Test Compass function', function () {
         var res = c.getDirection(270);
         assert.strictEqual(res, "W");
     });
+});
 
+describe('Test four intercardinal directions Compass function', function () {
     it('test:getDirection Northeast', function () {
         var c = new Compass();
         var res = c.getDirection(45);
@@ -54,7 +56,9 @@ describe('Test Compass function', function () {
         var res = c.getDirection(315);
         assert.strictEqual(res, "NW");
     });
+});
 
+describe('Test half-winds directions Compass function', function () {
     it('test:getDirection North-northeast', function () {
         var c = new Compass();
         var res = c.getDirection(21);
@@ -104,7 +108,7 @@ describe('Test Compass function', function () {
     });
 });
 
-describe('Test Description Icon function', function () {
+describe('Test Clear Description Icon function', function () {
     it('test:get icon clear at 6:00', function () {
         var d = new DescriptionIcon();
         var hour = 6;
@@ -132,7 +136,9 @@ describe('Test Description Icon function', function () {
         var res = d.getIcon("clear sky", hour);
         assert.strictEqual(res, "clear-night");
     });
+});
 
+describe('Test Cloud Description Icon function', function () {
     it('test:get icon few clouds at 6:00', function () {
         var d = new DescriptionIcon();
         var hour = 6;
@@ -188,7 +194,9 @@ describe('Test Description Icon function', function () {
         var res = d.getIcon("overcast clouds", hour);
         assert.strictEqual(res, "cloudy");
     });
+});
 
+describe('Test Rain Description Icon function', function () {
     it('test:get icon light rain at 6:00', function () {
         var d = new DescriptionIcon();
         var hour = 6;
@@ -202,7 +210,9 @@ describe('Test Description Icon function', function () {
         var res = d.getIcon("moderate rain", hour);
         assert.strictEqual(res, "rain");
     });
+});
 
+describe('Test Fog Description Icon function', function () {
     it('test:get icon mist at 6:00', function () {
         var d = new DescriptionIcon();
         var hour = 6;
@@ -218,15 +228,23 @@ describe('Test Description Icon function', function () {
     });
 });
 
-describe('Test Queue function', function () {
-    it('test:enqueue ', function () {
+describe('Test Enqueue function', function () {
+    it('test:enqueue', function () {
         var q = new QueueJA(10);
         q.enqueue(10);
         var res = q.getSize();
         assert.strictEqual(res, 1);
     });
 
-    it('test:dequeue ', function () {
+    it('test:enqueue a full queue', function () {
+        var q = new QueueJA(1);
+        q.enqueue(1);
+        assert.throws(() => {q.enqueue(2)}, Error, "no space is currently available");
+    });
+});
+
+describe('Test Dequeue function', function () {
+    it('test:dequeue', function () {
         var q = new QueueJA(10);
         q.enqueue("A");
         q.enqueue("B");
@@ -234,12 +252,25 @@ describe('Test Queue function', function () {
         assert.strictEqual(res, "A");
     });
 
+    it('test:dequeue an empty queue', function () {
+        var q = new QueueJA(10);
+        assert.throws(() => {q.dequeue()}, Error, "this queue is empty");
+    });
+});
+
+describe('Test Queue function', function () {
     it('test:get front at position 0', function () {
         var q = new QueueJA(10);
         q.enqueue("A");
         q.enqueue("B");
         var res = q.getFront();
         assert.strictEqual(res, "A");
+    });
+
+    it('test:get front an empty queue', function () {
+        var q = new QueueJA(10);
+        var res = q.getFront();
+        assert.strictEqual(res, null);
     });
 
     it('test:isEmpty', function () {

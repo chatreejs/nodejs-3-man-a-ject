@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --recursive --timeout 10000 test/uitest.js",
     "start": "node server.js"
   },
   "repository": {
@@ -23,10 +23,12 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "chromedriver": "^2.46.0",
     "grunt": "^1.0.4",
     "grunt-mocha-istanbul": "^5.0.2",
     "istanbul": "^0.4.5",
     "mocha": "^6.0.2",
-    "mocha-istanbul": "^0.3.0"
+    "mocha-istanbul": "^0.3.0",
+    "selenium-webdriver": "^4.0.0-alpha.1"
   }
 }

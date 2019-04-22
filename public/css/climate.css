@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Kanit');
+
 #mainNav {
   min-height: 56px;
   background-color: #fff;
@@ -105,7 +107,7 @@
 }
 
 .masthead h1 {
-  font-family: 'Helvetica';
+  font-family: 'Kanit', sans-serif !important;
   font-size: 5rem;
   line-height: 7.5rem;
   letter-spacing: 0.8rem;
@@ -114,11 +116,13 @@
 }
 
 .masthead h2 {
+  font-family: 'Kanit', sans-serif !important;
   max-width: 80rem;
   font-size: 3rem;
 }
 
 .masthead h3 {
+  font-family: 'Kanit', sans-serif !important;
   font-size: 1.5rem;
 }
 
@@ -157,7 +161,7 @@
   -webkit-box-shadow: 0 0.1875rem 0.1875rem 0 rgba(0, 0, 0, 0.1) !important;
   box-shadow: 0 0.1875rem 0.1875rem 0 rgba(0, 0, 0, 0.1) !important;
   padding: 1.25rem 2rem;
-  font-family: 'Helvetica';
+  font-family: 'Kanit', sans-serif !important;
   font-size: 80%;
   text-transform: uppercase;
   letter-spacing: .15rem;
@@ -182,8 +186,9 @@
 }
 
 body {
-  font-family: 'Nunito';
+  font-family: 'Kanit', sans-serif !important;
   letter-spacing: 0.0625em;
+  transition: background-color .4s;
 }
 
 canvas {
@@ -218,11 +223,6 @@ footer {
   padding: 5rem 0;
 }
 
-body {
-  font-family: "Helvetica";
-  transition: background-color .4s;
-}
-
 /* Start */
 .sidenav {
   height: 100%;
@@ -231,7 +231,7 @@ body {
   z-index: 5;
   top: 0;
   right: 0;
-  background-color: #F2EDD8;
+  background-color:#8ecfcc;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
@@ -245,10 +245,10 @@ body {
   display: block;
   transition: 0.5s;
 }
-
+/* เมาส์ชี้จังหวัด */
 .sidenav a:hover {
   color: #000;
-  background-color: rgba(150, 192, 206);
+  background-color: rgba(253,253,245, 0.8);
 }
 
 .sidenav .closebtn {
@@ -261,7 +261,10 @@ body {
 
 #main,
 #mainNav {
-  transition: margin-right .45s;
+  -moz-transition: margin-right .45s!important;
+  -webkit-transition: margin-right .45s!important;
+  -o-transition: margin-right .45s!important;
+  -ms-transition: margin-right .45s!important;
   padding: 16px;
 }
 
@@ -308,16 +311,39 @@ body {
   display: block !important;
 }
 
+/* พื้นหลังจังหวัด */
 .sidenav-dropdown {
   color: #000 !important;
-  background-color: #FEF6EB !important;
+  background-color: rgba(253,253,245, 0.8) !important;
 }
 
+/* ภาค */
 .sidenav-dropdown-open {
   color: rgb(0, 0, 0) !important;
-  background-color: rgb(194, 91, 86) !important;
+  background-color: rgba(136, 187, 221, 0.432) !important;
 }
 
 .sidenav-card {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.search-box .input {
+  width: 0px;
+  height: 35px;
+  border: 0px;
+  outline: none;
+  background: #e6e6e6;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  border-radius: 25px;
+}
+
+.search-box .input.active {
+  width: 200px;
+  padding: 0 10px;
+}
+
+.search-btn {
+  margin-left: 15px;
+  color: rgba(255, 255, 255, 0.5);
 }
