@@ -164,12 +164,14 @@ var server = app.listen(3000, function () {
 
 app.get('/', (req, res) => {
     //Call IPGeolocation API
+    console.time('get_ip');
     request('https://api.ipgeolocation.io/ipgeo?apiKey=7cc0eab4bbb44d95928fccea5b517f01', (error, response, body) => {
         if (response.statusCode == 200) {
             var obj = JSON.parse(body);
             city = obj.city;
             //Redirect and get weather at current location
             res.redirect('/weather?q=' + city);
+            console.timeEnd('get_ip');
         }
     });
 });
@@ -194,6 +196,7 @@ app.get('/weather', (req, res) => {
             query = 'q=' + city;
         }
 
+        console.time('call_api_weather');
         //Call Weather API
         request('http://api.openweathermap.org/data/2.5/weather?' + query + '&APPID=' + ApiKey, (error, response, body) => {
             var obj = JSON.parse(body);
@@ -220,7 +223,9 @@ app.get('/weather', (req, res) => {
                 pressure.enqueue(obj.main.pressure);
                 wind_speed.enqueue(obj.wind.speed);
                 wind_deg.enqueue(obj.wind.deg);
+                console.timeEnd('call_api_weather');
 
+                console.time('call_api_forecast');
                 request('http://api.openweathermap.org/data/2.5/forecast?' + query + '&APPID=' + ApiKey, (error, response, body) => {
                     var obj = JSON.parse(body);
                     var forecast_idx;
@@ -276,7 +281,9 @@ app.get('/weather', (req, res) => {
                         wind_deg.enqueue(obj.list[forecast_idx].wind.deg);
                         forecast_idx++;
                     }
+                    console.timeEnd('call_api_forecast');
 
+                    console.time('generate_view');
                     for (let index = 0; index < list_len + 1; index++) {
                         if (index == 0) {
                             item[index] = '<div id="carouselControls" class="carousel slide" data-ride="carousel">';
@@ -418,6 +425,7 @@ app.get('/weather', (req, res) => {
                     html += footer;
                     html += script;
                     html += '</body>';
+                    console.timeEnd('generate_view');
 
                     res.send(html)
                 });
