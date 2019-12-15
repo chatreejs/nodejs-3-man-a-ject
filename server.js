@@ -157,7 +157,7 @@ sidenav += '<a href="/weather?id=1150515" class="climate-button" name="surat_tha
 sidenav += '</div>'
 sidenav += '</div>'
 
-var server = app.listen(80, function () {
+var server = app.listen(3000, function () {
     var port = server.address().port;
     console.log('\x1b[32m%s%s\x1b[0m', 'Running on port : ', port);
 });
