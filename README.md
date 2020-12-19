@@ -12,7 +12,7 @@
 Clone it!
 
 ```
-$ git clone https://swu59565@dev.azure.com/swu59565/3man%20a%20ject/_git/3man%20a%20ject
+$ git clone https://gitlab.com/n-man-a-ject/3-man-a-ject
 ```
 
 Go into project directory and run the command
