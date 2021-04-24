@@ -1,7 +1,6 @@
 # Climate Change - Web Application
 
-<img src ="https://img.shields.io/azure-devops/build/swu59565/bc945380-bfd1-43c0-9718-5b5603abda6e/2/master.svg" />
-<img src ="https://img.shields.io/npm/v/express.svg" />
+<img src ="https://img.shields.io/azure-devops/build/swu59565/bc945380-bfd1-43c0-9718-5b5603abda6e/2/master.svg" /> <img src ="https://img.shields.io/npm/v/express.svg" />
 
 ## Requirement
 
